@@ -3,15 +3,28 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.19.0",
+    "jwt-decode": "^2.2.0",
+    "query-string": "^6.8.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-scripts": "3.1.1"
+    "react-redux": "^7.1.0",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.1.1",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test:lint:js": "eslint --ext=js --ext=jsx .",
+    "test:lint:scss": "stylelint \"**/*.scss\"",
+    "test:unit": "react-scripts test --env=jsdom",
+    "test": "npm run test:lint:js && npm run test:lint:scss && npm run test:unit",
+    "generate-build-version": "node generate-build-version",
+    "prebuild": "npm run generate-build-version",
+    "heroku-prebuild": "npm run generate-build-version"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -27,5 +40,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "moxios": "^0.4.0",
+    "prop-types": "^15.7.2",
+    "react-loadable": "^5.5.0",
+    "redux-logger": "^3.0.6",
+    "why-did-you-update": "^1.0.6"
   }
 }
