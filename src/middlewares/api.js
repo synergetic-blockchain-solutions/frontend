@@ -49,19 +49,6 @@ export default store => next => action => {
   // Send the request to the next middleware
   const [requestType, successType, failureType] = types;
 
-  if (
-    auth.user.role_id === 5 &&
-    method !== 'GET' &&
-    (endpoint !== '/student-signup' ||
-      endpoint !== '/login' ||
-      endpoint !== '/logout')
-  ) {
-    return store.dispatch({
-      payload: 'Something Went Wrong',
-      type: failureType,
-    });
-  }
-
   next(actionWith({ type: requestType }));
 
   // if (body && headers['Content-Type'] !== 'multipart/form-data') {
@@ -83,7 +70,7 @@ export default store => next => action => {
 
   return axios({
     method,
-    url: `${process.env.REACT_APP_API_URL}${endpoint}${queryString}`,
+    url: `${endpoint}${queryString}`,
     headers,
     onUploadProgress: handleUploadProgress,
     data: body,

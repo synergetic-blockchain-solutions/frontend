@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Auth from './Auth';
-import Root from 'components/Root'
-
+import Root from 'components/Root';
 
 export default class Router extends Component {
   render() {

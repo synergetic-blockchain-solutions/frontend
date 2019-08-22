@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export default function Loading() {
-  return (
-    <i className="fad fa-spinner-third"></i>
-  )
+  return <i className="fad fa-spinner-third" />;
 }
