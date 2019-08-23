@@ -63,6 +63,7 @@ AuthInput.propTypes = {
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
   marginBottom: PropTypes.string,
   label: PropTypes.string,
   error: PropTypes.string,

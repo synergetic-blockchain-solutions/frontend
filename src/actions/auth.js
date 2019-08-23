@@ -21,7 +21,7 @@ import {
 } from 'actions/types';
 
 /**
- * @route /api/register
+ * @route /register
  * @method POST
  * @param {string} name
  * @param {string} email
@@ -44,7 +44,7 @@ export const registerUser = (name, email, password, confirmPassword) => ({
 });
 
 /**
- * @route /api/login
+ * @route /login
  * @method POST
  * @param {string} email
  * @param {password} password
@@ -98,7 +98,8 @@ export const attemptTokenRefresh = () => ({
  * @param {object} token
  * @param {object} user
  * @param {array} subjectTopics
- * @desc gets the token and user information from localstorage and then sets them both in
+ * @desc gets the token and user information 
+ * from localstorage and then sets them both in
  * the redux state
  */
 export const setCurrentUser = (token, user, subjectTopics) => ({
@@ -110,7 +111,8 @@ export const setCurrentUser = (token, user, subjectTopics) => ({
 
 /**
  * @param none
- * @desc clear the promised that was saved to state from trying to refresh the authentication token
+ * @desc clear the promised that was saved to state 
+ * from trying to refresh the authentication token
  */
 export const clearRefreshTokenPromise = () => ({
   type: CLEAR_REFRESH_TOKEN_PROMISE,
@@ -119,7 +121,8 @@ export const clearRefreshTokenPromise = () => ({
 /**
  *
  * @param promise
- * @desc save the refresh token promise in the state so that if refresh token requests were sent
+ * @desc save the refresh token promise in the state so 
+ * that if refresh token requests were sent
  * at the same time they wont work over eachother
  */
 export const saveRefreshTokenPromise = promise => ({

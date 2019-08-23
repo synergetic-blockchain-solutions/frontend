@@ -21,9 +21,8 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "test:lint:js": "eslint --ext=js --ext=jsx .",
-    "test:lint:scss": "stylelint \"**/*.scss\"",
     "test:unit": "react-scripts test --env=jsdom",
-    "test": "npm run test:lint:js && npm run test:lint:scss && npm run test:unit",
+    "test": "npm run test:lint:js && npm run test:unit",
     "generate-build-version": "node generate-build-version",
     "prebuild": "npm run generate-build-version",
     "heroku-prebuild": "npm run generate-build-version"

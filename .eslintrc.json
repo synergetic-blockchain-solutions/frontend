@@ -7,8 +7,8 @@
   },
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "import/no-named-as-default": false,
-    "import/no-named-as-default-member": false,
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0,
     "no-use-before-define": 0,
     "max-len": 1,
     "react/prop-types": [
