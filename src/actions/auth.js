@@ -21,7 +21,7 @@ import {
 } from 'actions/types';
 
 /**
- * @route /api/register
+ * @route /register
  * @method POST
  * @param {string} name
  * @param {string} email
@@ -44,7 +44,7 @@ export const registerUser = (name, email, password, confirmPassword) => ({
 });
 
 /**
- * @route /api/login
+ * @route /login
  * @method POST
  * @param {string} email
  * @param {password} password
