@@ -8,7 +8,6 @@ export const Input = styled.input`
   border-radius: 5px;
   padding: 1rem 1rem;
   width: 100%;
-  margin-bottom: ${props => props.marginBottom};
   :focus {
     outline: none;
     border: 1px solid ${props => props.theme.colors.colorPrimaryLight};
@@ -17,6 +16,15 @@ export const Input = styled.input`
 
 const Label = styled.label`
   font-size: 1.2rem;
+`;
+
+const Error = styled.p`
+  font-size: 1.2rem;
+  color: ${props => props.theme.colors.colorDanger};
+`;
+
+const InputContainer = styled.div`
+  margin-bottom: ${props => props.marginBottom};
 `;
 
 function AuthInput(props) {
@@ -28,9 +36,11 @@ function AuthInput(props) {
     placeholder,
     marginBottom,
     label,
+    error,
   } = props;
+
   return (
-    <React.Fragment>
+    <InputContainer marginBottom={marginBottom}>
       {label && <Label htmlFor={name}>{label}</Label>}
       <Input
         type={type}
@@ -38,9 +48,9 @@ function AuthInput(props) {
         value={value}
         name={name}
         placeholder={placeholder}
-        marginBottom={marginBottom}
       />
-    </React.Fragment>
+      {error && <Error>{error}</Error>}
+    </InputContainer>
   );
 }
 
@@ -55,6 +65,7 @@ AuthInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   marginBottom: PropTypes.string,
   label: PropTypes.string,
+  error: PropTypes.string,
 };
 
 export default AuthInput;

@@ -18,7 +18,7 @@ describe('The Registration Form Component', () => {
   it('Renders the correct amount of input elements', () => {
     console.log(wrapped);
     console.log(wrapped.text());
-    expect(wrapped.find('StyledComponent').length).toEqual(4);
+    expect(wrapped.find('RegistrationForm').length).toEqual(4);
   });
 });
 

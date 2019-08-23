@@ -7,6 +7,7 @@ import Logo from 'components/common/visual/Logo';
 import ButtonMedium from 'components/common/buttons/ButtonMedium';
 import isEmpty from 'helpers/is-empty';
 import { registerUser } from 'actions/auth';
+import FormValidator from './FormValidator';
 
 const FormContainer = styled.div`
   position: absolute;
@@ -21,24 +22,73 @@ const FormContainer = styled.div`
 const Form = styled.form``;
 
 class RegistrationForm extends Component {
+  validator = new FormValidator([
+    {
+      field: 'name',
+      method: 'isEmpty',
+      validWhen: false,
+      message: 'Name is required.',
+    },
+    {
+      field: 'email',
+      method: 'isEmail',
+      validWhen: true,
+      message: 'That is not a valid email.',
+    },
+    {
+      field: 'password',
+      method: 'isEmpty',
+      validWhen: false,
+      message: 'Password is required.',
+    },
+    {
+      field: 'passwordConfirm',
+      method: 'isEmpty',
+      validWhen: false,
+      message: 'Password confirmation is required.',
+    },
+    {
+      field: 'passwordConfirm',
+      method: (confirmation, state) => this.passwordMatch(confirmation, state), // notice that we are passing a custom function here
+      validWhen: true,
+      message: 'Password and password confirmation do not match.',
+    },
+  ]);
+
   state = {
     name: '',
     email: '',
     password: '',
     passwordConfirm: '',
+    validation: this.validator.valid(),
   };
+
+  submitted = false;
+
+  passwordMatch = (confirmation, state) => state.password === confirmation;
 
   handleStandardChange = e =>
     this.setState({ [e.target.name]: e.target.value });
 
   submit = e => {
     e.preventDefault();
+
+    const validation = this.validator.validate(this.state);
+    this.setState({ validation });
+    this.submitted = true;
+
     const { name, email, password, passwordConfirm } = this.state;
     console.log(this.state);
-    this.props.registerUser(name, email, password, passwordConfirm);
+    if (validation.isValid) {
+      this.props.registerUser({ name, email, password, passwordConfirm });
+    }
   };
 
   render() {
+    let validation = this.submitted // if the form has been submitted at least once
+      ? this.validator.validate(this.state) // then check validity every time we render
+      : this.state.validation;
+
     const { name, email, password, passwordConfirm } = this.state;
 
     return (
@@ -53,6 +103,7 @@ class RegistrationForm extends Component {
             placeholder="Full Name"
             marginBottom="1rem"
             label="Full Name"
+            error={validation.name.message}
           />
           <AuthInput
             handleStandardChange={this.handleStandardChange}
@@ -62,6 +113,7 @@ class RegistrationForm extends Component {
             placeholder="Email"
             marginBottom="1rem"
             label="Email"
+            error={validation.email.message}
           />
           <AuthInput
             handleStandardChange={this.handleStandardChange}
@@ -71,6 +123,7 @@ class RegistrationForm extends Component {
             placeholder="Password"
             marginBottom="1rem"
             label="Password"
+            error={validation.password.message}
           />
           <AuthInput
             handleStandardChange={this.handleStandardChange}
@@ -80,6 +133,7 @@ class RegistrationForm extends Component {
             placeholder="Confirm Password"
             marginBottom="1rem"
             label="Confirm Password"
+            error={validation.passwordConfirm.message}
           />
           <ButtonMedium
             clickEvent={this.submit}
