@@ -21,16 +21,24 @@ import {
 } from 'actions/types';
 
 /**
- * @route /api/student-signup
+ * @route /api/register
  * @method POST
- * @param {object} formData
+ * @param {string} name
+ * @param {string} email
+ * @param {string} password
+ * @param {string} confirmPassword
  * @desc create an account for  user
  */
-export const registerUser = formData => ({
+export const registerUser = (name, email, password, confirmPassword) => ({
   [CALL_API]: {
-    endpoint: '/student-signup',
+    endpoint: '/register',
     method: 'POST',
-    body: formData,
+    body: {
+      name: name,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+    },
     types: [REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE],
   },
 });
