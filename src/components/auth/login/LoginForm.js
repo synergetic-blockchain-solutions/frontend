@@ -21,7 +21,7 @@ const FormContainer = styled.div`
 
 const Form = styled.form``;
 
-class RegistrationForm extends Component {
+class LoginForm extends Component {
   validator = new FormValidator([
     {
       field: 'name',
@@ -161,4 +161,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   null,
   mapDispatchToProps
-)(RegistrationForm);
+)(LoginForm);
