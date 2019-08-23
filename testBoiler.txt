@@ -1,0 +1,23 @@
+import React from 'react';
+import { mount } from 'enzyme';
+import TestRoot from 'TestRoot';
+
+let wrapped;
+
+describe('The component you want to render', () => {
+  beforeEach(() => {
+    wrapped = mount(
+      <TestRoot>
+        // Test Component Here 
+      </TestRoot>
+    );
+  });
+
+  it('has some sort of expected behaviour', () => {
+  });
+  
+});
+
+afterEach(() => {
+  wrapped.unmount();
+});

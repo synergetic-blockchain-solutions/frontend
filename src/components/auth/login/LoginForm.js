@@ -8,16 +8,7 @@ import ButtonMedium from 'components/common/buttons/ButtonMedium';
 import isEmpty from 'helpers/is-empty';
 import { loginUser } from 'actions/auth';
 import FormValidator from 'components/common/help-component/FormValidator';
-
-const FormContainer = styled.div`
-  position: absolute;
-  top: 10rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: ${props => props.theme.colors.colorLightBlue};
-  padding: 3rem;
-  border-radius: 30px;
-`;
+import FormContainer from 'components/auth/FormContainer';
 
 const Form = styled.form``;
 

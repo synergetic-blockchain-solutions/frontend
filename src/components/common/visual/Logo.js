@@ -10,10 +10,12 @@ const LogoContainer = styled.div`
   margin-bottom: 1rem;
   border-radius: 30px;
   text-align: center;
+  width: 100%;
 `;
 
 const LogoImg = styled.img`
   border-radius: 10px;
+  width: 100%;
 `;
 
 const LogoMotto = styled.h3`

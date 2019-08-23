@@ -2,18 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import jwtDecode from 'jwt-decode';
 import api from 'middlewares/api';
-import rootReducer from 'reducers';
+import TestRootReducer from 'reducers';
 import { setCurrentUser } from 'actions/auth';
 import setAuthToken from 'utils/setAuthToken';
-import CacheBuster from 'components/CacheBuster';
+import { GlobalStyle, theme } from 'styledSetup';
 
-const Root = ({ children, initialState }) => {
-  console.log('here')
+const TestRoot = ({ children, initialState }) => {
   const middleware = [thunk, api];
 
   if (process.env.NODE_ENV !== 'production') {
@@ -26,7 +26,7 @@ const Root = ({ children, initialState }) => {
   const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
 
   const store = createStore(
-    rootReducer,
+    TestRootReducer,
     initialState,
     composeEnhancers(applyMiddleware(...middleware))
   );
@@ -48,24 +48,18 @@ const Root = ({ children, initialState }) => {
   }
 
   return (
-    <CacheBuster>
-      {({ loading, isLatestVersion, refreshCacheAndReload }) => {
-        if (loading) return null;
-        if (!loading && !isLatestVersion) {
-          // You can decide how and when you want to force reload
-          refreshCacheAndReload();
-        }
-        return (
-          <Provider store={store}>
-            <BrowserRouter>{children}</BrowserRouter>
-          </Provider>
-        );
-      }}
-    </CacheBuster>
+    <Provider store={store}>
+      <BrowserRouter>
+        <GlobalStyle />
+        <ThemeProvider theme={theme}>
+        {children}
+        </ThemeProvider>
+      </BrowserRouter>
+    </Provider>
   );
 };
 
-Root.propTypes = {
+TestRoot.propTypes = {
   initialState: PropTypes.shape({
     auth: PropTypes.object,
     messaging: PropTypes.object,
@@ -75,4 +69,4 @@ Root.propTypes = {
   }),
 };
 
-export default Root;
+export default TestRoot;
