@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import AuthInput from 'components/common/inputs/AuthInput';
 import Logo from 'components/common/visual/Logo';
 import ButtonMedium from 'components/common/buttons/ButtonMedium';
 import isEmpty from 'helpers/is-empty';
 import { registerUser } from 'actions/auth';
-import FormValidator from '../../common/help-component/FormValidator';
+import FormValidator from 'components/common/help-component/FormValidator';
 
 const FormContainer = styled.div`
   position: absolute;
@@ -49,7 +49,8 @@ class RegistrationForm extends Component {
     },
     {
       field: 'passwordConfirm',
-      method: (confirmation, state) => this.passwordMatch(confirmation, state), // notice that we are passing a custom function here
+      // notice that we are passing a custom function here
+      method: (confirmation, state) => this.passwordMatch(confirmation, state), 
       validWhen: true,
       message: 'Password and password confirmation do not match.',
     },
@@ -85,8 +86,10 @@ class RegistrationForm extends Component {
   };
 
   render() {
-    let validation = this.submitted // if the form has been submitted at least once
-      ? this.validator.validate(this.state) // then check validity every time we render
+    // if the form has been submitted at least once
+     // then check validity every time we render
+    let validation = this.submitted 
+      ? this.validator.validate(this.state)
       : this.state.validation;
 
     const { name, email, password, passwordConfirm } = this.state;
@@ -151,6 +154,10 @@ class RegistrationForm extends Component {
       </FormContainer>
     );
   }
+}
+
+RegistrationForm.propTypes = {
+  registerUser: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({

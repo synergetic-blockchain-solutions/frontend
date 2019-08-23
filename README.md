@@ -4,6 +4,11 @@ The front end of the website made with react, bootstrapped with create-react-app
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Notes:
+
+If you are getting errors saying that you haven't got all the correct files installed run:
+npm install in your command line
+
 ## Available Scripts
 
 In the project directory, you can run:

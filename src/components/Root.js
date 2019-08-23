@@ -11,7 +11,6 @@ import rootReducer from 'reducers';
 import { setCurrentUser } from 'actions/auth';
 import setAuthToken from 'utils/setAuthToken';
 import CacheBuster from 'components/CacheBuster';
-import { whyDidYouUpdate } from 'why-did-you-update';
 
 const Root = ({ children, initialState }) => {
   const middleware = [thunk, api];
@@ -21,8 +20,6 @@ const Root = ({ children, initialState }) => {
     console.log(
       `${process.env.REACT_APP_NAME} ${process.env.REACT_APP_VERSION}`
     );
-    // const { whyDidYouUpdate } = import('why-did-you-update');
-    // whyDidYouUpdate(React);
   }
 
   const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
