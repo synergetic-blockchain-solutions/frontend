@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import AuthInput from 'components/common/inputs/AuthInput';
@@ -6,7 +7,7 @@ import Logo from 'components/common/visual/Logo';
 import ButtonMedium from 'components/common/buttons/ButtonMedium';
 import isEmpty from 'helpers/is-empty';
 import { loginUser } from 'actions/auth';
-import FormValidator from '../../common/help-component/FormValidator';
+import FormValidator from 'components/common/help-component/FormValidator';
 
 const FormContainer = styled.div`
   position: absolute;
@@ -63,8 +64,10 @@ class LoginForm extends Component {
   };
 
   render() {
-    let validation = this.submitted // if the form has been submitted at least once
-      ? this.validator.validate(this.state) // then check validity every time we render
+    // if the form has been submitted at least once
+    // then check validity every time we render
+    let validation = this.submitted 
+      ? this.validator.validate(this.state) 
       : this.state.validation;
 
     const {email, password} = this.state;
@@ -107,6 +110,10 @@ class LoginForm extends Component {
       </FormContainer>
     );
   }
+}
+
+LoginForm.propTypes = {
+  loginUser: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
