@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import AuthInput from 'components/common/inputs/AuthInput';
 import Logo from 'components/common/visual/Logo';
 import ButtonMedium from 'components/common/buttons/ButtonMedium';
 import isEmpty from 'helpers/is-empty';
-import { registerUser } from 'actions/auth';
+import { loginUser } from 'actions/auth';
 import FormValidator from '../../common/help-component/FormValidator';
 
 const FormContainer = styled.div`
@@ -24,12 +23,6 @@ const Form = styled.form``;
 class LoginForm extends Component {
   validator = new FormValidator([
     {
-      field: 'name',
-      method: 'isEmpty',
-      validWhen: false,
-      message: 'Name is required.',
-    },
-    {
       field: 'email',
       method: 'isEmail',
       validWhen: true,
@@ -41,31 +34,16 @@ class LoginForm extends Component {
       validWhen: false,
       message: 'Password is required.',
     },
-    {
-      field: 'passwordConfirm',
-      method: 'isEmpty',
-      validWhen: false,
-      message: 'Password confirmation is required.',
-    },
-    {
-      field: 'passwordConfirm',
-      method: (confirmation, state) => this.passwordMatch(confirmation, state), // notice that we are passing a custom function here
-      validWhen: true,
-      message: 'Password and password confirmation do not match.',
-    },
   ]);
 
   state = {
-    name: '',
     email: '',
     password: '',
-    passwordConfirm: '',
     validation: this.validator.valid(),
   };
 
   submitted = false;
 
-  passwordMatch = (confirmation, state) => state.password === confirmation;
 
   handleStandardChange = e =>
     this.setState({ [e.target.name]: e.target.value });
@@ -77,10 +55,10 @@ class LoginForm extends Component {
     this.setState({ validation });
     this.submitted = true;
 
-    const { name, email, password, passwordConfirm } = this.state;
+    const {email, password} = this.state;
     console.log(this.state);
     if (validation.isValid) {
-      this.props.registerUser({ name, email, password, passwordConfirm });
+      this.props.loginUser({email, password});
     }
   };
 
@@ -89,22 +67,12 @@ class LoginForm extends Component {
       ? this.validator.validate(this.state) // then check validity every time we render
       : this.state.validation;
 
-    const { name, email, password, passwordConfirm } = this.state;
+    const {email, password} = this.state;
 
     return (
       <FormContainer>
         <Logo />
         <Form onSubmit={this.submit}>
-          <AuthInput
-            handleStandardChange={this.handleStandardChange}
-            value={name}
-            type="text"
-            name="name"
-            placeholder="Full Name"
-            marginBottom="1rem"
-            label="Full Name"
-            error={validation.name.message}
-          />
           <AuthInput
             handleStandardChange={this.handleStandardChange}
             value={email}
@@ -125,24 +93,12 @@ class LoginForm extends Component {
             label="Password"
             error={validation.password.message}
           />
-          <AuthInput
-            handleStandardChange={this.handleStandardChange}
-            value={passwordConfirm}
-            type="password"
-            name="passwordConfirm"
-            placeholder="Confirm Password"
-            marginBottom="1rem"
-            label="Confirm Password"
-            error={validation.passwordConfirm.message}
-          />
           <ButtonMedium
             clickEvent={this.submit}
-            text="Sign Up Now!"
+            text="Log In"
             disabled={
-              isEmpty(name) ||
               isEmpty(email) ||
-              isEmpty(password) ||
-              isEmpty(passwordConfirm)
+              isEmpty(password)
             }
             color="btn-block btn-primary-light"
             margin="1rem 0 0 0"
@@ -154,8 +110,8 @@ class LoginForm extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  registerUser: (name, email, password, passwordConfirm) =>
-    dispatch(registerUser(name, email, password, passwordConfirm)),
+  loginUser: (email, password) =>
+    dispatch(loginUser(email, password)),
 });
 
 export default connect(
