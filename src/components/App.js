@@ -19,6 +19,7 @@ html {
 body {
   background-color: #f0f0f0;
   box-sizing: border-box;
+  font-family: 'Signika', sans-serif;
 }
 
 `;
@@ -35,6 +36,10 @@ const theme = {
     colorGrayLight2: '#b2b2b2',
     colorGrayMedium: '#e3e3e3',
     colorDanger: '#dc3545',
+  },
+  fonts: {
+    fontFancy: "'Signika', sans-serif",
+    fontStandard: "'Amiri', serif",
   },
 };
 

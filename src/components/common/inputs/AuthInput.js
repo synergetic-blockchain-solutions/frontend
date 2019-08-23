@@ -31,7 +31,7 @@ function AuthInput(props) {
   } = props;
   return (
     <React.Fragment>
-      {label && <Label>{label}</Label>}
+      {label && <Label htmlFor={name}>{label}</Label>}
       <Input
         type={type}
         onChange={handleStandardChange}
