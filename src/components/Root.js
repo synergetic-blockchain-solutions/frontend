@@ -13,7 +13,7 @@ import setAuthToken from 'utils/setAuthToken';
 import CacheBuster from 'components/CacheBuster';
 
 const Root = ({ children, initialState }) => {
-  console.log('here')
+  console.log('here');
   const middleware = [thunk, api];
 
   if (process.env.NODE_ENV !== 'production') {
@@ -34,9 +34,7 @@ const Root = ({ children, initialState }) => {
   // Check for token
   if (localStorage.user && localStorage.token) {
     // Decode token and get user info and exp
-    const user = JSON.parse(localStorage.getItem('user'));
     let token = JSON.parse(localStorage.getItem('token'));
-    const subjectTopics = JSON.parse(localStorage.getItem('subjectTopics'));
 
     // Set auth token header auth
     setAuthToken(token);
@@ -44,7 +42,7 @@ const Root = ({ children, initialState }) => {
     token = jwtDecode(token);
 
     // Set user and isAuthenticated
-    store.dispatch(setCurrentUser(token, user, subjectTopics));
+    store.dispatch(setCurrentUser(token));
   }
 
   return (
