@@ -65,6 +65,12 @@ up such that they will work in the testing environment.
 
 The project is made with React check the docs at https://reactjs.org/docs/getting-started.html
 
+### Notes on how we are structuring the react:
+
+The linters will hopefully force alot of good use of code. 
+
+Remember to abstract as much as possible, there should be absolute minimal code re-use, notice the registration and login page use the same inputs, buttons, logo, Validation and FormContainer. 
+
 ## Styling 
 
 The styling is done with styled-components check docs at https://www.styled-components.com/docs
