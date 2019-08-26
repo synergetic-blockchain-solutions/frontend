@@ -13,6 +13,11 @@ const Button = styled.button`
   margin: ${props => props.margin};
   outline: none;
 
+  :disabled {
+    background-color: ${props => props.theme.colors.colorGrayLight2} !important;
+    cursor: auto;
+  }
+
   :hover:enabled {
     cursor: pointer;
     transform: translateY(-2px);
@@ -22,11 +27,6 @@ const Button = styled.button`
   :active:enabled {
     transform: translateY(1px);
     outline: none;
-  }
-
-  :disabled {
-    background-color: ${props => props.theme.colors.colorGrayLight2} !important;
-    cursor: auto;
   }
 
   &.btn-primary-light {

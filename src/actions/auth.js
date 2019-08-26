@@ -29,7 +29,7 @@ import {
  * @param {string} confirmPassword
  * @desc create an account for  user
  */
-export const registerUser = (name, email, password, confirmPassword) => ({
+export const registerUser = (name, email, password) => ({
   [CALL_API]: {
     endpoint: '/register',
     method: 'POST',
@@ -37,7 +37,6 @@ export const registerUser = (name, email, password, confirmPassword) => ({
       name: name,
       email: email,
       password: password,
-      confirmPassword: confirmPassword,
     },
     types: [REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE],
   },
