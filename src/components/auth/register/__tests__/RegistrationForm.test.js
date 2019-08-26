@@ -27,30 +27,82 @@ describe('The Registration Form Component', () => {
   });
 
   it('All Inputs responds to change', () => {
-    const text = 'Hello Worlds!'
+    const text = 'Hello Worlds!';
     // Check the name
-    expect(wrapped.find('input').at(0).props().value).toEqual('');
-    wrapped.find('input').at(0).simulate('change', { target: { value: text, name: 'name' } });
+    expect(
+      wrapped
+        .find('input')
+        .at(0)
+        .props().value
+    ).toEqual('');
+    wrapped
+      .find('input')
+      .at(0)
+      .simulate('change', { target: { value: text, name: 'name' } });
     wrapped.update();
-    expect(wrapped.find('input').at(0).props().value).toEqual(text);
+    expect(
+      wrapped
+        .find('input')
+        .at(0)
+        .props().value
+    ).toEqual(text);
 
     // Check the email
-    expect(wrapped.find('input').at(1).props().value).toEqual('');
-    wrapped.find('input').at(1).simulate('change', { target: { value: text, name: 'email' } });
+    expect(
+      wrapped
+        .find('input')
+        .at(1)
+        .props().value
+    ).toEqual('');
+    wrapped
+      .find('input')
+      .at(1)
+      .simulate('change', { target: { value: text, name: 'email' } });
     wrapped.update();
-    expect(wrapped.find('input').at(1).props().value).toEqual(text);
+    expect(
+      wrapped
+        .find('input')
+        .at(1)
+        .props().value
+    ).toEqual(text);
 
     // Check the password
-    expect(wrapped.find('input').at(2).props().value).toEqual('');
-    wrapped.find('input').at(2).simulate('change', { target: { value: text, name: 'password' } });
+    expect(
+      wrapped
+        .find('input')
+        .at(2)
+        .props().value
+    ).toEqual('');
+    wrapped
+      .find('input')
+      .at(2)
+      .simulate('change', { target: { value: text, name: 'password' } });
     wrapped.update();
-    expect(wrapped.find('input').at(2).props().value).toEqual(text);
+    expect(
+      wrapped
+        .find('input')
+        .at(2)
+        .props().value
+    ).toEqual(text);
 
     // Check password confirmation
-    expect(wrapped.find('input').at(3).props().value).toEqual('');
-    wrapped.find('input').at(3).simulate('change', { target: { value: text, name: 'passwordConfirm' } });
+    expect(
+      wrapped
+        .find('input')
+        .at(3)
+        .props().value
+    ).toEqual('');
+    wrapped
+      .find('input')
+      .at(3)
+      .simulate('change', { target: { value: text, name: 'passwordConfirm' } });
     wrapped.update();
-    expect(wrapped.find('input').at(3).props().value).toEqual(text);
+    expect(
+      wrapped
+        .find('input')
+        .at(3)
+        .props().value
+    ).toEqual(text);
   });
 
   it('Disables and enables the button correctly', () => {
@@ -59,15 +111,26 @@ describe('The Registration Form Component', () => {
     expect(wrapped.find('button').props().disabled).toEqual(true);
 
     // Check the name
-    wrapped.find('input').at(0).simulate('change', { target: { value: text, name: 'name' } });
-    wrapped.find('input').at(1).simulate('change', { target: { value: text, name: 'email' } });
-    wrapped.find('input').at(2).simulate('change', { target: { value: text, name: 'password' } });
-    wrapped.find('input').at(3).simulate('change', { target: { value: text, name: 'passwordConfirm' } });
+    wrapped
+      .find('input')
+      .at(0)
+      .simulate('change', { target: { value: text, name: 'name' } });
+    wrapped
+      .find('input')
+      .at(1)
+      .simulate('change', { target: { value: text, name: 'email' } });
+    wrapped
+      .find('input')
+      .at(2)
+      .simulate('change', { target: { value: text, name: 'password' } });
+    wrapped
+      .find('input')
+      .at(3)
+      .simulate('change', { target: { value: text, name: 'passwordConfirm' } });
     wrapped.update();
 
     expect(wrapped.find('button').props().disabled).toEqual(false);
-
-  })
+  });
 });
 
 afterEach(() => {

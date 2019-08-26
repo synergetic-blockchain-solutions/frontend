@@ -9,7 +9,13 @@ describe('The button component', () => {
   beforeEach(() => {
     wrapped = mount(
       <TestRoot>
-        <ButtonMedium clickEvent={() => true} text="Button" disabled={false} color="btn-primary-light" margin="" />
+        <ButtonMedium
+          clickEvent={() => true}
+          text="Button"
+          disabled={false}
+          color="btn-primary-light"
+          margin=""
+        />
       </TestRoot>
     );
   });
@@ -31,7 +37,13 @@ describe('The button component', () => {
   beforeEach(() => {
     wrapped = mount(
       <TestRoot>
-        <ButtonMedium clickEvent={() => true} text="Submit" disabled={true} color="" margin="0 0 1rem 0" />
+        <ButtonMedium
+          clickEvent={() => true}
+          text="Submit"
+          disabled={true}
+          color=""
+          margin="0 0 1rem 0"
+        />
       </TestRoot>
     );
   });

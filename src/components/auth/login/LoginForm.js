@@ -50,7 +50,7 @@ class LoginForm extends Component {
     const {email, password} = this.state;
     console.log(this.state);
     if (validation.isValid) {
-      this.props.loginUser({email, password});
+      this.props.loginUser(email, password);
     }
   };
 

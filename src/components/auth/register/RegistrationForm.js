@@ -69,9 +69,9 @@ class RegistrationForm extends Component {
     this.setState({ validation });
     this.submitted = true;
 
-    const { name, email, password, passwordConfirm } = this.state;
+    const { name, email, password } = this.state;
     if (validation.isValid) {
-      this.props.registerUser({ name, email, password, passwordConfirm });
+      this.props.registerUser(name, email, password);
     }
   };
 
@@ -151,8 +151,8 @@ RegistrationForm.propTypes = {
 }
 
 const mapDispatchToProps = dispatch => ({
-  registerUser: (name, email, password, passwordConfirm) =>
-    dispatch(registerUser(name, email, password, passwordConfirm)),
+  registerUser: (name, email, password) =>
+    dispatch(registerUser(name, email, password)),
 });
 
 export default connect(
