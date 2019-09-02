@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import logo from 'assets/Logo.png';
+import LogoImg from './LogoImg';
 
 const LogoContainer = styled.div`
   padding: 2rem;
@@ -13,11 +13,6 @@ const LogoContainer = styled.div`
   width: 100%;
 `;
 
-const LogoImg = styled.img`
-  border-radius: 10px;
-  width: 100%;
-`;
-
 const LogoMotto = styled.h3`
   color: ${props => props.theme.colors.colorBlack};
   font-family: ${props => props.theme.fonts.fontFancy};
@@ -26,7 +21,7 @@ const LogoMotto = styled.h3`
 function Logo() {
   return (
     <LogoContainer>
-      <LogoImg src={logo} />
+      <LogoImg />
       <LogoMotto>Store and share family memories</LogoMotto>
     </LogoContainer>
   );

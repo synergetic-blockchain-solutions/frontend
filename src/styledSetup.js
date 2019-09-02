@@ -56,5 +56,10 @@ export const theme = {
     mediumScreen: '980px',
     smallScreen: '736px',
     phoneScreen: '480px',
-  }
+  },
+  zIndex: {
+    loader: '9999',
+    overlay: '9990',
+    header: '1040',
+  },
 };
