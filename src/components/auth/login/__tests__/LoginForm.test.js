@@ -1,10 +1,11 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import TestRoot from 'TestRoot';
+import LoginForm from '../LoginForm';
 
 let wrapped;
 
-describe('The Login form component', () => {
+describe('The Login Form component', () => {
   beforeEach(() => {
     wrapped = mount(
       <TestRoot>
