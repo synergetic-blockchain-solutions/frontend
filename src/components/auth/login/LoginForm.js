@@ -96,8 +96,10 @@ class LoginForm extends Component {
             }
             color="btn-block btn-primary-light"
             margin="1rem 0 0 0"
+            
           />
         </Form>
+        <a href="/sign-up" className="btn btn-link"><center>Register</center></a>
       </FormContainer>
     );
   }

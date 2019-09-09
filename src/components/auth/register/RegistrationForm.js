@@ -9,6 +9,7 @@ import isEmpty from 'helpers/is-empty';
 import { registerUser } from 'actions/auth';
 import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/auth/FormContainer';
+import axios from 'axios';
 
 const Form = styled.form``;
 
@@ -129,7 +130,18 @@ class RegistrationForm extends Component {
             error={validation.passwordConfirm.message}
           />
           <ButtonMedium
-            clickEvent={this.submit}
+            clickEvent={axios.post('/',{
+              name: name,
+              email: email,
+              password: password
+            })
+          .then(function(response){
+            console.log(response);
+          })
+        .catch(function(error){
+          console.log(error);
+        })
+      }
             text="Sign Up Now!"
             disabled={
               isEmpty(name) ||
@@ -141,6 +153,7 @@ class RegistrationForm extends Component {
             margin="1rem 0 0 0"
           />
         </Form>
+        <a href="/" className="btn btn-link"><center>Log In</center></a>
       </FormContainer>
     );
   }
