@@ -62,4 +62,14 @@ export const theme = {
     overlay: '9990',
     header: '1040',
   },
+  borders: {
+    borderRadiusLarge: '30px',
+    borderRadiusMedium: '20px',
+    borderRadiusSmall: '10px',
+  },
+  fontSizes: {
+    fontSizeLg: '2rem',
+    prominent: '1.4rem',
+    prominent2: '1.6rem',
+  },
 };
