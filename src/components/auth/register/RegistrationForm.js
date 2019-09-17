@@ -130,6 +130,7 @@ class RegistrationForm extends Component {
           />
           <ButtonMedium
             clickEvent={this.submit}
+            Link to= "/"
             text="Sign Up Now!"
             disabled={
               isEmpty(name) ||
@@ -141,6 +142,7 @@ class RegistrationForm extends Component {
             margin="1rem 0 0 0"
           />
         </Form>
+        <a href="/" className="btn btn-link"><center>Log In</center></a>
       </FormContainer>
     );
   }
