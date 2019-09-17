@@ -4,6 +4,10 @@ import styled from 'styled-components';
 import DropdownWrapper from 'components/common/dropdowns/DropdownWrapper';
 import UnstyledButton from 'components/common/buttons/UnstyledButton';
 
+const NavDropdownWrapper = styled(DropdownWrapper)`
+  margin-right: 4rem;
+`;
+
 const NavDropdownList = styled.ul`
   width: 100%;
 `;
@@ -72,7 +76,7 @@ const LogoutIcon = styled.i`
 
 function NavDropdown() {
   return (
-    <DropdownWrapper
+    <NavDropdownWrapper
       button={
         <ProfileContainer>
           <IconProfile className="fas fa-user-alt"></IconProfile>
@@ -92,7 +96,7 @@ function NavDropdown() {
           </LogoutButton>
         </NavDropdownListItem>
       </NavDropdownList>
-    </DropdownWrapper>
+    </NavDropdownWrapper>
   );
 }
 

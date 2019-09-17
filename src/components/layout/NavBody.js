@@ -65,7 +65,7 @@ function NavBody(props) {
   const { display } = props;
   return (
     <NavBodyContainer display={display}>
-      <NavBarLink to="/familys">
+      <NavBarLink to="/families">
         <NavLinkText> Familys </NavLinkText>
         <i className="fas fa-users"></i>
       </NavBarLink>
