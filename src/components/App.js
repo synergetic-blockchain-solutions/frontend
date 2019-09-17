@@ -4,6 +4,7 @@ import Router from 'components/router';
 import Root from 'components/Root';
 import { GlobalStyle, theme } from 'styledSetup';
 import NavBar from 'components/layout/NavBar';
+import Window from 'components/layout/Window';
 
 function App() {
   return (
@@ -13,7 +14,9 @@ function App() {
         <ThemeProvider theme={theme}>
           <React.Fragment>
             <NavBar />
-            <Router />
+            <Window>
+              <Router />
+            </Window>
           </React.Fragment>
         </ThemeProvider>
       </React.Fragment>

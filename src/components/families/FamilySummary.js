@@ -12,20 +12,38 @@ const Summary = styled.div`
   padding: 1.5rem;
   background-image: url("${props => props.srcUrl}");
   background-size: cover;
-  height: 20rem;
+  height: 30rem;
   width: 100%;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: ${props => props.theme.colors.colorBlack};
+    opacity: 0.3;
+  }
 `;
 
-const SummaryTitle = styled.h3`
-  font-size: 1.6rem;
+const FamilyTitle = styled.h2`
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 4rem;
+  color: ${props => props.theme.colors.colorWhite};
+  z-index: ${props => props.theme.zIndex.important};
 `;
 
 function FamilySummary(props) {
   const { src, name } = props;
   return (
     <SummaryContainer>
-      <Summary srcUrl={src}></Summary>
-      <SummaryTitle>{name}</SummaryTitle>
+      <Summary srcUrl={src}>
+        <FamilyTitle>{name}</FamilyTitle>
+      </Summary>
     </SummaryContainer>
   );
 }
