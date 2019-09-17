@@ -56,5 +56,20 @@ export const theme = {
     mediumScreen: '980px',
     smallScreen: '736px',
     phoneScreen: '480px',
-  }
+  },
+  zIndex: {
+    loader: '9999',
+    overlay: '9990',
+    header: '1040',
+  },
+  borders: {
+    borderRadiusLarge: '30px',
+    borderRadiusMedium: '20px',
+    borderRadiusSmall: '10px',
+  },
+  fontSizes: {
+    fontSizeLg: '2rem',
+    prominent: '1.4rem',
+    prominent2: '1.6rem',
+  },
 };

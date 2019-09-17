@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import Router from 'components/router';
 import Root from 'components/Root';
 import { GlobalStyle, theme } from 'styledSetup';
+import NavBar from 'components/layout/NavBar';
 
 function App() {
   return (
@@ -10,7 +11,10 @@ function App() {
       <React.Fragment>
         <GlobalStyle />
         <ThemeProvider theme={theme}>
-          <Router />
+          <React.Fragment>
+            <NavBar />
+            <Router />
+          </React.Fragment>
         </ThemeProvider>
       </React.Fragment>
     </Root>

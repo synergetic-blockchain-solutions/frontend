@@ -11,7 +11,7 @@ const Login = Loadable({
 const Register = Loadable({
   loader: () => import('components/auth/register'),
   loading: Loading,
-})
+});
 
 export default function Auth(props) {
   return (
