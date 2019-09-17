@@ -5,14 +5,23 @@ import styled from 'styled-components';
 import AuthInput from 'components/common/inputs/AuthInput';
 import ButtonMedium from 'components/common/buttons/ButtonMedium';
 //import isEmpty from 'helpers/is-empty';
-import { createArtefact } from 'actions/flow';
-//import FormValidator from 'components/common/help-component/FormValidator';
+import { registerArtefact } from 'actions/flow';
+import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/auth/FormContainer';
 import ImageDropZone from "react-image-dropzone";
 
 const Form = styled.form``;
 
 class CreateArtefact extends Component {
+
+  validator = new FormValidator([
+    {
+      field: 'title',
+      method: 'isEmpty',
+      validWhen: false,
+      message: 'Title is required.',
+    },
+  ]);
 
   state = {
     title: '',
@@ -22,7 +31,7 @@ class CreateArtefact extends Component {
     details: '',
     addToFamilies: '',
     address: '',
-    //validation: this.validator.valid(),
+    validation: this.validator.valid(),
   };
 
   submitted = false;
@@ -34,23 +43,22 @@ class CreateArtefact extends Component {
   submit = e => {
     e.preventDefault();
 
-    //const validation = this.validator.validate(this.state);
-    //this.setState({ validation });
+    const validation = this.validator.validate(this.state);
+    this.setState({ validation });
     this.submitted = true;
 
     const { title, image, tag, dateTaken, details, addToFamilies, address} = this.state;
-    // eslint-disable-next-line
-    if (/*validation.isValid*/1==1) {
-      this.props.createArtefact(title, image, tag, dateTaken, details, addToFamilies, address);
+    if (validation.isValid) {
+      this.props.registerArtefact(title, image, tag, dateTaken, details, addToFamilies, address);
     }
   };
 
   render() {
     // if the form has been submitted at least once
      // then check validity every time we render
-    /*let validation = this.submitted 
+    let validation = this.submitted 
       ? this.validator.validate(this.state)
-      : this.state.validation;*/
+      : this.state.validation;
 
     const { title, image, tag, dateTaken, details, addToFamilies, address } = this.state;
 
@@ -67,7 +75,7 @@ class CreateArtefact extends Component {
             placeholder="title"
             marginBottom="1rem"
             label="title"
-            //error={validation.name.message}
+            error={validation.title.message}
           />
           <ImageDropZone
             anySize
@@ -84,7 +92,6 @@ class CreateArtefact extends Component {
             placeholder="tag"
             marginBottom="1rem"
             label="tag"
-            //error={validation.name.message}
           />
           <AuthInput
             handleStandardChange={this.handleStandardChange}
@@ -94,7 +101,6 @@ class CreateArtefact extends Component {
             placeholder="dateTaken"
             marginBottom="1rem"
             label="dateTaken"
-            //error={validation.passwordConfirm.message}
           />
           <AuthInput
             handleStandardChange={this.handleStandardChange}
@@ -104,7 +110,6 @@ class CreateArtefact extends Component {
             placeholder="details"
             marginBottom="1rem"
             label="details"
-            //error={validation.name.message}
           />
           <AuthInput
             handleStandardChange={this.handleStandardChange}
@@ -114,7 +119,6 @@ class CreateArtefact extends Component {
             placeholder="addToFamilies"
             marginBottom="1rem"
             label="addToFamilies"
-            //error={validation.name.message}
           />
           <AuthInput
             handleStandardChange={this.handleStandardChange}
@@ -124,7 +128,6 @@ class CreateArtefact extends Component {
             placeholder="address"
             marginBottom="1rem"
             label="address"
-            //error={validation.name.message}
           />
           <ButtonMedium
             clickEvent={this.submit}
@@ -138,13 +141,13 @@ class CreateArtefact extends Component {
   }
 }
 
-createArtefact.propTypes = {
-  createArtefact: PropTypes.func.isRequired,
+CreateArtefact.propTypes = {
+  registerArtefact: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
-  createArtefact: (title, image, tag, dateTaken, details, addToFamilies, address) =>
-    dispatch(createArtefact(title, image, tag, dateTaken, details, addToFamilies, address)),
+  registerArtefact: (title, image, tag, dateTaken, details, addToFamilies, address) =>
+    dispatch(registerArtefact(title, image, tag, dateTaken, details, addToFamilies, address)),
 });
 
 export default connect(

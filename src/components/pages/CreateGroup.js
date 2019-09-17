@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import AuthInput from 'components/common/inputs/AuthInput';
 import ButtonMedium from 'components/common/buttons/ButtonMedium';
 //import isEmpty from 'helpers/is-empty';
-import { createGroup } from 'actions/flow';
-//import FormValidator from 'components/common/help-component/FormValidator';
+import { registerGroup } from 'actions/flow';
+import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/auth/FormContainer';
 import ImageDropZone from "react-image-dropzone";
 
@@ -14,12 +14,21 @@ const Form = styled.form``;
 
 class CreateGroup extends Component {
 
+  validator = new FormValidator([
+    {
+      field: 'groupName',
+      method: 'isEmpty',
+      validWhen: false,
+      message: 'Group name is required.',
+    },
+  ]);
+
   state = {
     groupName: '',
     coverPhoto: '',
     details: '',
     tag: '',
-    //validation: this.validator.valid(),
+    validation: this.validator.valid(),
   };
 
   submitted = false;
@@ -31,23 +40,22 @@ class CreateGroup extends Component {
   submit = e => {
     e.preventDefault();
 
-    //const validation = this.validator.validate(this.state);
-    //this.setState({ validation });
+    const validation = this.validator.validate(this.state);
+    this.setState({ validation });
     this.submitted = true;
 
     const { groupName, coverPhoto, details, tag} = this.state;
-    // eslint-disable-next-line
-    if (/*validation.isValid*/1==1) {
-      this.props.createGroup(groupName, coverPhoto, details, tag);
+    if (validation.isValid) {
+      this.props.registerGroup(groupName, coverPhoto, details, tag);
     }
   };
 
   render() {
     // if the form has been submitted at least once
      // then check validity every time we render
-    /*let validation = this.submitted 
+    let validation = this.submitted 
       ? this.validator.validate(this.state)
-      : this.state.validation;*/
+      : this.state.validation;
 
     const { groupName, coverPhoto, details, tag } = this.state;
 
@@ -64,7 +72,7 @@ class CreateGroup extends Component {
             placeholder="groupName"
             marginBottom="1rem"
             label="groupName"
-            //error={validation.name.message}
+            error={validation.groupName.message}
           />
           <ImageDropZone
             anySize
@@ -81,7 +89,6 @@ class CreateGroup extends Component {
             placeholder="details"
             marginBottom="1rem"
             label="details"
-            //error={validation.name.message}
           />
           <AuthInput
             handleStandardChange={this.handleStandardChange}
@@ -91,7 +98,6 @@ class CreateGroup extends Component {
             placeholder="tag"
             marginBottom="1rem"
             label="tag"
-            //error={validation.name.message}
           />
           <ButtonMedium
             clickEvent={this.submit}
@@ -105,13 +111,13 @@ class CreateGroup extends Component {
   }
 }
 
-createGroup.propTypes = {
-  createGroup: PropTypes.func.isRequired,
+CreateGroup.propTypes = {
+  registerGroup: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
-  createGroup: (groupName, coverPhoto, details, tag) =>
-    dispatch(createGroup(groupName, coverPhoto, details, tag)),
+  registerGroup: (groupName, coverPhoto, details, tag) =>
+    dispatch(registerGroup(groupName, coverPhoto, details, tag)),
 });
 
 export default connect(

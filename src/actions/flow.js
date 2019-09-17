@@ -9,7 +9,7 @@ import {
   } from 'actions/types';
   
   /**
-   * @route /createArtefact
+   * @route /CreateArtefact
    * @method POST
    * @param {string} title
    * @param {ImageBitmap} image
@@ -20,9 +20,9 @@ import {
    * @param {String} address
    * @desc create an artefact for the user
    */
-  export const createArtefact = (title, image, tag, dateTaken, details, addToFamilies, address) => ({
+  export const registerArtefact = (title, image, tag, dateTaken, details, addToFamilies, address) => ({
     [CALL_API]: {
-      endpoint: '/createArtefact',
+      endpoint: '/CreateArtefact',
       method: 'POST',
       body: {
         title: title,
@@ -39,7 +39,7 @@ import {
   
 
     /**
-   * @route /createGroup
+   * @route CreateGroup
    * @method POST
    * @param {string} groupName
    * @param {ImageBitmap} coverPhoto
@@ -47,9 +47,9 @@ import {
    * @param {String} tag
    * @desc create an group for  user
    */
-  export const createGroup = (groupName, coverPhoto, details, tag) => ({
+  export const registerGroup = (groupName, coverPhoto, details, tag) => ({
     [CALL_API]: {
-      endpoint: '/createGroup',
+      endpoint: '/CreateGroup',
       method: 'POST',
       body: {
         groupName: groupName,
