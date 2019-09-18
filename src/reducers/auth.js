@@ -24,7 +24,6 @@ import {
 
 const initialState = {
   token: {},
-  user: {},
   refreshTokenPromise: null,
   loading: false,
   errors: {},
@@ -76,11 +75,9 @@ export default function(state = initialState, action) {
       };
     case LOGIN_SUCCESS:
       setAuthToken(action.payload.token);
-      setLocalStorage(action.payload.user, 'user');
       setLocalStorage(action.payload.token, 'token');
       return {
         ...state,
-        user: action.payload.user,
         token: jwtDecode(action.payload.token),
         refreshTokenPromise: null,
         errors: {},

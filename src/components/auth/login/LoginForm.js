@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import AuthInput from 'components/common/inputs/AuthInput';
 import Logo from 'components/common/visual/Logo';
@@ -34,8 +35,14 @@ class LoginForm extends Component {
     validation: this.validator.valid(),
   };
 
-  submitted = false;
+  shouldComponentUpdate(nextProps, nextState) {
+    if (!isEmpty(nextProps.auth.token)) {
+      this.props.history.push('/dashboard');
+    }
+    return true;
+  }
 
+  submitted = false;
 
   handleStandardChange = e =>
     this.setState({ [e.target.name]: e.target.value });
@@ -47,8 +54,7 @@ class LoginForm extends Component {
     this.setState({ validation });
     this.submitted = true;
 
-    const {email, password} = this.state;
-    console.log(this.state);
+    const { email, password } = this.state;
     if (validation.isValid) {
       this.props.loginUser(email, password);
     }
@@ -57,11 +63,13 @@ class LoginForm extends Component {
   render() {
     // if the form has been submitted at least once
     // then check validity every time we render
-    let validation = this.submitted 
-      ? this.validator.validate(this.state) 
+    let validation = this.submitted
+      ? this.validator.validate(this.state)
       : this.state.validation;
 
-    const {email, password} = this.state;
+    const { email, password } = this.state;
+
+    console.log(this.props);
 
     return (
       <FormContainer>
@@ -90,10 +98,7 @@ class LoginForm extends Component {
           <ButtonMedium
             clickEvent={this.submit}
             text="Log In"
-            disabled={
-              isEmpty(email) ||
-              isEmpty(password)
-            }
+            disabled={isEmpty(email) || isEmpty(password)}
             color="btn-block btn-primary-light"
             margin="1rem 0 0 0"
             
@@ -107,14 +112,18 @@ class LoginForm extends Component {
 
 LoginForm.propTypes = {
   loginUser: PropTypes.func.isRequired,
-}
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
 
 const mapDispatchToProps = dispatch => ({
-  loginUser: (email, password) =>
-    dispatch(loginUser(email, password)),
+  loginUser: (email, password) => dispatch(loginUser(email, password)),
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
-)(LoginForm);
+)(withRouter(LoginForm));

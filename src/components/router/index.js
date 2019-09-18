@@ -4,6 +4,7 @@ import Auth from './Auth';
 import PrivateRoute from './PrivateRoute';
 import Root from 'components/Root';
 import Dashboard from 'components/dashboard';
+import Families from './Families';
 
 export default class Router extends Component {
   render() {
@@ -14,6 +15,7 @@ export default class Router extends Component {
             <React.Fragment>
               <Switch>
                 <Route path="/dashboard" component={Dashboard} exact />
+                <Route path="/families" component={Families} exact />
                 <Route path="/">
                   <Auth location={location} />
                 </Route>

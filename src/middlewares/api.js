@@ -70,7 +70,7 @@ export default store => next => action => {
 
   return axios({
     method,
-    url: `${endpoint}${queryString}`,
+    url: `${process.env.REACT_APP_API_URL}${endpoint}${queryString}`,
     headers,
     onUploadProgress: handleUploadProgress,
     data: body,
