@@ -10,19 +10,15 @@ export default class Router extends Component {
   render() {
     return (
       <Root>
-        <Route
-          render={({ location }) => (
-            <React.Fragment>
-              <Switch>
-                <Route path="/dashboard" component={Dashboard} exact />
-                <Route path="/families" component={Families} exact />
-                <Route path="/">
-                  <Auth location={location} />
-                </Route>
-              </Switch>
-            </React.Fragment>
-          )}
-        />
+        <Switch>
+          <PrivateRoute path="/dashboard" component={Dashboard} exact />
+          <Route path="/families">
+            <Families />
+          </Route>
+          <Route path="/">
+            <Auth />
+          </Route>
+        </Switch>
       </Root>
     );
   }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import AuthInput from 'components/common/inputs/AuthInput';
 import Logo from 'components/common/visual/Logo';
@@ -101,10 +101,11 @@ class LoginForm extends Component {
             disabled={isEmpty(email) || isEmpty(password)}
             color="btn-block btn-primary-light"
             margin="1rem 0 0 0"
-            
           />
         </Form>
-        <a href="/sign-up" className="btn btn-link"><center>Register</center></a>
+        <Link href="/sign-up" className="btn btn-link">
+          Register
+        </Link>
       </FormContainer>
     );
   }

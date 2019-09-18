@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import NavBrand from './NavBrand';
 import NavBody from './NavBody';
 
@@ -38,6 +39,7 @@ class NavBar extends Component {
 
   render() {
     const { display } = this.state;
+    console.log(this.props);
     return (
       <Nav>
         <NavBrand />
@@ -50,4 +52,9 @@ class NavBar extends Component {
     );
   }
 }
-export default NavBar;
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(NavBar);

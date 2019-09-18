@@ -24,12 +24,9 @@ import {
 
 const initialState = {
   token: {},
-  refreshTokenPromise: null,
   loading: false,
   errors: {},
   success: '',
-  subjectTopics: {},
-  allSubjects: [],
 };
 
 export default function(state = initialState, action) {
@@ -59,8 +56,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         token: action.token,
-        user: action.user,
-        subjectTopics: action.subjectTopics || {},
       };
     case LOGIN_REQUEST:
       return {
@@ -79,7 +74,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         token: jwtDecode(action.payload.token),
-        refreshTokenPromise: null,
         errors: {},
         loading: false,
         success: 'Successfully logged in',
@@ -93,7 +87,6 @@ export default function(state = initialState, action) {
         refreshTokenPromise: null,
       };
     case TOKEN_REFRESH_FAILURE:
-      removeLocalStorage('user');
       removeLocalStorage('token');
       window.location.reload();
       return Object.assign({}, state, initialState);

@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import { Route, Redirect } from 'react-router-dom'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-import isEmpty from 'helpers/is-empty'
+import React, { Component } from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import isEmpty from 'helpers/is-empty';
 
 /**
  * @prop { object } subjectTopics
@@ -14,7 +14,8 @@ import isEmpty from 'helpers/is-empty'
  */
 class PrivateRoute extends Component {
   render() {
-    const { component: Component, auth, user, ...rest } = this.props
+    const { component: Component, auth, ...rest } = this.props;
+    console.log(this.props);
     return (
       <Route
         {...rest}
@@ -22,7 +23,7 @@ class PrivateRoute extends Component {
           !isEmpty(auth) ? <Component {...props} /> : <Redirect to="/" />
         }
       />
-    )
+    );
   }
 }
 
@@ -39,11 +40,10 @@ PrivateRoute.propTypes = {
   user: PropTypes.shape({
     subjects: PropTypes.arrayOf(PropTypes.object),
   }),
-}
+};
 
 const mapStateToProps = state => ({
-  auth: state.auth.token,
-  user: state.auth.user,
-})
+  auth: state.auth,
+});
 
-export default connect(mapStateToProps)(PrivateRoute)
+export default connect(mapStateToProps)(PrivateRoute);
