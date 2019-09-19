@@ -41,7 +41,7 @@ class RegistrationForm extends Component {
     {
       field: 'passwordConfirm',
       // notice that we are passing a custom function here
-      method: (confirmation, state) => this.passwordMatch(confirmation, state), 
+      method: (confirmation, state) => this.passwordMatch(confirmation, state),
       validWhen: true,
       message: 'Password and password confirmation do not match.',
     },
@@ -77,12 +77,14 @@ class RegistrationForm extends Component {
 
   render() {
     // if the form has been submitted at least once
-     // then check validity every time we render
-    let validation = this.submitted 
+    // then check validity every time we render
+    let validation = this.submitted
       ? this.validator.validate(this.state)
       : this.state.validation;
 
     const { name, email, password, passwordConfirm } = this.state;
+
+    console.log('here');
 
     return (
       <FormContainer>
@@ -130,7 +132,8 @@ class RegistrationForm extends Component {
           />
           <ButtonMedium
             clickEvent={this.submit}
-            Link to= "/"
+            Link
+            to="/"
             text="Sign Up Now!"
             disabled={
               isEmpty(name) ||
@@ -142,7 +145,9 @@ class RegistrationForm extends Component {
             margin="1rem 0 0 0"
           />
         </Form>
-        <a href="/" className="btn btn-link"><center>Log In</center></a>
+        <a href="/" className="btn btn-link">
+          <center>Log In</center>
+        </a>
       </FormContainer>
     );
   }
@@ -150,7 +155,7 @@ class RegistrationForm extends Component {
 
 RegistrationForm.propTypes = {
   registerUser: PropTypes.func.isRequired,
-}
+};
 
 const mapDispatchToProps = dispatch => ({
   registerUser: (name, email, password) =>

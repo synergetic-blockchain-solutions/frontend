@@ -50,7 +50,7 @@ const NavBodyContainer = styled.div`
 
   @media (max-width: ${props => props.theme.breakpoints.smallScreen}) {
     background-color: ${props => props.theme.colors.colorPrimaryLight};
-    display: ${props => (props.display ? 'flex' : 'none')};
+    display: ${props => (props.display === 'true' ? 'flex' : 'none')};
     flex-direction: column;
     position: absolute;
     top: 7rem;
@@ -64,7 +64,7 @@ const NavBodyContainer = styled.div`
 function NavBody(props) {
   const { display } = props;
   return (
-    <NavBodyContainer display={display}>
+    <NavBodyContainer display={display.toString()}>
       <NavBarLink to="/families">
         <NavLinkText> Familys </NavLinkText>
         <i className="fas fa-users"></i>

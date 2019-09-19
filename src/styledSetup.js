@@ -61,6 +61,7 @@ export const theme = {
     loader: '9999',
     overlay: '9990',
     header: '1040',
+    important: '10',
   },
   borders: {
     borderRadiusLarge: '30px',
