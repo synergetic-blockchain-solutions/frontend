@@ -1,10 +1,35 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Auth from './Auth';
+import Loadable from 'react-loadable';
+import Loading from 'components/common/loading/Loading';
 import PrivateRoute from './PrivateRoute';
 import Root from 'components/Root';
 import Dashboard from 'components/dashboard';
-import Families from './Families';
+
+const Login = Loadable({
+  loader: () => import('components/auth/login'),
+  loading: Loading,
+});
+
+const Register = Loadable({
+  loader: () => import('components/auth/register'),
+  loading: Loading,
+});
+
+const CreateArtefact = Loadable({
+  loader: () => import('components/artefact/CreateArtefact'),
+  loading: Loading,
+});
+
+const CreateGroup = Loadable({
+  loader: () => import('components/group/CreateGroup'),
+  loading: Loading,
+});
+
+const ViewFamilies = Loadable({
+  loader: () => import('components/families/ViewFamilies'),
+  loading: Loading,
+});
 
 export default class Router extends Component {
   render() {
@@ -12,12 +37,11 @@ export default class Router extends Component {
       <Root>
         <Switch>
           <PrivateRoute path="/dashboard" component={Dashboard} exact />
-          <Route path="/families">
-            <Families />
-          </Route>
-          <Route path="/">
-            <Auth />
-          </Route>
+          <PrivateRoute path="/families" component={ViewFamilies} exact />
+          <PrivateRoute path="/create" component={CreateArtefact} exact />
+          <PrivateRoute path="/create-group" component={CreateGroup} exact />
+          <Route path="/sign-up" component={Register} exact />
+          <Route path="/" component={Login} exact />
         </Switch>
       </Root>
     );
