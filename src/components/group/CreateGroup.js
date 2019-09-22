@@ -5,32 +5,29 @@ import styled from 'styled-components';
 import AuthInput from 'components/common/inputs/AuthInput';
 import ButtonMedium from 'components/common/buttons/ButtonMedium';
 //import isEmpty from 'helpers/is-empty';
-import { registerArtefact } from 'actions/flow';
+import { registerGroup } from 'actions/group';
 import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/auth/FormContainer';
 import ImageDropZone from "react-image-dropzone";
 
 const Form = styled.form``;
 
-class CreateArtefact extends Component {
+class CreateGroup extends Component {
 
   validator = new FormValidator([
     {
-      field: 'title',
+      field: 'groupName',
       method: 'isEmpty',
       validWhen: false,
-      message: 'Title is required.',
+      message: 'Group name is required.',
     },
   ]);
 
   state = {
-    title: '',
-    image: '',
-    tag: '',
-    dateTaken: '',
+    groupName: '',
+    coverPhoto: '',
     details: '',
-    addToFamilies: '',
-    address: '',
+    tag: '',
     validation: this.validator.valid(),
   };
 
@@ -47,9 +44,9 @@ class CreateArtefact extends Component {
     this.setState({ validation });
     this.submitted = true;
 
-    const { title, image, tag, dateTaken, details, addToFamilies, address} = this.state;
+    const { groupName, coverPhoto, details, tag} = this.state;
     if (validation.isValid) {
-      this.props.registerArtefact(title, image, tag, dateTaken, details, addToFamilies, address);
+      this.props.registerGroup(groupName, coverPhoto, details, tag);
     }
   };
 
@@ -60,7 +57,7 @@ class CreateArtefact extends Component {
       ? this.validator.validate(this.state)
       : this.state.validation;
 
-    const { title, image, tag, dateTaken, details, addToFamilies, address } = this.state;
+    const { groupName, coverPhoto, details, tag } = this.state;
 
     return (
       
@@ -69,38 +66,20 @@ class CreateArtefact extends Component {
         <Form onSubmit={this.submit}>
           <AuthInput
             handleStandardChange={this.handleStandardChange}
-            value={title}
+            value={groupName}
             type="text"
-            name="title"
-            placeholder="title"
+            name="groupName"
+            placeholder="groupName"
             marginBottom="1rem"
-            label="title"
-            error={validation.title.message}
+            label="groupName"
+            error={validation.groupName.message}
           />
           <ImageDropZone
             anySize
 
             width={420}
             height={359}
-            image={image}
-          />
-          <AuthInput
-            handleStandardChange={this.handleStandardChange}
-            value={tag}
-            type="text"
-            name="tag"
-            placeholder="tag"
-            marginBottom="1rem"
-            label="tag"
-          />
-          <AuthInput
-            handleStandardChange={this.handleStandardChange}
-            value={dateTaken}
-            type="date"
-            name="dateTaken"
-            placeholder="dateTaken"
-            marginBottom="1rem"
-            label="dateTaken"
+            coverPhoto={coverPhoto}
           />
           <AuthInput
             handleStandardChange={this.handleStandardChange}
@@ -113,21 +92,12 @@ class CreateArtefact extends Component {
           />
           <AuthInput
             handleStandardChange={this.handleStandardChange}
-            value={addToFamilies}
+            value={tag}
             type="text"
-            name="addToFamilies"
-            placeholder="addToFamilies"
+            name="tag"
+            placeholder="tag"
             marginBottom="1rem"
-            label="addToFamilies"
-          />
-          <AuthInput
-            handleStandardChange={this.handleStandardChange}
-            value={address}
-            type="text"
-            name="address"
-            placeholder="address"
-            marginBottom="1rem"
-            label="address"
+            label="tag"
           />
           <ButtonMedium
             clickEvent={this.submit}
@@ -141,16 +111,16 @@ class CreateArtefact extends Component {
   }
 }
 
-CreateArtefact.propTypes = {
-  registerArtefact: PropTypes.func.isRequired,
+CreateGroup.propTypes = {
+  registerGroup: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
-  registerArtefact: (title, image, tag, dateTaken, details, addToFamilies, address) =>
-    dispatch(registerArtefact(title, image, tag, dateTaken, details, addToFamilies, address)),
+  registerGroup: (groupName, coverPhoto, details, tag) =>
+    dispatch(registerGroup(groupName, coverPhoto, details, tag)),
 });
 
 export default connect(
   null,
   mapDispatchToProps
-)(CreateArtefact);
+)(CreateGroup);
