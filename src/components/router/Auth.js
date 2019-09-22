@@ -14,12 +14,12 @@ const Register = Loadable({
 })
 
 const CreateArtefact = Loadable({
-  loader: () => import('components/pages/CreateArtefact'),
+  loader: () => import('components/artefact/CreateArtefact'),
   loading: Loading,
 })
 
 const CreateGroup = Loadable({
-  loader: () => import('components/pages/CreateGroup'),
+  loader: () => import('components/group/CreateGroup'),
   loading: Loading,
 })
 
@@ -29,7 +29,7 @@ export default function Auth(props) {
       <Switch>
         <Route path="/" component={Login} exact />
         <Route path="/sign-up" component={Register} exact />
-        <Route path="/create-artefact" component={CreateArtefact} exact />
+        <Route path="/create" component={CreateArtefact} exact />
         <Route path="/create-group" component={CreateGroup} exact />
       </Switch>
     </React.Fragment>

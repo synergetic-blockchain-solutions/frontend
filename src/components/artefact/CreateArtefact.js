@@ -3,31 +3,35 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import AuthInput from 'components/common/inputs/AuthInput';
+import TextAreaInput from 'components/common/inputs/TextAreaInput';
 import ButtonMedium from 'components/common/buttons/ButtonMedium';
 //import isEmpty from 'helpers/is-empty';
-import { registerGroup } from 'actions/flow';
+import { registerArtefact } from 'actions/artefact';
 import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/auth/FormContainer';
 import ImageDropZone from "react-image-dropzone";
 
 const Form = styled.form``;
 
-class CreateGroup extends Component {
+class CreateArtefact extends Component {
 
   validator = new FormValidator([
     {
-      field: 'groupName',
+      field: 'title',
       method: 'isEmpty',
       validWhen: false,
-      message: 'Group name is required.',
+      message: 'Title is required.',
     },
   ]);
 
   state = {
-    groupName: '',
-    coverPhoto: '',
-    details: '',
+    title: '',
+    image: '',
     tag: '',
+    dateTaken: '',
+    details: '',
+    addToFamilies: '',
+    address: '',
     validation: this.validator.valid(),
   };
 
@@ -44,9 +48,9 @@ class CreateGroup extends Component {
     this.setState({ validation });
     this.submitted = true;
 
-    const { groupName, coverPhoto, details, tag} = this.state;
+    const { title, image, tag, dateTaken, details, addToFamilies, address} = this.state;
     if (validation.isValid) {
-      this.props.registerGroup(groupName, coverPhoto, details, tag);
+      this.props.registerArtefact(title, image, tag, dateTaken, details, addToFamilies, address);
     }
   };
 
@@ -57,7 +61,7 @@ class CreateGroup extends Component {
       ? this.validator.validate(this.state)
       : this.state.validation;
 
-    const { groupName, coverPhoto, details, tag } = this.state;
+    const { title, image, tag, dateTaken, details, addToFamilies, address } = this.state;
 
     return (
       
@@ -66,22 +70,40 @@ class CreateGroup extends Component {
         <Form onSubmit={this.submit}>
           <AuthInput
             handleStandardChange={this.handleStandardChange}
-            value={groupName}
+            value={title}
             type="text"
-            name="groupName"
-            placeholder="groupName"
+            name="title"
+            placeholder="title"
             marginBottom="1rem"
-            label="groupName"
-            error={validation.groupName.message}
+            label="title"
+            error={validation.title.message}
           />
           <ImageDropZone
             anySize
 
             width={420}
             height={359}
-            coverPhoto={coverPhoto}
+            image={image}
           />
           <AuthInput
+            handleStandardChange={this.handleStandardChange}
+            value={tag}
+            type="text"
+            name="tag"
+            placeholder="tag"
+            marginBottom="1rem"
+            label="tag"
+          />
+          <AuthInput
+            handleStandardChange={this.handleStandardChange}
+            value={dateTaken}
+            type="date"
+            name="dateTaken"
+            placeholder="dateTaken"
+            marginBottom="1rem"
+            label="dateTaken"
+          />
+          <TextAreaInput
             handleStandardChange={this.handleStandardChange}
             value={details}
             type="text"
@@ -92,12 +114,21 @@ class CreateGroup extends Component {
           />
           <AuthInput
             handleStandardChange={this.handleStandardChange}
-            value={tag}
+            value={addToFamilies}
             type="text"
-            name="tag"
-            placeholder="tag"
+            name="addToFamilies"
+            placeholder="addToFamilies"
             marginBottom="1rem"
-            label="tag"
+            label="addToFamilies"
+          />
+          <AuthInput
+            handleStandardChange={this.handleStandardChange}
+            value={address}
+            type="text"
+            name="address"
+            placeholder="address"
+            marginBottom="1rem"
+            label="address"
           />
           <ButtonMedium
             clickEvent={this.submit}
@@ -111,16 +142,16 @@ class CreateGroup extends Component {
   }
 }
 
-CreateGroup.propTypes = {
-  registerGroup: PropTypes.func.isRequired,
+CreateArtefact.propTypes = {
+  registerArtefact: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
-  registerGroup: (groupName, coverPhoto, details, tag) =>
-    dispatch(registerGroup(groupName, coverPhoto, details, tag)),
+  registerArtefact: (title, image, tag, dateTaken, details, addToFamilies, address) =>
+    dispatch(registerArtefact(title, image, tag, dateTaken, details, addToFamilies, address)),
 });
 
 export default connect(
   null,
   mapDispatchToProps
-)(CreateGroup);
+)(CreateArtefact);
