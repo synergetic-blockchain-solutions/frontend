@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import FamilySummary from './FamilySummary';
+import { getGroups } from 'actions/group';
 
 const ViewFamiliesPage = styled.section`
   margin-top: 8rem;
@@ -13,21 +16,44 @@ const ViewFamiliesTitle = styled.h1`
 `;
 
 class ViewFamilies extends Component {
+  componentDidMount() {
+    this.props.getGroups();
+  }
+
   render() {
+    const { groups } = this.props;
     return (
       <ViewFamiliesPage>
         <ViewFamiliesTitle>View Families</ViewFamiliesTitle>
-        <FamilySummary
-          src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-          name="The Smiths"
-        />
-        <FamilySummary
-          src="https://images.unsplash.com/photo-1496275068113-fff8c90750d1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-          name="The Geralds"
-        />
+        {groups &&
+          groups.map(group => {
+            return (
+              <FamilySummary
+                src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                name={group.name}
+                id={group.id}
+              />
+            );
+          })}
       </ViewFamiliesPage>
     );
   }
 }
 
-export default ViewFamilies;
+const mapStateToProps = state => ({
+  groups: state.group.groups,
+});
+
+const mapDispatchToProps = dispatch => ({
+  getGroups: () => dispatch(getGroups()),
+});
+
+ViewFamilies.propTypes = {
+  getGroups: PropTypes.func.isRequired,
+  groups: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ViewFamilies);
