@@ -15,7 +15,7 @@ describe('The Create Artefact Component', () => {
   });
 
   it('Renders the correct amount of input elements', () => {
-    expect(wrapped.find('input').length).toEqual(7);
+    expect(wrapped.find('input').length).toEqual(6);
   });
 
   it('Renders the button', () => {
@@ -53,18 +53,18 @@ describe('The Create Artefact Component', () => {
     expect(
       wrapped
         .find('input')
-        .at(2)
+        .at(1)
         .props().value
     ).toEqual('');
     wrapped
       .find('input')
-      .at(2)
+      .at(1)
       .simulate('change', { target: { value: text, name: 'tag' } });
     wrapped.update();
     expect(
       wrapped
         .find('input')
-        .at(2)
+        .at(1)
         .props().value
     ).toEqual(text);
 
@@ -74,23 +74,43 @@ describe('The Create Artefact Component', () => {
     expect(
       wrapped
         .find('input')
+        .at(2)
+        .props().value
+    ).toEqual('');
+    wrapped
+      .find('input')
+      .at(2)
+      .simulate('change', { target: { value: date, name: 'date' } });
+    wrapped.update();
+    expect(
+      wrapped
+        .find('input')
+        .at(2)
+        .props().value
+    ).toEqual(date);
+
+
+    // Check the details
+    expect(
+      wrapped
+        .find('input')
         .at(3)
         .props().value
     ).toEqual('');
     wrapped
       .find('input')
       .at(3)
-      .simulate('change', { target: { value: date, name: 'date' } });
+      .simulate('change', { target: { value: text, name: 'details' } });
     wrapped.update();
     expect(
       wrapped
         .find('input')
         .at(3)
         .props().value
-    ).toEqual(date);
+    ).toEqual(text);
 
 
-    // Check the details
+    // Check the addToFamilie3
     expect(
       wrapped
         .find('input')
@@ -100,7 +120,7 @@ describe('The Create Artefact Component', () => {
     wrapped
       .find('input')
       .at(4)
-      .simulate('change', { target: { value: text, name: 'details' } });
+      .simulate('change', { target: { value: text, name: 'addToFamilies' } });
     wrapped.update();
     expect(
       wrapped
@@ -110,7 +130,7 @@ describe('The Create Artefact Component', () => {
     ).toEqual(text);
 
 
-    // Check the addToFamilies
+    // Check the address
     expect(
       wrapped
         .find('input')
@@ -120,32 +140,12 @@ describe('The Create Artefact Component', () => {
     wrapped
       .find('input')
       .at(5)
-      .simulate('change', { target: { value: text, name: 'addToFamilies' } });
-    wrapped.update();
-    expect(
-      wrapped
-        .find('input')
-        .at(5)
-        .props().value
-    ).toEqual(text);
-
-
-    // Check the address
-    expect(
-      wrapped
-        .find('input')
-        .at(6)
-        .props().value
-    ).toEqual('');
-    wrapped
-      .find('input')
-      .at(6)
       .simulate('change', { target: { value: text, name: 'address' } });
     wrapped.update();
     expect(
       wrapped
         .find('input')
-        .at(6)
+        .at(5)
         .props().value
     ).toEqual(text);
   });

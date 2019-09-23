@@ -15,7 +15,7 @@ describe('The Create Group Component', () => {
   });
 
   it('Renders the correct amount of input elements', () => {
-    expect(wrapped.find('input').length).toEqual(4);
+    expect(wrapped.find('input').length).toEqual(3);
   });
 
   it('Renders the button', () => {
@@ -52,18 +52,18 @@ describe('The Create Group Component', () => {
     expect(
       wrapped
         .find('input')
-        .at(2)
+        .at(1)
         .props().value
     ).toEqual('');
     wrapped
       .find('input')
-      .at(2)
+      .at(1)
       .simulate('change', { target: { value: text, name: 'details' } });
     wrapped.update();
     expect(
       wrapped
         .find('input')
-        .at(2)
+        .at(1)
         .props().value
     ).toEqual(text);
 
@@ -71,18 +71,18 @@ describe('The Create Group Component', () => {
     expect(
       wrapped
         .find('input')
-        .at(3)
+        .at(2)
         .props().value
     ).toEqual('');
     wrapped
       .find('input')
-      .at(3)
+      .at(2)
       .simulate('change', { target: { value: text, name: 'tag' } });
     wrapped.update();
     expect(
       wrapped
         .find('input')
-        .at(3)
+        .at(2)
         .props().value
     ).toEqual(text);
   });
