@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import AuthInput from 'components/common/inputs/AuthInput';
@@ -12,7 +13,9 @@ import FormContainer from 'components/auth/FormContainer';
 
 const Form = styled.form``;
 
+
 class RegistrationForm extends Component {
+
   validator = new FormValidator([
     {
       field: 'name',
@@ -132,8 +135,6 @@ class RegistrationForm extends Component {
           />
           <ButtonMedium
             clickEvent={this.submit}
-            Link
-            to="/"
             text="Sign Up Now!"
             disabled={
               isEmpty(name) ||
@@ -145,9 +146,12 @@ class RegistrationForm extends Component {
             margin="1rem 0 0 0"
           />
         </Form>
-        <a href="/" className="btn btn-link">
-          <center>Log In</center>
-        </a>
+        <Link to="/" className="btn btn-link">
+          Already registered? Log in!
+        </Link>
+        <Link to="/addMember" className="btn btn-link">
+          AddMembers
+        </Link>
       </FormContainer>
     );
   }

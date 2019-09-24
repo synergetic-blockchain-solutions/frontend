@@ -3,6 +3,9 @@ import {
     REGISTER_GROUP_REQUEST,
     REGISTER_GROUP_SUCCESS,
     REGISTER_GROUP_FAILURE,
+    ADD_MEMBER_REQUEST,
+    ADD_MEMBER_SUCCESS,
+    ADD_MEMBER_FAILURE,
   } from 'actions/types';
     
 
@@ -26,5 +29,23 @@ import {
         tag: tag,
       },
       types: [REGISTER_GROUP_REQUEST, REGISTER_GROUP_SUCCESS, REGISTER_GROUP_FAILURE],
+    },
+  });
+
+
+    /**
+   * @route addMemberToGroup
+   * @method POST
+   * @param {email} memberEmail
+   * @desc create an group for  user
+   */
+  export const addMemberToGroup = (memberEmail) => ({
+    [CALL_API]: {
+      endpoint: '/AddMember',
+      method: 'POST',
+      body: {
+        memberEmail: memberEmail,
+      },
+      types: [ADD_MEMBER_REQUEST, ADD_MEMBER_SUCCESS, ADD_MEMBER_FAILURE],
     },
   });

@@ -26,6 +26,11 @@ const CreateGroup = Loadable({
   loading: Loading,
 });
 
+const AddMember = Loadable({
+  loader: () => import('components/group/AddMember'),
+  loading: Loading,
+});
+
 const ViewFamilies = Loadable({
   loader: () => import('components/families/ViewFamilies'),
   loading: Loading,
@@ -40,6 +45,7 @@ export default class Router extends Component {
           <PrivateRoute path="/families" component={ViewFamilies} exact />
           <PrivateRoute path="/create" component={CreateArtefact} exact />
           <PrivateRoute path="/create-group" component={CreateGroup} exact />
+          <PrivateRoute path="/addMember" component={AddMember} exact />
           <Route path="/sign-up" component={Register} exact />
           <Route path="/" component={Login} exact />
         </Switch>
