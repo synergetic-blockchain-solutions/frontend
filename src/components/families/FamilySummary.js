@@ -1,31 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-const SummaryContainer = styled.div`
-  margin-bottom: 2rem;
-`;
-
-const Summary = styled.div`
-  position: relative;
-  border: 1px solid ${props => props.theme.colors.colorBlack};
-  padding: 1.5rem;
-  background-image: url("${props => props.srcUrl}");
-  background-size: cover;
-  height: 30rem;
-  width: 100%;
-
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: ${props => props.theme.colors.colorBlack};
-    opacity: 0.3;
-  }
-`;
+import { Link } from 'react-router-dom';
+import {
+  SummaryContainer,
+  Summary,
+} from 'components/common/summaries/BlockSummary';
 
 const FamilyTitle = styled.h2`
   position: absolute;
@@ -37,20 +17,28 @@ const FamilyTitle = styled.h2`
   z-index: ${props => props.theme.zIndex.important};
 `;
 
+const FamilyLink = styled(Link)`
+  display: block;
+  width: 100%;
+`;
+
 function FamilySummary(props) {
-  const { src, name } = props;
+  const { src, name, id } = props;
   return (
-    <SummaryContainer>
-      <Summary srcUrl={src}>
-        <FamilyTitle>{name}</FamilyTitle>
-      </Summary>
-    </SummaryContainer>
+    <FamilyLink to={`/family/${id}`}>
+      <SummaryContainer>
+        <Summary srcUrl={src}>
+          <FamilyTitle>{name}</FamilyTitle>
+        </Summary>
+      </SummaryContainer>
+    </FamilyLink>
   );
 }
 
 FamilySummary.propTypes = {
   src: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 export default FamilySummary;
