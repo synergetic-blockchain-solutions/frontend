@@ -10,9 +10,21 @@ import isEmpty from 'helpers/is-empty';
 import { registerUser } from 'actions/auth';
 import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/auth/FormContainer';
+import Modal from 'react-modal';
 
 const Form = styled.form``;
 
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
 
 class RegistrationForm extends Component {
 
@@ -56,11 +68,36 @@ class RegistrationForm extends Component {
     password: '',
     passwordConfirm: '',
     validation: this.validator.valid(),
+    modalIsOpen: false,
   };
+
+  openModal = this.openModal.bind(this);
+  afterOpenModal = this.afterOpenModal.bind(this);
+  closeModal = this.closeModal.bind(this);
 
   submitted = false;
 
+  openModal() {
+    this.setState({modalIsOpen: true});
+  }
+
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    this.subtitle.style.color = '#f00';
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false});
+  }
+
   passwordMatch = (confirmation, state) => state.password === confirmation;
+
+  handleSubmitEvent = e =>
+    this.submit;
+    openModal;
+
+    
+
 
   handleStandardChange = e =>
     this.setState({ [e.target.name]: e.target.value });
@@ -92,7 +129,7 @@ class RegistrationForm extends Component {
     return (
       <FormContainer>
         <Logo />
-        <Form onSubmit={this.submit}>
+        <Form onSubmit={this.submit} id= 'form'>
           <AuthInput
             handleStandardChange={this.handleStandardChange}
             value={name}
@@ -134,7 +171,7 @@ class RegistrationForm extends Component {
             error={validation.passwordConfirm.message}
           />
           <ButtonMedium
-            clickEvent={this.submit}
+            clickEvent={(e) => { this.submit(e); this.openModal(e);}}
             text="Sign Up Now!"
             disabled={
               isEmpty(name) ||
@@ -145,12 +182,21 @@ class RegistrationForm extends Component {
             color="btn-block btn-primary-light"
             margin="1rem 0 0 0"
           />
+          <Modal
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          style= {customStyles}
+          ariaHideApp={false}
+          onRequestClose={this.closeModal}
+          contentLabel="Example Modal"
+        >
+          <h2 ref={subtitle => this.subtitle = subtitle}>Successfully Registered</h2>
+          <button onClick={this.closeModal}>close</button>
+          <button><Link to= "/">Log in</Link></button>
+        </Modal>
         </Form>
         <Link to="/" className="btn btn-link">
           Already registered? Log in!
-        </Link>
-        <Link to="/addMember" className="btn btn-link">
-          AddMembers
         </Link>
       </FormContainer>
     );

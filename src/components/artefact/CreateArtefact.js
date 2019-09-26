@@ -9,34 +9,32 @@ import ButtonMedium from 'components/common/buttons/ButtonMedium';
 import { registerArtefact } from 'actions/artefact';
 import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/auth/FormContainer';
-import ImageDropZone from "react-image-dropzone";
+import ImageDropZone from 'react-image-dropzone';
 
 const Form = styled.form``;
 
 class CreateArtefact extends Component {
-
   validator = new FormValidator([
     {
-      field: 'title',
+      field: 'name',
       method: 'isEmpty',
       validWhen: false,
-      message: 'Title is required.',
+      message: 'name is required.',
     },
   ]);
 
   state = {
-    title: '',
+    name: '',
     image: '',
     tag: '',
     dateTaken: '',
-    details: '',
+    description: '',
     addToFamilies: '',
     address: '',
     validation: this.validator.valid(),
   };
 
   submitted = false;
-  
 
   handleStandardChange = e =>
     this.setState({ [e.target.name]: e.target.value });
@@ -48,43 +46,62 @@ class CreateArtefact extends Component {
     this.setState({ validation });
     this.submitted = true;
 
-    const { title, image, tag, dateTaken, details, addToFamilies, address} = this.state;
+    const {
+      name,
+      image,
+      tag,
+      dateTaken,
+      description,
+      addToFamilies,
+      address,
+    } = this.state;
     if (validation.isValid) {
-      this.props.registerArtefact(title, image, tag, dateTaken, details, addToFamilies, address);
+      this.props.registerArtefact(
+        name,
+        image,
+        tag,
+        dateTaken,
+        description,
+        addToFamilies,
+        address
+      );
     }
   };
 
   render() {
     // if the form has been submitted at least once
-     // then check validity every time we render
-    let validation = this.submitted 
+    // then check validity every time we render
+    let validation = this.submitted
       ? this.validator.validate(this.state)
       : this.state.validation;
 
-    const { title, image, tag, dateTaken, details, addToFamilies, address } = this.state;
+    const {
+      name,
+      image,
+      tag,
+      dateTaken,
+      description,
+      addToFamilies,
+      address,
+    } = this.state;
 
     return (
-      
       <FormContainer>
-        <h2><center>Add a new artefact</center></h2>
+        <h2>
+          <center>Add a new artefact</center>
+        </h2>
         <Form onSubmit={this.submit}>
           <AuthInput
             handleStandardChange={this.handleStandardChange}
-            value={title}
+            value={name}
             type="text"
-            name="title"
-            placeholder="title"
+            name="name"
+            placeholder="name"
             marginBottom="1rem"
-            label="title"
-            error={validation.title.message}
+            label="name"
+            error={validation.name.message}
           />
-          <ImageDropZone
-            anySize
-
-            width={420}
-            height={359}
-            image={image}
-          />
+          <ImageDropZone anySize width={420} height={359} image={image} />
           <AuthInput
             handleStandardChange={this.handleStandardChange}
             value={tag}
@@ -105,12 +122,12 @@ class CreateArtefact extends Component {
           />
           <TextAreaInput
             handleStandardChange={this.handleStandardChange}
-            value={details}
+            value={description}
             type="text"
-            name="details"
-            placeholder="details"
+            name="description"
+            placeholder="description"
             marginBottom="1rem"
-            label="details"
+            label="description"
           />
           <AuthInput
             handleStandardChange={this.handleStandardChange}
@@ -144,11 +161,29 @@ class CreateArtefact extends Component {
 
 CreateArtefact.propTypes = {
   registerArtefact: PropTypes.func.isRequired,
-}
+};
 
 const mapDispatchToProps = dispatch => ({
-  registerArtefact: (title, image, tag, dateTaken, details, addToFamilies, address) =>
-    dispatch(registerArtefact(title, image, tag, dateTaken, details, addToFamilies, address)),
+  registerArtefact: (
+    name,
+    image,
+    tag,
+    dateTaken,
+    description,
+    addToFamilies,
+    address
+  ) =>
+    dispatch(
+      registerArtefact(
+        name,
+        image,
+        tag,
+        dateTaken,
+        description,
+        addToFamilies,
+        address
+      )
+    ),
 });
 
 export default connect(

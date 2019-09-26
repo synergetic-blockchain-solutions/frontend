@@ -72,7 +72,7 @@ class AddMember extends Component {
           />
           <ButtonMedium
             clickEvent={this.submit}
-            text="Add Artefact"
+            text="Add Member"
             color="btn-block btn-primary-light"
             margin="1rem 0 0 0"
           />
