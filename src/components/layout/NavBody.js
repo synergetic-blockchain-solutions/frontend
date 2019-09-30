@@ -45,7 +45,7 @@ const NavLinkText = styled.span`
 
 const NavBodyContainer = styled.div`
   display: flex;
-  margin: 0 auto;
+  margin: 0 ${props => (props.hasAuth ? 'auto' : '0 0 auto')};
   width: fit-content;
 
   @media (max-width: ${props => props.theme.breakpoints.smallScreen}) {
@@ -62,32 +62,52 @@ const NavBodyContainer = styled.div`
 `;
 
 function NavBody(props) {
-  const { display } = props;
+  const { display, hasAuth } = props;
+  console.log(hasAuth);
   return (
-    <NavBodyContainer display={display}>
-      <NavBarLink to="/families">
-        <NavLinkText> Familys </NavLinkText>
-        <i className="fas fa-users"></i>
-      </NavBarLink>
-      <NavBarLink to="/my-artefacts">
-        <NavLinkText>My Artefacts</NavLinkText>{' '}
-        <i className="fas fa-hand-holding-heart"></i>
-      </NavBarLink>
-      <NavBarLink to="/create">
-        <NavLinkText>Create</NavLinkText> <i className="fas fa-plus-square"></i>
-      </NavBarLink>
-      <NavBarLinkCollapsing to="/profile">
-        <NavLinkText>My Profile</NavLinkText> <i className="fas fa-user"></i>
-      </NavBarLinkCollapsing>
-      <NavBarLinkCollapsing to="/logout">
-        <NavLinkText>Logout</NavLinkText> <i className="fas fa-power-off"></i>
-      </NavBarLinkCollapsing>
+    <NavBodyContainer hasAuth={hasAuth} display={display}>
+      {hasAuth ? (
+        <React.Fragment>
+          <NavBarLink to="/families">
+            <NavLinkText> Familys </NavLinkText>
+            <i className="fas fa-users"></i>
+          </NavBarLink>
+          <NavBarLink to="/my-artefacts">
+            <NavLinkText>My Artefacts</NavLinkText>{' '}
+            <i className="fas fa-hand-holding-heart"></i>
+          </NavBarLink>
+          <NavBarLink to="/create">
+            <NavLinkText>Create</NavLinkText>{' '}
+            <i className="fas fa-plus-square"></i>
+          </NavBarLink>
+          <NavBarLinkCollapsing to="/profile">
+            <NavLinkText>My Profile</NavLinkText>{' '}
+            <i className="fas fa-user"></i>
+          </NavBarLinkCollapsing>
+          <NavBarLinkCollapsing to="/logout">
+            <NavLinkText>Logout</NavLinkText>{' '}
+            <i className="fas fa-power-off"></i>
+          </NavBarLinkCollapsing>
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          <NavBarLink to="/">
+            <NavLinkText> Login </NavLinkText>
+            <i className="fas fa-sign-in"></i>
+          </NavBarLink>
+          <NavBarLink to="/sign-up">
+            <NavLinkText> Register </NavLinkText>{' '}
+            <i className="far fa-file-contract"></i>
+          </NavBarLink>
+        </React.Fragment>
+      )}
     </NavBodyContainer>
   );
 }
 
 NavBody.propTypes = {
   display: PropTypes.bool.isRequired,
+  hasAuth: PropTypes.bool.isRequired,
 };
 
 export default NavBody;

@@ -68,11 +68,7 @@ export const loginUser = (email, password) => ({
  * @desc logout the user
  */
 export const logoutUser = () => ({
-  [CALL_API]: {
-    endpoint: '/logout',
-    method: 'POST',
-    types: [LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE],
-  },
+  type: LOGOUT_SUCCESS,
 });
 
 /**
@@ -97,7 +93,7 @@ export const attemptTokenRefresh = () => ({
  * @param {object} token
  * @param {object} user
  * @param {array} subjectTopics
- * @desc gets the token and user information 
+ * @desc gets the token and user information
  * from localstorage and then sets them both in
  * the redux state
  */
@@ -110,7 +106,7 @@ export const setCurrentUser = (token, user, subjectTopics) => ({
 
 /**
  * @param none
- * @desc clear the promised that was saved to state 
+ * @desc clear the promised that was saved to state
  * from trying to refresh the authentication token
  */
 export const clearRefreshTokenPromise = () => ({
@@ -120,7 +116,7 @@ export const clearRefreshTokenPromise = () => ({
 /**
  *
  * @param promise
- * @desc save the refresh token promise in the state so 
+ * @desc save the refresh token promise in the state so
  * that if refresh token requests were sent
  * at the same time they wont work over eachother
  */

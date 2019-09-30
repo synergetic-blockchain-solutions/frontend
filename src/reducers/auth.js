@@ -110,17 +110,9 @@ export default function(state = initialState, action) {
         ...state,
         refreshTokenPromise: null,
       };
-    case LOGOUT_REQUEST:
-      return {
-        ...state,
-        loading: true,
-      };
-    case LOGOUT_FAILURE:
-      localStorage.clear();
-      window.location.reload();
-      return Object.assign({}, state, initialState);
     case LOGOUT_SUCCESS:
       localStorage.clear();
+      window.location.reload();
       return Object.assign({}, state, initialState);
     case CLEAR_ERRORS:
       return {
