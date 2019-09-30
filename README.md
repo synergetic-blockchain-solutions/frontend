@@ -24,7 +24,7 @@ to run the project locally in development mode
 
 ## Tests
 
-### Running Tests
+### Running Tests:
 
 In order to run all tests:
 
@@ -46,19 +46,42 @@ To run the javacript linters:
 npm run test:lint:js
 ```
 
-### Unit/Integration tests
-
-### And coding style tests
-
-Explain what these tests test and why
+To run the style linters 
 
 ```
-Give an example
+npm run test:lint:css
 ```
+
+### Notes On Testing: 
+
+I left a file called testBoiler.txt in the root directory. This is to serve as a boiler plate for testing.
+Simply copy and paste the code to get an intial setup for making a test, then import the file you are wanting 
+to test and write the tests. 
+
+The TestRoot is needed in order to provide the theme, global styles, get rid of the CacheBuster and set things 
+up such that they will work in the testing environment. 
+
+## Front-end Framework
+
+The project is made with React check the docs at https://reactjs.org/docs/getting-started.html
+
+### Notes on how we are structuring the react:
+
+The linters will hopefully force alot of good use of code. 
+
+Remember to abstract as much as possible, there should be absolute minimal code re-use, notice the registration and login page use the same inputs, buttons, logo, Validation and FormContainer. 
+
+## Styling 
+
+The styling is done with styled-components check docs at https://www.styled-components.com/docs
+
+## State Managment 
+
+The state managment is done with redux check docs at https://redux.js.org/introduction/getting-started
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live syste
+Not Applicable at the moment 
 
 ## Authors
 

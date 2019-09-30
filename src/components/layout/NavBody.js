@@ -50,7 +50,7 @@ const NavBodyContainer = styled.div`
 
   @media (max-width: ${props => props.theme.breakpoints.smallScreen}) {
     background-color: ${props => props.theme.colors.colorPrimaryLight};
-    display: ${props => (props.display ? 'flex' : 'none')};
+    display: ${props => (props.display === 'true' ? 'flex' : 'none')};
     flex-direction: column;
     position: absolute;
     top: 7rem;
@@ -63,7 +63,6 @@ const NavBodyContainer = styled.div`
 
 function NavBody(props) {
   const { display, hasAuth } = props;
-  console.log(hasAuth);
   return (
     <NavBodyContainer hasAuth={hasAuth} display={display}>
       {hasAuth ? (
@@ -101,6 +100,24 @@ function NavBody(props) {
           </NavBarLink>
         </React.Fragment>
       )}
+    <NavBodyContainer display={display.toString()}>
+      <NavBarLink to="/families">
+        <NavLinkText> Familys </NavLinkText>
+        <i className="fas fa-users"></i>
+      </NavBarLink>
+      <NavBarLink to="/my-artefacts">
+        <NavLinkText>My Artefacts</NavLinkText>{' '}
+        <i className="fas fa-hand-holding-heart"></i>
+      </NavBarLink>
+      <NavBarLink to="/create">
+        <NavLinkText>Create</NavLinkText> <i className="fas fa-plus-square"></i>
+      </NavBarLink>
+      <NavBarLinkCollapsing to="/profile">
+        <NavLinkText>My Profile</NavLinkText> <i className="fas fa-user"></i>
+      </NavBarLinkCollapsing>
+      <NavBarLinkCollapsing to="/logout">
+        <NavLinkText>Logout</NavLinkText> <i className="fas fa-power-off"></i>
+      </NavBarLinkCollapsing>
     </NavBodyContainer>
   );
 }

@@ -43,9 +43,6 @@ class NavBar extends Component {
   render() {
     const { display } = this.state;
     const { auth } = this.props;
-
-    console.log(auth);
-
     return (
       <Nav>
         <NavBrand />
@@ -83,3 +80,5 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(NavBar);
+
+export default connect(mapStateToProps)(NavBar);

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
@@ -13,7 +12,6 @@ import setAuthToken from 'utils/setAuthToken';
 import CacheBuster from 'components/CacheBuster';
 
 const Root = ({ children, initialState }) => {
-  console.log('here');
   const middleware = [thunk, api];
 
   if (process.env.NODE_ENV !== 'production') {
@@ -32,7 +30,7 @@ const Root = ({ children, initialState }) => {
   );
 
   // Check for token
-  if (localStorage.user && localStorage.token) {
+  if (localStorage.token) {
     // Decode token and get user info and exp
     let token = JSON.parse(localStorage.getItem('token'));
 
@@ -53,11 +51,7 @@ const Root = ({ children, initialState }) => {
           // You can decide how and when you want to force reload
           refreshCacheAndReload();
         }
-        return (
-          <Provider store={store}>
-            <BrowserRouter>{children}</BrowserRouter>
-          </Provider>
-        );
+        return <Provider store={store}>{children}</Provider>;
       }}
     </CacheBuster>
   );
