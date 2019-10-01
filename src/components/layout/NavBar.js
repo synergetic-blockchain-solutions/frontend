@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { logoutUser } from 'actions/auth';
+import isEmpty from 'helpers/is-empty';
 import NavBrand from './NavBrand';
 import NavBody from './NavBody';
 
@@ -39,15 +42,23 @@ class NavBar extends Component {
 
   render() {
     const { display } = this.state;
-    console.log(this.props);
+    const { auth } = this.props;
     return (
       <Nav>
         <NavBrand />
         <NavDropdownButton onClick={this.toggle}>
           <i className="fas fa-bars"></i>
         </NavDropdownButton>
-        <NavBody display={display} />
-        <NavDropdown />
+        {!isEmpty(auth.token) ? (
+          <React.Fragment>
+            <NavBody hasAuth display={display} />
+            <NavDropdown />
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <NavBody hasAuth={!isEmpty(auth.token)} display={display} />
+          </React.Fragment>
+        )}
       </Nav>
     );
   }
@@ -57,4 +68,15 @@ const mapStateToProps = state => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps)(NavBar);
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(logoutUser()),
+});
+
+NavBar.propTypes = {
+  auth: PropTypes.object.isRequired,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NavBar);

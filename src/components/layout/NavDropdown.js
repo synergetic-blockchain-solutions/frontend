@@ -1,8 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import DropdownWrapper from 'components/common/dropdowns/DropdownWrapper';
 import UnstyledButton from 'components/common/buttons/UnstyledButton';
+import { logoutUser } from 'actions/auth';
 
 const NavDropdownWrapper = styled(DropdownWrapper)`
   margin-right: 4rem;
@@ -100,4 +102,15 @@ function NavDropdown() {
   );
 }
 
-export default NavDropdown;
+const mapDispatchFromProps = dispatch => ({
+  logoutUser: () => dispatch(logoutUser()),
+});
+
+NavDropdown.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+};
+
+export default connect(
+  null,
+  mapDispatchFromProps
+)(NavDropdown);
