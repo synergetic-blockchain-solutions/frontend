@@ -13,6 +13,10 @@ import ImageDropzone from 'components/common/image/ImageDropzone';
 
 const Form = styled.form``;
 
+const DivSpacing = styled.div`
+  margin: 1rem 0;
+`;
+
 class CreateArtefact extends Component {
   validator = new FormValidator([
     {
@@ -101,7 +105,9 @@ class CreateArtefact extends Component {
             label="Name"
             error={validation.name.message}
           />
-          <ImageDropzone />
+          <DivSpacing>
+            <ImageDropzone />
+          </DivSpacing>
           <AuthInput
             handleStandardChange={this.handleStandardChange}
             value={tag}
