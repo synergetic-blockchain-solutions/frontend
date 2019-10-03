@@ -9,7 +9,7 @@ import ButtonMedium from 'components/common/buttons/ButtonMedium';
 import { registerArtefact } from 'actions/artefact';
 import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/auth/FormContainer';
-import ImageDropZone from 'react-image-dropzone';
+import ImageDropzone from 'components/common/image/ImageDropzone';
 
 const Form = styled.form``;
 
@@ -96,56 +96,56 @@ class CreateArtefact extends Component {
             value={name}
             type="text"
             name="name"
-            placeholder="name"
+            placeholder="Name"
             marginBottom="1rem"
-            label="name"
+            label="Name"
             error={validation.name.message}
           />
-          <ImageDropZone anySize width={420} height={359} image={image} />
+          <ImageDropzone />
           <AuthInput
             handleStandardChange={this.handleStandardChange}
             value={tag}
             type="text"
             name="tag"
-            placeholder="tag"
+            placeholder="Tag"
             marginBottom="1rem"
-            label="tag"
+            label="Tag"
           />
           <AuthInput
             handleStandardChange={this.handleStandardChange}
             value={dateTaken}
             type="date"
             name="dateTaken"
-            placeholder="dateTaken"
+            placeholder="Date Taken"
             marginBottom="1rem"
-            label="dateTaken"
+            label="Date Taken"
           />
           <TextAreaInput
             handleStandardChange={this.handleStandardChange}
             value={description}
             type="text"
             name="description"
-            placeholder="description"
+            placeholder="Description"
             marginBottom="1rem"
-            label="description"
+            label="Description"
           />
           <AuthInput
             handleStandardChange={this.handleStandardChange}
             value={addToFamilies}
             type="text"
             name="addToFamilies"
-            placeholder="addToFamilies"
+            placeholder="Add To Families"
             marginBottom="1rem"
-            label="addToFamilies"
+            label="Add To Families"
           />
           <AuthInput
             handleStandardChange={this.handleStandardChange}
             value={address}
             type="text"
             name="address"
-            placeholder="address"
+            placeholder="Address"
             marginBottom="1rem"
-            label="address"
+            label="Address"
           />
           <ButtonMedium
             clickEvent={this.submit}
