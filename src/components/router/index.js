@@ -61,9 +61,7 @@ export default class Router extends Component {
           <PrivateRoute path="/family/:id" component={ViewFamily} exact />
           <PrivateRoute path="/create" component={CreateArtefact} exact />
           <PrivateRoute path="/create-group" component={CreateGroup} exact />
-<<<<<<< HEAD
           <PrivateRoute path="/addMember" component={AddMember} exact />
-=======
           <PrivateRoute
             path="/my-artefacts"
             component={ViewMyArtifacts}
@@ -74,7 +72,6 @@ export default class Router extends Component {
             component={ViewSingleArtifact}
             exact
           />
->>>>>>> 1c90fb0f7e567030013a27404a2b6d6fb4104909
           <Route path="/sign-up" component={Register} exact />
           <Route path="/" component={Login} exact />
         </Switch>

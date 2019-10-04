@@ -11,6 +11,7 @@ import { registerUser } from 'actions/auth';
 import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/auth/FormContainer';
 import Modal from 'react-modal';
+import { REGISTER_FAILURE } from '../../../actions/types';
 
 const Form = styled.form``;
 
@@ -92,13 +93,6 @@ class RegistrationForm extends Component {
 
   passwordMatch = (confirmation, state) => state.password === confirmation;
 
-  handleSubmitEvent = e =>
-    this.submit;
-    openModal;
-
-    
-
-
   handleStandardChange = e =>
     this.setState({ [e.target.name]: e.target.value });
 
@@ -111,7 +105,16 @@ class RegistrationForm extends Component {
 
     const { name, email, password } = this.state;
     if (validation.isValid) {
-      this.props.registerUser(name, email, password);
+      this.props.registerUser(name, email, password)
+      .then()
+      .then(data=>{
+        if(REGISTER_FAILURE){
+          return data.message;
+        }else{
+          this.openModal(e);
+        }
+      })
+      ;
     }
   };
 
@@ -171,7 +174,7 @@ class RegistrationForm extends Component {
             error={validation.passwordConfirm.message}
           />
           <ButtonMedium
-            clickEvent={(e) => { this.submit(e); this.openModal(e);}}
+            clickEvent={(e) => { this.submit(e);}}
             text="Sign Up Now!"
             disabled={
               isEmpty(name) ||
@@ -188,7 +191,7 @@ class RegistrationForm extends Component {
           style= {customStyles}
           ariaHideApp={false}
           onRequestClose={this.closeModal}
-          contentLabel="Example Modal"
+          contentLabel="Modal"
         >
           <h2 ref={subtitle => this.subtitle = subtitle}>Successfully Registered</h2>
           <button onClick={this.closeModal}>close</button>

@@ -1,15 +1,4 @@
 import {
-<<<<<<< HEAD
-    CALL_API,
-    REGISTER_GROUP_REQUEST,
-    REGISTER_GROUP_SUCCESS,
-    REGISTER_GROUP_FAILURE,
-    ADD_MEMBER_REQUEST,
-    ADD_MEMBER_SUCCESS,
-    ADD_MEMBER_FAILURE,
-  } from 'actions/types';
-    
-=======
   CALL_API,
   REGISTER_GROUP_REQUEST,
   REGISTER_GROUP_SUCCESS,
@@ -21,7 +10,6 @@ import {
   GET_GROUP_SUCCESS,
   GET_GROUP_FAILURE,
 } from './types';
->>>>>>> 1c90fb0f7e567030013a27404a2b6d6fb4104909
 
 /**
  * @route CreateGroup
@@ -42,27 +30,6 @@ export const registerGroup = (groupName, coverPhoto, details, tag) => ({
       details: details,
       tag: tag,
     },
-<<<<<<< HEAD
-  });
-
-
-    /**
-   * @route addMemberToGroup
-   * @method POST
-   * @param {email} memberEmail
-   * @desc create an group for  user
-   */
-  export const addMemberToGroup = (memberEmail) => ({
-    [CALL_API]: {
-      endpoint: '/AddMember',
-      method: 'POST',
-      body: {
-        memberEmail: memberEmail,
-      },
-      types: [ADD_MEMBER_REQUEST, ADD_MEMBER_SUCCESS, ADD_MEMBER_FAILURE],
-    },
-  });
-=======
     types: [
       REGISTER_GROUP_REQUEST,
       REGISTER_GROUP_SUCCESS,
@@ -100,4 +67,3 @@ export const getGroup = id => ({
     types: [GET_GROUP_REQUEST, GET_GROUP_SUCCESS, GET_GROUP_FAILURE],
   },
 });
->>>>>>> 1c90fb0f7e567030013a27404a2b6d6fb4104909

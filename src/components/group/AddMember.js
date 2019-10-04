@@ -12,7 +12,7 @@ import FormContainer from 'components/auth/FormContainer';
 const Form = styled.form``;
 
 class AddMember extends Component {
-
+  /*
   validator = new FormValidator([
     {
         field: 'memberEmail',
@@ -80,8 +80,9 @@ class AddMember extends Component {
       </FormContainer>
     );
   }
+  */
 }
-
+/*
 AddMember.propTypes = {
   addMemberToGroup: PropTypes.func.isRequired,
 }
@@ -95,3 +96,4 @@ export default connect(
   null,
   mapDispatchToProps
 )(AddMember);
+*/
