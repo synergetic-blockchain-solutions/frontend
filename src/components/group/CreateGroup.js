@@ -62,7 +62,7 @@ class CreateGroup extends Component {
     return (
       
       <FormContainer>
-        <h2><center>Add a new artefact</center></h2>
+        <h2><center>Add a new artifact</center></h2>
         <Form onSubmit={this.submit}>
           <AuthInput
             handleStandardChange={this.handleStandardChange}
@@ -101,7 +101,7 @@ class CreateGroup extends Component {
           />
           <ButtonMedium
             clickEvent={this.submit}
-            text="Add Artefact"
+            text="Add Artifact"
             color="btn-block btn-primary-light"
             margin="1rem 0 0 0"
           />

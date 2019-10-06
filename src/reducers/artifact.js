@@ -1,7 +1,7 @@
 import {
-  REGISTER_ARTEFACT_REQUEST,
-  REGISTER_ARTEFACT_SUCCESS,
-  REGISTER_ARTEFACT_FAILURE,
+  REGISTER_ARTIFACT_REQUEST,
+  REGISTER_ARTIFACT_SUCCESS,
+  REGISTER_ARTIFACT_FAILURE,
   GET_ALL_ARTIFACTS_REQUEST,
   GET_ALL_ARTIFACTS_SUCCESS,
   GET_ALL_ARTIFACTS_FAILURE,
@@ -25,22 +25,22 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case REGISTER_ARTEFACT_REQUEST:
+    case REGISTER_ARTIFACT_REQUEST:
       return {
         ...state,
         loading: true,
         success: '',
         failure: {},
       };
-    case REGISTER_ARTEFACT_SUCCESS:
+    case REGISTER_ARTIFACT_SUCCESS:
       return {
         ...state,
         loading: false,
-        success: REGISTER_ARTEFACT_SUCCESS,
+        success: REGISTER_ARTIFACT_SUCCESS,
         failure: {},
         artifact: action.payload,
       };
-    case REGISTER_ARTEFACT_FAILURE:
+    case REGISTER_ARTIFACT_FAILURE:
       return {
         ...state,
         loading: false,

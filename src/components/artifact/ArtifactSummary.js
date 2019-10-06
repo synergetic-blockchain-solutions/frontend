@@ -12,10 +12,10 @@ const SummaryLink = styled(Link)`
   width: 100%;
 `;
 
-function ArtefactSummary(props) {
+function ArtifactSummary(props) {
   const { name, description, src, id } = props;
   return (
-    <SummaryLink to={`artefact/${id}`}>
+    <SummaryLink to={`artifact/${id}`}>
       <SummaryContainer>
         <Summary srcUrl={src}>{name}</Summary>
         {description}
@@ -24,11 +24,11 @@ function ArtefactSummary(props) {
   );
 }
 
-ArtefactSummary.propTypes = {
+ArtifactSummary.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
 };
 
-export default ArtefactSummary;
+export default ArtifactSummary;

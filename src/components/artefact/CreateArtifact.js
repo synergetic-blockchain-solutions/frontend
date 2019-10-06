@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import AuthInput from 'components/common/inputs/AuthInput';
-import TextAreaInput from 'components/common/inputs/TextAreaInput';
-import ButtonMedium from 'components/common/buttons/ButtonMedium';
+import AuthInput from './node_modules/components/common/inputs/AuthInput';
+import TextAreaInput from './node_modules/components/common/inputs/TextAreaInput';
+import ButtonMedium from './node_modules/components/common/buttons/ButtonMedium';
 //import isEmpty from 'helpers/is-empty';
-import { registerArtefact, resetArtefact } from 'actions/artefact';
-import { addResourceToArtefact } from 'actions/resource';
-import { REGISTER_ARTEFACT_SUCCESS } from 'actions/types';
-import FormValidator from 'components/common/help-component/FormValidator';
-import FormContainer from 'components/auth/FormContainer';
-import ImageDropzone from 'components/common/image/ImageDropzone';
-import ImagePreview from 'components/common/image/ImagePreview';
-import isEmpty from 'helpers/is-empty';
-import Success from 'components/common/visual/Success';
+import { registerArtifact, resetArtifact } from './node_modules/actions/artifact';
+import { addResourceToArtifact } from './node_modules/actions/resource';
+import { REGISTER_ARTIFACT_SUCCESS } from './node_modules/actions/types';
+import FormValidator from './node_modules/components/common/help-component/FormValidator';
+import FormContainer from './node_modules/components/auth/FormContainer';
+import ImageDropzone from './node_modules/components/common/image/ImageDropzone';
+import ImagePreview from './node_modules/components/common/image/ImagePreview';
+import isEmpty from './node_modules/helpers/is-empty';
+import Success from './node_modules/components/common/visual/Success';
 
 const Form = styled.form``;
 
@@ -22,7 +22,7 @@ const DivSpacing = styled.div`
   margin: 1rem 0;
 `;
 
-class CreateArtefact extends Component {
+class CreateArtifact extends Component {
   validator = new FormValidator([
     {
       field: 'name',
@@ -47,7 +47,7 @@ class CreateArtefact extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
       !isEmpty(nextProps.artifact.artifact) &&
-      nextProps.artifact.success === REGISTER_ARTEFACT_SUCCESS &&
+      nextProps.artifact.success === REGISTER_ARTIFACT_SUCCESS &&
       !isEmpty(prevState.image)
     ) {
       for (let file in prevState.image) {
@@ -60,7 +60,7 @@ class CreateArtefact extends Component {
           })
         );
         formData.append('resource', prevState.image[file].file);
-        nextProps.addResourceToArtefact(
+        nextProps.addResourceToArtifact(
           nextProps.artifact.artifact.id,
           formData
         );
@@ -77,7 +77,7 @@ class CreateArtefact extends Component {
   }
 
   componentWillUnmount() {
-    this.props.resetArtefact();
+    this.props.resetArtifact();
   }
 
   submitted = false;
@@ -117,7 +117,7 @@ class CreateArtefact extends Component {
     } = this.state;
 
     if (validation.isValid) {
-      this.props.registerArtefact(
+      this.props.registerArtifact(
         name,
         tag,
         dateTaken,
@@ -160,7 +160,7 @@ class CreateArtefact extends Component {
         ) : (
           <React.Fragment>
             <h2>
-              <center>Add a new artefact</center>
+              <center>Add a new artifact</center>
             </h2>
             <Form onSubmit={this.submit}>
               <AuthInput
@@ -238,7 +238,7 @@ class CreateArtefact extends Component {
               />
               <ButtonMedium
                 clickEvent={this.submit}
-                text="Add Artefact"
+                text="Add Artifact"
                 color="btn-block btn-primary-light"
                 margin="1rem 0 0 0"
                 disabled={isEmpty(name) || isEmpty(description)}
@@ -251,15 +251,15 @@ class CreateArtefact extends Component {
   }
 }
 
-CreateArtefact.propTypes = {
-  registerArtefact: PropTypes.func.isRequired,
+CreateArtifact.propTypes = {
+  registerArtifact: PropTypes.func.isRequired,
   artifact: PropTypes.object.isRequired,
-  addResourceToArtefact: PropTypes.func.isRequired,
-  resetArtefact: PropTypes.func.isRequired,
+  addResourceToArtifact: PropTypes.func.isRequired,
+  resetArtifact: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
-  registerArtefact: (
+  registerArtifact: (
     name,
     image,
     tag,
@@ -269,7 +269,7 @@ const mapDispatchToProps = dispatch => ({
     address
   ) =>
     dispatch(
-      registerArtefact(
+      registerArtifact(
         name,
         image,
         tag,
@@ -279,9 +279,9 @@ const mapDispatchToProps = dispatch => ({
         address
       )
     ),
-  addResourceToArtefact: (id, formData) =>
-    dispatch(addResourceToArtefact(id, formData)),
-  resetArtefact: () => dispatch(resetArtefact()),
+  addResourceToArtifact: (id, formData) =>
+    dispatch(addResourceToArtifact(id, formData)),
+  resetArtifact: () => dispatch(resetArtifact()),
 });
 
 const mapStateToProps = state => ({
@@ -291,4 +291,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreateArtefact);
+)(CreateArtifact);

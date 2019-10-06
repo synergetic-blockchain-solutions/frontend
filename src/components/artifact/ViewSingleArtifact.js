@@ -2,21 +2,21 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { getArtifact } from 'actions/artefact';
+import { getArtifact } from 'actions/artifact';
 
-const SingleArtefactPage = styled.section`
+const SingleArtifactPage = styled.section`
   margin-top: 8rem;
 `;
 
-const SingleArtefactTitle = styled.h1`
+const SingleArtifactTitle = styled.h1`
   margin-bottom: 2rem;
 `;
 
-const SingleArtefactDescription = styled.div`
+const SingleArtifactDescription = styled.div`
   font-size: 1.6rem;
 `;
 
-class ViewSingleArtefact extends Component {
+class ViewSingleArtifact extends Component {
   componentDidMount() {
     this.props.getArtifact(this.props.match.params.id);
   }
@@ -26,10 +26,10 @@ class ViewSingleArtefact extends Component {
     const { description, name } = artifact;
 
     return (
-      <SingleArtefactPage>
-        <SingleArtefactTitle>{name}</SingleArtefactTitle>
-        <SingleArtefactDescription>{description}</SingleArtefactDescription>
-      </SingleArtefactPage>
+      <SingleArtifactPage>
+        <SingleArtifactTitle>{name}</SingleArtifactTitle>
+        <SingleArtifactDescription>{description}</SingleArtifactDescription>
+      </SingleArtifactPage>
     );
   }
 }
@@ -42,7 +42,7 @@ const mapDispatchToProps = dispatch => ({
   getArtifact: id => dispatch(getArtifact(id)),
 });
 
-ViewSingleArtefact.propTypes = {
+ViewSingleArtifact.propTypes = {
   getArtifact: PropTypes.func.isRequired,
   artifact: PropTypes.object.isRequired,
 };
@@ -50,4 +50,4 @@ ViewSingleArtefact.propTypes = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ViewSingleArtefact);
+)(ViewSingleArtifact);

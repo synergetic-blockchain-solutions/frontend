@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getArtifacts } from 'actions/artefact';
-import ArtefactSummary from './ArtefactSummary';
+import { getArtifacts } from 'actions/artifact';
+import ArtifactSummary from './ArtifactSummary';
 
-const MyArtefactsPage = styled.section`
+const MyArtifactsPage = styled.section`
   margin-top: 8rem;
   padding: 2rem;
 `;
 
-const MyArtefactsPageTitle = styled.h1`
+const MyArtifactsPageTitle = styled.h1`
   margin-bottom: 2rem;
 `;
 
-class ViewMyArtefacts extends Component {
+class ViewMyArtifacts extends Component {
   componentDidMount() {
     this.props.getArtifacts();
   }
@@ -24,12 +24,12 @@ class ViewMyArtefacts extends Component {
     console.log(artifacts);
 
     return (
-      <MyArtefactsPage>
-        <MyArtefactsPageTitle>My Artefacts</MyArtefactsPageTitle>
+      <MyArtifactsPage>
+        <MyArtifactsPageTitle>My Artifacts</MyArtifactsPageTitle>
         {artifacts &&
           artifacts.map(artifact => {
             return (
-              <ArtefactSummary
+              <ArtifactSummary
                 name={artifact.name}
                 description={artifact.description}
                 id={artifact.id}
@@ -37,7 +37,7 @@ class ViewMyArtefacts extends Component {
               />
             );
           })}
-      </MyArtefactsPage>
+      </MyArtifactsPage>
     );
   }
 }
@@ -51,7 +51,7 @@ const mapStateToProps = state => ({
   artifacts: state.artifact.artifacts,
 });
 
-ViewMyArtefacts.propTypes = {
+ViewMyArtifacts.propTypes = {
   artifacts: PropTypes.array.isRequired,
   getArtifacts: PropTypes.func.isRequired,
 };
@@ -59,4 +59,4 @@ ViewMyArtefacts.propTypes = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ViewMyArtefacts);
+)(ViewMyArtifacts);

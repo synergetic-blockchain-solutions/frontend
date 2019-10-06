@@ -10,9 +10,9 @@ import {
  * @method POST
  * @param {number} id
  * @param {object} formData
- * @desc create a resource for an artefact
+ * @desc create a resource for an artifact
  */
-export const addResourceToArtefact = (id, formData) => ({
+export const addResourceToArtifact = (id, formData) => ({
   [CALL_API]: {
     endpoint: `/artifact/${id}/resource`,
     method: 'POST',
