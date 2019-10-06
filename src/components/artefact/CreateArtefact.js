@@ -6,10 +6,15 @@ import AuthInput from 'components/common/inputs/AuthInput';
 import TextAreaInput from 'components/common/inputs/TextAreaInput';
 import ButtonMedium from 'components/common/buttons/ButtonMedium';
 //import isEmpty from 'helpers/is-empty';
-import { registerArtefact } from 'actions/artefact';
+import { registerArtefact, resetArtefact } from 'actions/artefact';
+import { addResourceToArtefact } from 'actions/resource';
+import { REGISTER_ARTEFACT_SUCCESS } from 'actions/types';
 import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/auth/FormContainer';
 import ImageDropzone from 'components/common/image/ImageDropzone';
+import ImagePreview from 'components/common/image/ImagePreview';
+import isEmpty from 'helpers/is-empty';
+import Success from 'components/common/visual/Success';
 
 const Form = styled.form``;
 
@@ -29,19 +34,71 @@ class CreateArtefact extends Component {
 
   state = {
     name: '',
-    image: '',
+    image: [],
     tag: '',
     dateTaken: '',
     description: '',
     addToFamilies: '',
     address: '',
     validation: this.validator.valid(),
+    finished: false,
   };
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      !isEmpty(nextProps.artifact.artifact) &&
+      nextProps.artifact.success === REGISTER_ARTEFACT_SUCCESS &&
+      !isEmpty(prevState.image)
+    ) {
+      for (let file in prevState.image) {
+        let formData = new FormData();
+        formData.append(
+          'metadata',
+          JSON.stringify({
+            name: 'flathem',
+            description: 'flathem',
+          })
+        );
+        formData.append('resource', prevState.image[file].file);
+        nextProps.addResourceToArtefact(
+          nextProps.artifact.artifact.id,
+          formData
+        );
+      }
+    }
+
+    if (
+      nextProps.artifact.successCount === prevState.image.length &&
+      nextProps.artifact.success
+    ) {
+      return { finished: true };
+    }
+    return prevState;
+  }
+
+  componentWillUnmount() {
+    this.props.resetArtefact();
+  }
 
   submitted = false;
 
   handleStandardChange = e =>
     this.setState({ [e.target.name]: e.target.value });
+
+  recieveImage = image => {
+    this.setState(prevState => {
+      return { image: [...prevState.image, image] };
+    });
+  };
+
+  deleteImage = e => {
+    const name = e.target.name.toString();
+    this.setState(prevState => ({
+      image: prevState.image.filter((img, index) => {
+        return index.toString() !== name;
+      }),
+    }));
+  };
 
   submit = e => {
     e.preventDefault();
@@ -52,17 +109,16 @@ class CreateArtefact extends Component {
 
     const {
       name,
-      image,
       tag,
       dateTaken,
       description,
       addToFamilies,
       address,
     } = this.state;
+
     if (validation.isValid) {
       this.props.registerArtefact(
         name,
-        image,
         tag,
         dateTaken,
         description,
@@ -73,6 +129,7 @@ class CreateArtefact extends Component {
   };
 
   render() {
+    console.log(this.state);
     // if the form has been submitted at least once
     // then check validity every time we render
     let validation = this.submitted
@@ -81,85 +138,114 @@ class CreateArtefact extends Component {
 
     const {
       name,
-      image,
       tag,
       dateTaken,
       description,
       addToFamilies,
       address,
+      image,
+      finished,
     } = this.state;
+
+    const { artifact } = this.props.artifact;
 
     return (
       <FormContainer>
-        <h2>
-          <center>Add a new artefact</center>
-        </h2>
-        <Form onSubmit={this.submit}>
-          <AuthInput
-            handleStandardChange={this.handleStandardChange}
-            value={name}
-            type="text"
-            name="name"
-            placeholder="Name"
-            marginBottom="1rem"
-            label="Name"
-            error={validation.name.message}
+        {finished ? (
+          <Success
+            text="Artifact Was Created Successfully"
+            linkAddress={`/artifact/${artifact.id}`}
+            linkText="Click Here To View Artifact"
           />
-          <DivSpacing>
-            <ImageDropzone />
-          </DivSpacing>
-          <AuthInput
-            handleStandardChange={this.handleStandardChange}
-            value={tag}
-            type="text"
-            name="tag"
-            placeholder="Tag"
-            marginBottom="1rem"
-            label="Tag"
-          />
-          <AuthInput
-            handleStandardChange={this.handleStandardChange}
-            value={dateTaken}
-            type="date"
-            name="dateTaken"
-            placeholder="Date Taken"
-            marginBottom="1rem"
-            label="Date Taken"
-          />
-          <TextAreaInput
-            handleStandardChange={this.handleStandardChange}
-            value={description}
-            type="text"
-            name="description"
-            placeholder="Description"
-            marginBottom="1rem"
-            label="Description"
-          />
-          <AuthInput
-            handleStandardChange={this.handleStandardChange}
-            value={addToFamilies}
-            type="text"
-            name="addToFamilies"
-            placeholder="Add To Families"
-            marginBottom="1rem"
-            label="Add To Families"
-          />
-          <AuthInput
-            handleStandardChange={this.handleStandardChange}
-            value={address}
-            type="text"
-            name="address"
-            placeholder="Address"
-            marginBottom="1rem"
-            label="Address"
-          />
-          <ButtonMedium
-            clickEvent={this.submit}
-            text="Add Artefact"
-            color="btn-block btn-primary-light"
-            margin="1rem 0 0 0"
-          />
-        </Form>
+        ) : (
+          <React.Fragment>
+            <h2>
+              <center>Add a new artefact</center>
+            </h2>
+            <Form onSubmit={this.submit}>
+              <AuthInput
+                handleStandardChange={this.handleStandardChange}
+                value={name}
+                type="text"
+                name="name"
+                placeholder="Name"
+                marginBottom="1rem"
+                label="Name"
+                error={validation.name.message}
+              />
+              <DivSpacing>
+                <ImageDropzone
+                  recieveImage={this.recieveImage}
+                  image={this.recieveImage}
+                  images={image}
+                />
+              </DivSpacing>
+              <DivSpacing>
+                {image.map((img, index) => {
+                  return (
+                    <ImagePreview
+                      src={img.preview}
+                      deleteImage={this.deleteImage}
+                      position={index}
+                    />
+                  );
+                })}
+              </DivSpacing>
+              <AuthInput
+                handleStandardChange={this.handleStandardChange}
+                value={tag}
+                type="text"
+                name="tag"
+                placeholder="Tag"
+                marginBottom="1rem"
+                label="Tag"
+              />
+              <AuthInput
+                handleStandardChange={this.handleStandardChange}
+                value={dateTaken}
+                type="date"
+                name="dateTaken"
+                placeholder="Date Taken"
+                marginBottom="1rem"
+                label="Date Taken"
+              />
+              <TextAreaInput
+                handleStandardChange={this.handleStandardChange}
+                value={description}
+                type="text"
+                name="description"
+                placeholder="Description"
+                marginBottom="1rem"
+                label="Description"
+              />
+              <AuthInput
+                handleStandardChange={this.handleStandardChange}
+                value={addToFamilies}
+                type="text"
+                name="addToFamilies"
+                placeholder="Add To Families"
+                marginBottom="1rem"
+                label="Add To Families"
+              />
+              <AuthInput
+                handleStandardChange={this.handleStandardChange}
+                value={address}
+                type="text"
+                name="address"
+                placeholder="Address"
+                marginBottom="1rem"
+                label="Address"
+              />
+              <ButtonMedium
+                clickEvent={this.submit}
+                text="Add Artefact"
+                color="btn-block btn-primary-light"
+                margin="1rem 0 0 0"
+                disabled={isEmpty(name) || isEmpty(description)}
+              />
+            </Form>
+          </React.Fragment>
+        )}
       </FormContainer>
     );
   }
@@ -167,6 +253,9 @@ class CreateArtefact extends Component {
 
 CreateArtefact.propTypes = {
   registerArtefact: PropTypes.func.isRequired,
+  artifact: PropTypes.object.isRequired,
+  addResourceToArtefact: PropTypes.func.isRequired,
+  resetArtefact: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -190,9 +279,16 @@ const mapDispatchToProps = dispatch => ({
         address
       )
     ),
+  addResourceToArtefact: (id, formData) =>
+    dispatch(addResourceToArtefact(id, formData)),
+  resetArtefact: () => dispatch(resetArtefact()),
+});
+
+const mapStateToProps = state => ({
+  artifact: state.artifact,
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(CreateArtefact);

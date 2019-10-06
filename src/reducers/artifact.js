@@ -1,10 +1,17 @@
 import {
+  REGISTER_ARTEFACT_REQUEST,
+  REGISTER_ARTEFACT_SUCCESS,
+  REGISTER_ARTEFACT_FAILURE,
   GET_ALL_ARTIFACTS_REQUEST,
   GET_ALL_ARTIFACTS_SUCCESS,
   GET_ALL_ARTIFACTS_FAILURE,
   GET_ARTIFACT_REQUEST,
   GET_ARTIFACT_SUCCESS,
   GET_ARTIFACT_FAILURE,
+  POST_ARTIFACT_RESOURCE_REQUEST,
+  POST_ARTIFACT_RESOURCE_SUCCESS,
+  POST_ARTIFACT_RESOURCE_FAILURE,
+  RESET_ARTIFACT,
 } from 'actions/types';
 
 const initialState = {
@@ -13,10 +20,33 @@ const initialState = {
   loading: false,
   success: '',
   failure: {},
+  successCount: 0,
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case REGISTER_ARTEFACT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        success: '',
+        failure: {},
+      };
+    case REGISTER_ARTEFACT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: REGISTER_ARTEFACT_SUCCESS,
+        failure: {},
+        artifact: action.payload,
+      };
+    case REGISTER_ARTEFACT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        success: '',
+        failure: action.payload,
+      };
     case GET_ALL_ARTIFACTS_REQUEST:
       return {
         ...state,
@@ -54,6 +84,30 @@ export default function(state = initialState, action) {
         loading: true,
         failure: {},
       };
+    case POST_ARTIFACT_RESOURCE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        failure: {},
+        success: '',
+      };
+    case POST_ARTIFACT_RESOURCE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: POST_ARTIFACT_RESOURCE_SUCCESS,
+        successCount: state.successCount + 1,
+        failure: {},
+      };
+    case POST_ARTIFACT_RESOURCE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        success: '',
+        failure: action.payload,
+      };
+    case RESET_ARTIFACT:
+      return initialState;
     default:
       return state;
   }

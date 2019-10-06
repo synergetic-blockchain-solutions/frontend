@@ -9,6 +9,7 @@ import {
   GET_ARTIFACT_REQUEST,
   GET_ARTIFACT_SUCCESS,
   GET_ARTIFACT_FAILURE,
+  RESET_ARTIFACT,
 } from './types';
 
 /**
@@ -80,4 +81,8 @@ export const getArtifact = id => ({
     method: 'GET',
     types: [GET_ARTIFACT_REQUEST, GET_ARTIFACT_SUCCESS, GET_ARTIFACT_FAILURE],
   },
+});
+
+export const resetArtefact = () => ({
+  type: RESET_ARTIFACT,
 });

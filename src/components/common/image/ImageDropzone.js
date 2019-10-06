@@ -59,6 +59,21 @@ class ImageDropzone extends Component {
 
   fileInputRef = React.createRef();
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (isEmpty(nextProps.images)) {
+      return { preview: '', files: null, dragOver: false };
+    } else if (
+      !isEmpty(nextProps.images) &&
+      nextProps.images.length !== prevState.files.length
+    ) {
+      return {
+        ...prevState,
+        preview: nextProps.images[0].preview,
+        files: nextProps.images,
+      };
+    }
+  }
+
   onDragOver = e => {
     e.preventDefault();
     this.setState({ dragOver: true });
@@ -85,6 +100,15 @@ class ImageDropzone extends Component {
     const preview = URL.createObjectURL(files[0]);
 
     this.setState({ files, preview });
+
+    for (let file in files) {
+      if (files.hasOwnProperty(file)) {
+        this.props.recieveImage({
+          file: files[file],
+          preview: URL.createObjectURL(files[file]),
+        });
+      }
+    }
   };
 
   render() {
@@ -121,5 +145,10 @@ class ImageDropzone extends Component {
     );
   }
 }
+
+ImageDropzone.propTypes = {
+  recieveImage: PropTypes.func.isRequired,
+  images: PropTypes.arrayOf(PropTypes.object.isRequired),
+};
 
 export default ImageDropzone;
