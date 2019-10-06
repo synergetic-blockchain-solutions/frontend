@@ -5,6 +5,7 @@ import Loading from 'components/common/loading/Loading';
 import PrivateRoute from './PrivateRoute';
 import Root from 'components/Root';
 import Dashboard from 'components/dashboard';
+import NavBar from 'components/layout/NavBar';
 
 const Login = Loadable({
   loader: () => import('components/auth/login'),
@@ -50,25 +51,28 @@ export default class Router extends Component {
   render() {
     return (
       <Root>
-        <Switch>
-          <PrivateRoute path="/dashboard" component={Dashboard} exact />
-          <PrivateRoute path="/families" component={ViewFamilies} exact />
-          <PrivateRoute path="/family/:id" component={ViewFamily} exact />
-          <PrivateRoute path="/create" component={CreateArtifact} exact />
-          <PrivateRoute path="/create-group" component={CreateGroup} exact />
-          <PrivateRoute
-            path="/my-artifacts"
-            component={ViewMyArtifacts}
-            exact
-          />
-          <PrivateRoute
-            path="/artifact/:id"
-            component={ViewSingleArtifact}
-            exact
-          />
-          <Route path="/sign-up" component={Register} exact />
-          <Route path="/" component={Login} exact />
-        </Switch>
+        <React.Fragment>
+          <NavBar />
+          <Switch>
+            <PrivateRoute path="/dashboard" component={Dashboard} exact />
+            <PrivateRoute path="/families" component={ViewFamilies} exact />
+            <PrivateRoute path="/family/:id" component={ViewFamily} exact />
+            <PrivateRoute path="/create" component={CreateArtifact} exact />
+            <PrivateRoute path="/create-group" component={CreateGroup} exact />
+            <PrivateRoute
+              path="/my-artifacts"
+              component={ViewMyArtifacts}
+              exact
+            />
+            <PrivateRoute
+              path="/artifact/:id"
+              component={ViewSingleArtifact}
+              exact
+            />
+            <Route path="/sign-up" component={Register} exact />
+            <Route path="/" component={Login} exact />
+          </Switch>
+        </React.Fragment>
       </Root>
     );
   }
