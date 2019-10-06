@@ -21,7 +21,7 @@ class ViewMyArtifacts extends Component {
   render() {
     const { artifacts } = this.props;
 
-    console.log(artifacts);
+    console.log(this.props);
 
     return (
       <MyArtifactsPage>
@@ -33,7 +33,8 @@ class ViewMyArtifacts extends Component {
                 name={artifact.name}
                 description={artifact.description}
                 id={artifact.id}
-                src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                resources={artifact.resources}
+                key={artifact.id}
               />
             );
           })}
@@ -49,6 +50,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   artifacts: state.artifact.artifacts,
+  resources: state.artifact.resources,
 });
 
 ViewMyArtifacts.propTypes = {

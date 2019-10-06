@@ -23,7 +23,7 @@ class ViewSingleArtifact extends Component {
   render() {
     const { artifact } = this.props;
     console.log(artifact);
-    const { description, name } = artifact;
+    const { description, name, groups } = artifact;
 
     return (
       <SingleArtifactPage>

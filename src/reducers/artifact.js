@@ -11,6 +11,9 @@ import {
   POST_ARTIFACT_RESOURCE_REQUEST,
   POST_ARTIFACT_RESOURCE_SUCCESS,
   POST_ARTIFACT_RESOURCE_FAILURE,
+  GET_ARTIFACT_RESOURCE_REQUEST,
+  GET_ARTIFACT_RESOURCE_SUCCESS,
+  GET_ARTIFACT_RESOURCE_FAILURE,
   RESET_ARTIFACT,
 } from 'actions/types';
 
@@ -21,6 +24,7 @@ const initialState = {
   success: '',
   failure: {},
   successCount: 0,
+  resources: [],
 };
 
 export default function(state = initialState, action) {
@@ -105,6 +109,23 @@ export default function(state = initialState, action) {
         loading: false,
         success: '',
         failure: action.payload,
+      };
+    case GET_ARTIFACT_RESOURCE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_ARTIFACT_RESOURCE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        resources: [...state.resources, action.payload],
+      };
+    case GET_ARTIFACT_RESOURCE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        failure: 'Oops Something Went Wrong',
       };
     case RESET_ARTIFACT:
       return initialState;
