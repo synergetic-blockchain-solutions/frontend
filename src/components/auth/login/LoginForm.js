@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import AuthInput from 'components/common/inputs/AuthInput';
 import Logo from 'components/common/visual/Logo';
@@ -103,9 +103,12 @@ class LoginForm extends Component {
             margin="1rem 0 0 0"
           />
         </Form>
+<<<<<<< HEAD
         <Link to="/sign-up" className="btn btn-link">
           Register
         </Link>
+=======
+>>>>>>> 39921053c76e3b2c665f35224326eecb72bfbe09
       </FormContainer>
     );
   }

@@ -43,20 +43,21 @@ class NavBar extends Component {
   render() {
     const { display } = this.state;
     const { auth } = this.props;
+    console.log(this.props);
     return (
       <Nav>
         <NavBrand />
         <NavDropdownButton onClick={this.toggle}>
           <i className="fas fa-bars"></i>
         </NavDropdownButton>
-        {!isEmpty(auth.token) ? (
+        {!isEmpty(auth) ? (
           <React.Fragment>
             <NavBody hasAuth display={display} />
             <NavDropdown />
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <NavBody hasAuth={!isEmpty(auth.token)} display={display} />
+            <NavBody hasAuth={!isEmpty(auth)} display={display} />
           </React.Fragment>
         )}
       </Nav>
@@ -65,7 +66,7 @@ class NavBar extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth,
+  auth: state.auth.token,
 });
 
 const mapDispatchToProps = dispatch => ({

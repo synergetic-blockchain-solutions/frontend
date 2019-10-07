@@ -4,7 +4,6 @@ import { BrowserRouter } from 'react-router-dom';
 import Router from 'components/router';
 import Root from 'components/Root';
 import { GlobalStyle, theme } from 'styledSetup';
-import NavBar from 'components/layout/NavBar';
 import Window from 'components/layout/Window';
 
 class App extends Component {
@@ -16,7 +15,6 @@ class App extends Component {
           <ThemeProvider theme={theme}>
             <BrowserRouter>
               <React.Fragment>
-                <NavBar />
                 <Window>
                   <Router />
                 </Window>

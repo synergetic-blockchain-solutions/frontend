@@ -76,7 +76,7 @@ const LogoutIcon = styled.i`
   margin-right: 1rem;
 `;
 
-function NavDropdown() {
+function NavDropdown(props) {
   return (
     <NavDropdownWrapper
       button={
@@ -88,7 +88,7 @@ function NavDropdown() {
     >
       <NavDropdownList>
         <NavDropdownListItem>
-          <LogoutButton>
+          <LogoutButton onClick={props.logoutUser}>
             <LogoutIcon className="fas fa-power-off"></LogoutIcon>Logout
           </LogoutButton>
         </NavDropdownListItem>

@@ -2,42 +2,43 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getArtifacts } from 'actions/artefact';
-import ArtefactSummary from './ArtefactSummary';
+import { getArtifacts } from 'actions/artifact';
+import ArtifactSummary from './ArtifactSummary';
 
-const MyArtefactsPage = styled.section`
+const MyArtifactsPage = styled.section`
   margin-top: 8rem;
   padding: 2rem;
 `;
 
-const MyArtefactsPageTitle = styled.h1`
+const MyArtifactsPageTitle = styled.h1`
   margin-bottom: 2rem;
 `;
 
-class ViewMyArtefacts extends Component {
+class ViewMyArtifacts extends Component {
   componentDidMount() {
     this.props.getArtifacts();
   }
   render() {
     const { artifacts } = this.props;
 
-    console.log(artifacts);
+    console.log(this.props);
 
     return (
-      <MyArtefactsPage>
-        <MyArtefactsPageTitle>My Artefacts</MyArtefactsPageTitle>
+      <MyArtifactsPage>
+        <MyArtifactsPageTitle>My Artifacts</MyArtifactsPageTitle>
         {artifacts &&
           artifacts.map(artifact => {
             return (
-              <ArtefactSummary
+              <ArtifactSummary
                 name={artifact.name}
                 description={artifact.description}
                 id={artifact.id}
-                src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                resources={artifact.resources}
+                key={artifact.id}
               />
             );
           })}
-      </MyArtefactsPage>
+      </MyArtifactsPage>
     );
   }
 }
@@ -49,9 +50,10 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   artifacts: state.artifact.artifacts,
+  resources: state.artifact.resources,
 });
 
-ViewMyArtefacts.propTypes = {
+ViewMyArtifacts.propTypes = {
   artifacts: PropTypes.array.isRequired,
   getArtifacts: PropTypes.func.isRequired,
 };
@@ -59,4 +61,4 @@ ViewMyArtefacts.propTypes = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ViewMyArtefacts);
+)(ViewMyArtifacts);

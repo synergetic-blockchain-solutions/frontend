@@ -1,14 +1,15 @@
 import {
   CALL_API,
-  REGISTER_ARTEFACT_REQUEST,
-  REGISTER_ARTEFACT_SUCCESS,
-  REGISTER_ARTEFACT_FAILURE,
+  REGISTER_ARTIFACT_REQUEST,
+  REGISTER_ARTIFACT_SUCCESS,
+  REGISTER_ARTIFACT_FAILURE,
   GET_ALL_ARTIFACTS_REQUEST,
   GET_ALL_ARTIFACTS_SUCCESS,
   GET_ALL_ARTIFACTS_FAILURE,
   GET_ARTIFACT_REQUEST,
   GET_ARTIFACT_SUCCESS,
   GET_ARTIFACT_FAILURE,
+  RESET_ARTIFACT,
 } from './types';
 
 /**
@@ -21,9 +22,9 @@ import {
  * @param {String} details
  * @param {String} addToFamilies
  * @param {String} address
- * @desc create an artefact for the user
+ * @desc create an artifact for the user
  */
-export const registerArtefact = (
+export const registerArtifact = (
   name,
   image,
   tag,
@@ -40,9 +41,9 @@ export const registerArtefact = (
       description: description,
     },
     types: [
-      REGISTER_ARTEFACT_REQUEST,
-      REGISTER_ARTEFACT_SUCCESS,
-      REGISTER_ARTEFACT_FAILURE,
+      REGISTER_ARTIFACT_REQUEST,
+      REGISTER_ARTIFACT_SUCCESS,
+      REGISTER_ARTIFACT_FAILURE,
     ],
   },
 });
@@ -80,4 +81,8 @@ export const getArtifact = id => ({
     method: 'GET',
     types: [GET_ARTIFACT_REQUEST, GET_ARTIFACT_SUCCESS, GET_ARTIFACT_FAILURE],
   },
+});
+
+export const resetArtifact = () => ({
+  type: RESET_ARTIFACT,
 });

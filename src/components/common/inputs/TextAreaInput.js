@@ -8,6 +8,8 @@ export const Input = styled.textarea`
   border-radius: 5px;
   padding: 1rem 1rem;
   width: 100%;
+  height: 15rem;
+  resize: none;
   :focus {
     outline: none;
     border: 1px solid ${props => props.theme.colors.colorPrimaryLight};
@@ -48,7 +50,7 @@ function TextAreaInput(props) {
         value={value}
         name={name}
         placeholder={placeholder}
-      />
+      ></Input>
       {error && <Error>{error}</Error>}
     </InputContainer>
   );

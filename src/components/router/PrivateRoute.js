@@ -15,7 +15,6 @@ import isEmpty from 'helpers/is-empty';
 class PrivateRoute extends Component {
   render() {
     const { component: Component, auth, ...rest } = this.props;
-    console.log(this.props);
     return (
       <Route
         {...rest}
