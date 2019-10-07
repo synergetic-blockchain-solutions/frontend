@@ -1,10 +1,20 @@
 import {
+  REGISTER_ARTIFACT_REQUEST,
+  REGISTER_ARTIFACT_SUCCESS,
+  REGISTER_ARTIFACT_FAILURE,
   GET_ALL_ARTIFACTS_REQUEST,
   GET_ALL_ARTIFACTS_SUCCESS,
   GET_ALL_ARTIFACTS_FAILURE,
   GET_ARTIFACT_REQUEST,
   GET_ARTIFACT_SUCCESS,
   GET_ARTIFACT_FAILURE,
+  POST_ARTIFACT_RESOURCE_REQUEST,
+  POST_ARTIFACT_RESOURCE_SUCCESS,
+  POST_ARTIFACT_RESOURCE_FAILURE,
+  GET_ARTIFACT_RESOURCE_REQUEST,
+  GET_ARTIFACT_RESOURCE_SUCCESS,
+  GET_ARTIFACT_RESOURCE_FAILURE,
+  RESET_ARTIFACT,
 } from 'actions/types';
 
 const initialState = {
@@ -13,10 +23,34 @@ const initialState = {
   loading: false,
   success: '',
   failure: {},
+  successCount: 0,
+  resources: [],
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case REGISTER_ARTIFACT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        success: '',
+        failure: {},
+      };
+    case REGISTER_ARTIFACT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: REGISTER_ARTIFACT_SUCCESS,
+        failure: {},
+        artifact: action.payload,
+      };
+    case REGISTER_ARTIFACT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        success: '',
+        failure: action.payload,
+      };
     case GET_ALL_ARTIFACTS_REQUEST:
       return {
         ...state,
@@ -54,6 +88,47 @@ export default function(state = initialState, action) {
         loading: true,
         failure: {},
       };
+    case POST_ARTIFACT_RESOURCE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        failure: {},
+        success: '',
+      };
+    case POST_ARTIFACT_RESOURCE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: POST_ARTIFACT_RESOURCE_SUCCESS,
+        successCount: state.successCount + 1,
+        failure: {},
+      };
+    case POST_ARTIFACT_RESOURCE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        success: '',
+        failure: action.payload,
+      };
+    case GET_ARTIFACT_RESOURCE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_ARTIFACT_RESOURCE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        resources: [...state.resources, action.payload],
+      };
+    case GET_ARTIFACT_RESOURCE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        failure: 'Oops Something Went Wrong',
+      };
+    case RESET_ARTIFACT:
+      return initialState;
     default:
       return state;
   }

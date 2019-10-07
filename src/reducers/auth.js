@@ -43,7 +43,7 @@ export default function(state = initialState, action) {
         ...state,
         loading: false,
         errors: {},
-        success: 'Successfully Registered',
+        success: REGISTER_SUCCESS,
       };
     case REGISTER_FAILURE:
       return {

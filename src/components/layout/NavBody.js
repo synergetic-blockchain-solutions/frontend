@@ -71,8 +71,8 @@ function NavBody(props) {
             <NavLinkText> Familys </NavLinkText>
             <i className="fas fa-users"></i>
           </NavBarLink>
-          <NavBarLink to="/my-artefacts">
-            <NavLinkText>My Artefacts</NavLinkText>{' '}
+          <NavBarLink to="/my-artifacts">
+            <NavLinkText>My Artifacts</NavLinkText>{' '}
             <i className="fas fa-hand-holding-heart"></i>
           </NavBarLink>
           <NavBarLink to="/create">
