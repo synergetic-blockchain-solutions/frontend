@@ -17,14 +17,18 @@ const Form = styled.form``;
 
 
 const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
+    content: {
+      position: 'absolute',
+      top: '50%',
+      left: '45%',
+      backgroundColor: 'rgb(135,206,235)',
+      borderRadius: '30px',
+      justifyContent: 'center',
+      margin: '0',
+      alignItems: 'center',
+      height: 100 ,  
+      width: '10%',
+    }
 };
 
 class RegistrationForm extends Component {
@@ -109,6 +113,7 @@ class RegistrationForm extends Component {
       .then()
       .then(data=>{
         if(REGISTER_FAILURE){
+          this.openModal(e);
           return data.message;
         }else{
           this.openModal(e);
