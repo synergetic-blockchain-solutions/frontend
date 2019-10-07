@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import AuthInput from 'components/common/inputs/AuthInput';
@@ -113,7 +113,6 @@ class RegistrationForm extends Component {
       .then()
       .then(data=>{
         if(REGISTER_FAILURE){
-          this.openModal(e);
           return data.message;
         }else{
           this.openModal(e);
