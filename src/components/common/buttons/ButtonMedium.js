@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import debouncedButton from './debouncedButton';
 
 const Button = styled.button`
   width: 15rem;
@@ -69,4 +70,4 @@ ButtonMedium.propTypes = {
   margin: PropTypes.string,
 };
 
-export default ButtonMedium;
+export default debouncedButton(ButtonMedium);
