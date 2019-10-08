@@ -18,8 +18,9 @@ const SummaryLink = styled(Link)`
 class ArtifactSummary extends Component {
   componentDidMount() {
     const { id, resources } = this.props;
+    console.log(this.props);
     if (!isEmpty(resources)) {
-      this.props.getResource(id, resources[0]);
+      this.props.getResource(id, resources[0].id);
     }
   }
   render() {

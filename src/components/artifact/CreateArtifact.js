@@ -10,7 +10,7 @@ import { registerArtifact, resetArtifact } from 'actions/artifact';
 import { addResourceToArtifact } from 'actions/resource';
 import { REGISTER_ARTIFACT_SUCCESS } from 'actions/types';
 import FormValidator from 'components/common/help-component/FormValidator';
-import FormContainer from 'components/auth/FormContainer';
+import FormContainer from 'components/common/containers/FormDisplayContainer';
 import ImageDropzone from 'components/common/image/ImageDropzone';
 import ImagePreview from 'components/common/image/ImagePreview';
 import isEmpty from 'helpers/is-empty';
