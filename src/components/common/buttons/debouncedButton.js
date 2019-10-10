@@ -5,7 +5,7 @@ import { debounce } from 'lodash'; // 4.0.8
 const withPreventDoubleClick = WrappedComponent => {
   class PreventDoubleClick extends React.Component {
     debouncedOnClickEvent = () => {
-      this.props.onClickEvent && this.props.onClickEvent();
+      this.props.clickEvent && this.props.clickEvent();
     };
 
     onClickEvent = debounce(this.debouncedOnClickEvent, 1000, {
@@ -21,7 +21,7 @@ const withPreventDoubleClick = WrappedComponent => {
   }
 
   PreventDoubleClick.propTypes = {
-    onClickEvent: PropTypes.func.isRequired,
+    clickEvent: PropTypes.func.isRequired,
   };
 
   return PreventDoubleClick;

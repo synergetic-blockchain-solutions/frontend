@@ -5,7 +5,6 @@ import { setLocalStorage, removeLocalStorage } from '../utils/localStorage';
 import {
   LOGIN_SUCCESS,
   LOGIN_REQUEST,
-  LOGOUT_REQUEST,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
@@ -16,7 +15,6 @@ import {
   TOKEN_REFRESH_FAILURE,
   SET_CURRENT_USER,
   LOGIN_FAILURE,
-  LOGOUT_FAILURE,
   CLEAR_ERRORS,
   CLEAR_SUCCESS,
   CLEAR_AUTH,

@@ -15,6 +15,7 @@ import ImageDropzone from 'components/common/image/ImageDropzone';
 import ImagePreview from 'components/common/image/ImagePreview';
 import isEmpty from 'helpers/is-empty';
 import Success from 'components/common/visual/Success';
+// import TagAdder from 'components/common/form/TagAdder';
 
 const Form = styled.form``;
 
@@ -54,12 +55,9 @@ class CreateArtifact extends Component {
         let formData = new FormData();
         formData.append(
           'metadata',
-          JSON.stringify({
-            name: 'flathem',
-            description: 'flathem',
-          })
+          JSON.stringify(prevState.image[file].metaData)
         );
-        formData.append('resource', prevState.image[file].file);
+        formData.append('resource', prevState.image[file].image.file);
         nextProps.addResourceToArtifact(
           nextProps.artifact.artifact.id,
           formData
@@ -87,8 +85,24 @@ class CreateArtifact extends Component {
 
   recieveImage = image => {
     this.setState(prevState => {
-      return { image: [...prevState.image, image] };
+      return {
+        image: [
+          ...prevState.image,
+          { image, metaData: { name: '', description: '', tags: [] } },
+        ],
+      };
     });
+  };
+
+  handleMetaDataChange = e => {
+    console.log('here');
+    const [field, position] = e.target.name.split('-');
+    const { image } = this.state;
+    const newImages = image;
+    const changedImage = newImages[Number(position)];
+    changedImage.metaData[field] = e.target.value;
+    console.log(changedImage);
+    this.setState({ images: newImages });
   };
 
   deleteImage = e => {
@@ -184,22 +198,19 @@ class CreateArtifact extends Component {
                 {image.map((img, index) => {
                   return (
                     <ImagePreview
-                      src={img.preview}
+                      src={img.image.preview}
                       deleteImage={this.deleteImage}
                       position={index}
+                      metaData={img.metaData}
+                      handleMetaDataChange={this.handleMetaDataChange}
+                      key={index}
                     />
                   );
                 })}
               </DivSpacing>
-              <AuthInput
-                handleStandardChange={this.handleStandardChange}
-                value={tag}
-                type="text"
-                name="tag"
-                placeholder="Tag"
-                marginBottom="1rem"
-                label="Tag"
-              />
+              {
+                // <TagAdder addTag={this.addTag} />
+              }
               <AuthInput
                 handleStandardChange={this.handleStandardChange}
                 value={dateTaken}

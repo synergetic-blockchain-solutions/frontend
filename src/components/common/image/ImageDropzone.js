@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import isEmpty from 'helpers/is-empty';
 import UnstyledBtn from 'components/common/buttons/UnstyledButton';
 
 const ImageContainer = styled.label`
@@ -32,47 +31,12 @@ const ImageInput = styled.input`
   height: 100%;
 `;
 
-const Image = styled.img`
-  height: 100%;
-  width: 100%;
-  border-radius: 10px;
-  object-fit: cover;
-`;
-
-const Button = styled(UnstyledBtn)`
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-`;
-
-const Icon = styled.i`
-  font-size: 2rem;
-  color: ${props => props.theme.colors.colorDanger};
-`;
-
 class ImageDropzone extends Component {
   state = {
-    preview: '',
+    // preview: '',
     files: null,
     dragOver: false,
   };
-
-  fileInputRef = React.createRef();
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (isEmpty(nextProps.images)) {
-      return { preview: '', files: null, dragOver: false };
-    } else if (
-      !isEmpty(nextProps.images) &&
-      nextProps.images.length !== prevState.files.length
-    ) {
-      return {
-        ...prevState,
-        preview: nextProps.images[0].preview,
-        files: nextProps.images,
-      };
-    }
-  }
 
   onDragOver = e => {
     e.preventDefault();
@@ -112,8 +76,7 @@ class ImageDropzone extends Component {
   };
 
   render() {
-    console.log(this.state);
-    const { preview, dragOver } = this.state;
+    const { dragOver } = this.state;
     return (
       <React.Fragment>
         <ImageContainer
@@ -127,12 +90,6 @@ class ImageDropzone extends Component {
             Drag Image or Click Inside Dotted Line{' '}
             <i className="far fa-image"></i>
           </ImageText>
-          {!isEmpty(preview) && <Image src={preview} />}
-          {!isEmpty(preview) && (
-            <Button type="button">
-              <Icon className="fas fa-times-circle"></Icon>
-            </Button>
-          )}
         </ImageContainer>
         <ImageInput
           id="dropzone"
@@ -148,7 +105,6 @@ class ImageDropzone extends Component {
 
 ImageDropzone.propTypes = {
   recieveImage: PropTypes.func.isRequired,
-  images: PropTypes.arrayOf(PropTypes.object.isRequired),
 };
 
 export default ImageDropzone;
