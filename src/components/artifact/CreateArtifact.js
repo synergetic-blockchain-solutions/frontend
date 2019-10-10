@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import moment from 'moment';
 import AuthInput from 'components/common/inputs/AuthInput';
 import TextAreaInput from 'components/common/inputs/TextAreaInput';
 import ButtonMedium from 'components/common/buttons/ButtonMedium';
 //import isEmpty from 'helpers/is-empty';
 import { registerArtifact, resetArtifact } from 'actions/artifact';
 import { addResourceToArtifact } from 'actions/resource';
+import { getGroups } from 'actions/group';
 import { REGISTER_ARTIFACT_SUCCESS } from 'actions/types';
 import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/common/containers/FormDisplayContainer';
@@ -15,7 +17,8 @@ import ImageDropzone from 'components/common/image/ImageDropzone';
 import ImagePreview from 'components/common/image/ImagePreview';
 import isEmpty from 'helpers/is-empty';
 import Success from 'components/common/visual/Success';
-// import TagAdder from 'components/common/form/TagAdder';
+import InputAdder from 'components/common/form/InputAdder';
+import Select from 'components/common/inputs/Select';
 
 const Form = styled.form``;
 
@@ -36,14 +39,19 @@ class CreateArtifact extends Component {
   state = {
     name: '',
     image: [],
-    tag: '',
-    dateTaken: '',
+    tag: [],
+    date: '',
     description: '',
-    addToFamilies: '',
-    address: '',
+    groups: [],
+    owners: [],
+    sharedWith: [],
     validation: this.validator.valid(),
     finished: false,
   };
+
+  componentDidMount() {
+    this.props.getGroups();
+  }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
@@ -95,13 +103,11 @@ class CreateArtifact extends Component {
   };
 
   handleMetaDataChange = e => {
-    console.log('here');
     const [field, position] = e.target.name.split('-');
     const { image } = this.state;
     const newImages = image;
     const changedImage = newImages[Number(position)];
     changedImage.metaData[field] = e.target.value;
-    console.log(changedImage);
     this.setState({ images: newImages });
   };
 
@@ -114,6 +120,34 @@ class CreateArtifact extends Component {
     }));
   };
 
+  handleGroupSelect = groups => {
+    this.setState({ groups: groups });
+  };
+
+  addOwner = owner =>
+    this.setState(prevState => ({
+      owners: [...prevState.owners, owner],
+    }));
+
+  removeOwner = ownerIndex =>
+    this.setState(prevState => ({
+      owners: prevState.owners.filter((gr, index) => {
+        return index !== ownerIndex;
+      }),
+    }));
+
+  addUser = user =>
+    this.setState(prevState => ({
+      sharedWith: [...prevState.sharedWith, user],
+    }));
+
+  removeUser = userIndex =>
+    this.setState(prevState => ({
+      sharedWith: prevState.sharedWith.filter((gr, index) => {
+        return index !== userIndex;
+      }),
+    }));
+
   submit = e => {
     e.preventDefault();
 
@@ -124,26 +158,27 @@ class CreateArtifact extends Component {
     const {
       name,
       tag,
-      dateTaken,
+      date,
       description,
-      addToFamilies,
-      address,
+      groups,
+      sharedWith,
+      owners,
     } = this.state;
 
     if (validation.isValid) {
       this.props.registerArtifact(
         name,
-        tag,
-        dateTaken,
         description,
-        addToFamilies,
-        address
+        owners,
+        groups,
+        sharedWith,
+        tag,
+        moment(date).format()
       );
     }
   };
 
   render() {
-    console.log(this.state);
     // if the form has been submitted at least once
     // then check validity every time we render
     let validation = this.submitted
@@ -152,17 +187,19 @@ class CreateArtifact extends Component {
 
     const {
       name,
-      tag,
-      dateTaken,
+      date,
       description,
-      addToFamilies,
-      address,
+      owners,
+      sharedWith,
       image,
       finished,
     } = this.state;
 
+    const { usersGroups } = this.props;
     const { artifact } = this.props.artifact;
 
+    console.log(this.props);
+    console.log(this.state);
     return (
       <FormContainer>
         {finished ? (
@@ -208,14 +245,11 @@ class CreateArtifact extends Component {
                   );
                 })}
               </DivSpacing>
-              {
-                // <TagAdder addTag={this.addTag} />
-              }
               <AuthInput
                 handleStandardChange={this.handleStandardChange}
-                value={dateTaken}
+                value={date}
                 type="date"
-                name="dateTaken"
+                name="date"
                 placeholder="Date Taken"
                 marginBottom="1rem"
                 label="Date Taken"
@@ -229,23 +263,31 @@ class CreateArtifact extends Component {
                 marginBottom="1rem"
                 label="Description"
               />
-              <AuthInput
-                handleStandardChange={this.handleStandardChange}
-                value={addToFamilies}
+              {!isEmpty(usersGroups) && (
+                <Select
+                  groups={usersGroups}
+                  handleSelect={this.handleGroupSelect}
+                  marginBottom="1rem"
+                  label="Select the groups to share to (it will automatically add to your personal group)"
+                />
+              )}
+              <InputAdder
                 type="text"
-                name="addToFamilies"
-                placeholder="Add To Families"
-                marginBottom="1rem"
-                label="Add To Families"
+                inputName="owners"
+                placeholder="Add owners that will be able to edit the information of this artifact"
+                label="Add Emails of other users who you would like to be able to edit this artifact"
+                addElem={this.addOwner}
+                removeElem={this.removeOwner}
+                values={owners}
               />
-              <AuthInput
-                handleStandardChange={this.handleStandardChange}
-                value={address}
+              <InputAdder
                 type="text"
-                name="address"
-                placeholder="Address"
-                marginBottom="1rem"
-                label="Address"
+                name="sharedWith"
+                placeholder="Share this artifact with other Memory Books users"
+                label="Share Artifact with other memory books users by typing in their email here"
+                addElem={this.addUser}
+                removeElem={this.removeUser}
+                values={sharedWith}
               />
               <ButtonMedium
                 clickEvent={this.submit}
@@ -267,36 +309,32 @@ CreateArtifact.propTypes = {
   artifact: PropTypes.object.isRequired,
   addResourceToArtifact: PropTypes.func.isRequired,
   resetArtifact: PropTypes.func.isRequired,
+  getGroups: PropTypes.func.isRequired,
+  usersGroups: PropTypes.array.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
   registerArtifact: (
     name,
-    image,
-    tag,
-    dateTaken,
     description,
-    addToFamilies,
-    address
+    owners,
+    groups,
+    sharedWith,
+    tag,
+    date
   ) =>
     dispatch(
-      registerArtifact(
-        name,
-        image,
-        tag,
-        dateTaken,
-        description,
-        addToFamilies,
-        address
-      )
+      registerArtifact(name, description, owners, groups, sharedWith, tag, date)
     ),
   addResourceToArtifact: (id, formData) =>
     dispatch(addResourceToArtifact(id, formData)),
   resetArtifact: () => dispatch(resetArtifact()),
+  getGroups: () => dispatch(getGroups()),
 });
 
 const mapStateToProps = state => ({
   artifact: state.artifact,
+  usersGroups: state.group.groups,
 });
 
 export default connect(

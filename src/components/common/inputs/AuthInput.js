@@ -1,31 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-export const Input = styled.input`
-  font-size: 1.2rem;
-  border: 1px solid ${props => props.theme.colors.colorGrayMedium};
-  border-radius: 5px;
-  padding: 1rem 1rem;
-  width: 100%;
-  :focus {
-    outline: none;
-    border: 1px solid ${props => props.theme.colors.colorPrimaryLight};
-  }
-`;
-
-const Label = styled.label`
-  font-size: 1.2rem;
-`;
-
-const Error = styled.p`
-  font-size: 1.2rem;
-  color: ${props => props.theme.colors.colorDanger};
-`;
-
-const InputContainer = styled.div`
-  margin-bottom: ${props => props.marginBottom};
-`;
+import { Label, Error, InputContainer, Input } from './InputHelpers';
 
 function AuthInput(props) {
   const {
