@@ -9,14 +9,6 @@ import isEmpty from 'helpers/is-empty';
 let wrapped;
 
 
-const NavBrandContainer = styled(NavLink)`
-  display: block;
-  height: 5rem;
-  width: 18rem;
-  margin-left: 2rem;
-  margin-top: 1rem;
-`;
-
 const props={
     token: '100',
 }
@@ -31,17 +23,11 @@ describe('The NavBrand component', () => {
     
   });
 
-  /*it('renders the dashboard on non-empty token', ()=>{
-    const comp = (
-        <NavBrandContainer to={isEmpty(props.token) ? '/' : '/dashboard'} className={"test"}>
-            NaveLink Test
-        </NavBrandContainer>
-    );
-    wrapped= shallow(comp);
+  it('Renders the NavLink', () => {
     expect(
-        wrapped.find('NavBrandContainer').first().props().to).to.equal("/home");
-});
-*/
+        wrapped.find(NavLink).length
+    ).toEqual(1);
+  });
 });
 
 afterEach(() => {
