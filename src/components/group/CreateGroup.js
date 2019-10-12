@@ -101,11 +101,7 @@ class CreateGroup extends Component {
           />
           <ButtonMedium
             clickEvent={this.submit}
-<<<<<<< HEAD
             text="Add Group"
-=======
-            text="Add Artifact"
->>>>>>> 39921053c76e3b2c665f35224326eecb72bfbe09
             color="btn-block btn-primary-light"
             margin="1rem 0 0 0"
           />

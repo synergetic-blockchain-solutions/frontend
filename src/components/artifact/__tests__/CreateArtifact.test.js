@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import TestRoot from 'TestRoot';
-import CreateArtefact from '../CreateArtefact';
+import CreateArtifact from '../CreateArtifact';
 
 let wrapped;
 
@@ -9,13 +9,17 @@ describe('The Create Artefact Component', () => {
   beforeEach(() => {
     wrapped = mount(
       <TestRoot>
-        <CreateArtefact />
+        <CreateArtifact />
       </TestRoot>
     );
   });
 
   it('Renders the correct amount of input elements', () => {
     expect(wrapped.find('input').length).toEqual(6);
+  });
+
+  it('Renders the correct amount of textarea elements', () => {
+    expect(wrapped.find('textarea').length).toEqual(1);
   });
 
   it('Renders the button', () => {
@@ -34,7 +38,7 @@ describe('The Create Artefact Component', () => {
     wrapped
       .find('input')
       .at(0)
-      .simulate('change', { target: { value: text, name: 'title' } });
+      .simulate('change', { target: { value: text, name: 'name' } });
     wrapped.update();
     expect(
       wrapped
@@ -53,44 +57,24 @@ describe('The Create Artefact Component', () => {
     expect(
       wrapped
         .find('input')
-        .at(1)
-        .props().value
-    ).toEqual('');
-    wrapped
-      .find('input')
-      .at(1)
-      .simulate('change', { target: { value: text, name: 'tag' } });
-    wrapped.update();
-    expect(
-      wrapped
-        .find('input')
-        .at(1)
-        .props().value
-    ).toEqual(text);
-
-
-    const date = '02/02/2019';
-    // Check the date
-    expect(
-      wrapped
-        .find('input')
         .at(2)
         .props().value
     ).toEqual('');
     wrapped
       .find('input')
       .at(2)
-      .simulate('change', { target: { value: date, name: 'date' } });
+      .simulate('change', { target: { value: text, name: 'tag' } });
     wrapped.update();
     expect(
       wrapped
         .find('input')
         .at(2)
         .props().value
-    ).toEqual(date);
+    ).toEqual(text);
 
 
-    // Check the details
+    /*const date = new Date(2018, 11, 24);
+    // Check the date
     expect(
       wrapped
         .find('input')
@@ -100,14 +84,34 @@ describe('The Create Artefact Component', () => {
     wrapped
       .find('input')
       .at(3)
-      .simulate('change', { target: { value: text, name: 'details' } });
+      .simulate('change', { target: { value: date, name: 'date' } });
     wrapped.update();
     expect(
       wrapped
         .find('input')
         .at(3)
         .props().value
-    ).toEqual(text);
+    ).toEqual(date);
+
+
+    // Check the details
+    expect(
+      wrapped
+        .find('textarea')
+        .at(0)
+        .props().value
+    ).toEqual('');
+    wrapped
+      .find('textarea')
+      .at(0)
+      .simulate('change', { target: { value: text, name: 'details' } });
+    wrapped.update();
+    expect(
+      wrapped
+        .find('textarea')
+        .at(0)
+        .props().value
+    ).toEqual(text);*/
 
 
     // Check the addToFamilie3

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import AuthInput from 'components/common/inputs/AuthInput';
@@ -8,31 +7,14 @@ import Logo from 'components/common/visual/Logo';
 import ButtonMedium from 'components/common/buttons/ButtonMedium';
 import isEmpty from 'helpers/is-empty';
 import { registerUser } from 'actions/auth';
+import { REGISTER_SUCCESS } from 'actions/types';
 import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/auth/FormContainer';
-import Modal from 'react-modal';
-import { REGISTER_FAILURE } from '../../../actions/types';
+import Success from 'components/common/visual/Success';
 
 const Form = styled.form``;
 
-
-const customStyles = {
-    content: {
-      position: 'absolute',
-      top: '50%',
-      left: '45%',
-      backgroundColor: 'rgb(135,206,235)',
-      borderRadius: '30px',
-      justifyContent: 'center',
-      margin: '0',
-      alignItems: 'center',
-      height: 100 ,  
-      width: '10%',
-    }
-};
-
 class RegistrationForm extends Component {
-
   validator = new FormValidator([
     {
       field: 'name',
@@ -73,26 +55,13 @@ class RegistrationForm extends Component {
     password: '',
     passwordConfirm: '',
     validation: this.validator.valid(),
-    modalIsOpen: false,
+    success: false,
   };
 
-  openModal = this.openModal.bind(this);
-  afterOpenModal = this.afterOpenModal.bind(this);
-  closeModal = this.closeModal.bind(this);
-
-  submitted = false;
-
-  openModal() {
-    this.setState({modalIsOpen: true});
-  }
-
-  afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    this.subtitle.style.color = '#f00';
-  }
-
-  closeModal() {
-    this.setState({modalIsOpen: false});
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.auth.success === REGISTER_SUCCESS) {
+      return { success: true };
+    }
   }
 
   passwordMatch = (confirmation, state) => state.password === confirmation;
@@ -109,16 +78,7 @@ class RegistrationForm extends Component {
 
     const { name, email, password } = this.state;
     if (validation.isValid) {
-      this.props.registerUser(name, email, password)
-      .then()
-      .then(data=>{
-        if(REGISTER_FAILURE){
-          return data.message;
-        }else{
-          this.openModal(e);
-        }
-      })
-      ;
+      this.props.registerUser(name, email, password);
     }
   };
 
@@ -129,82 +89,77 @@ class RegistrationForm extends Component {
       ? this.validator.validate(this.state)
       : this.state.validation;
 
-    const { name, email, password, passwordConfirm } = this.state;
-
-    console.log('here');
+    const { name, email, password, passwordConfirm, success } = this.state;
 
     return (
       <FormContainer>
-        <Logo />
-        <Form onSubmit={this.submit} id= 'form'>
-          <AuthInput
-            handleStandardChange={this.handleStandardChange}
-            value={name}
-            type="text"
-            name="name"
-            placeholder="Full Name"
-            marginBottom="1rem"
-            label="Full Name"
-            error={validation.name.message}
+        {success ? (
+          <Success
+            text="You have been successfully registered"
+            linkAddress="/"
+            linkText="Back To Login"
           />
-          <AuthInput
-            handleStandardChange={this.handleStandardChange}
-            value={email}
-            type="email"
-            name="email"
-            placeholder="Email"
-            marginBottom="1rem"
-            label="Email"
-            error={validation.email.message}
-          />
-          <AuthInput
-            handleStandardChange={this.handleStandardChange}
-            value={password}
-            type="password"
-            name="password"
-            placeholder="Password"
-            marginBottom="1rem"
-            label="Password"
-            error={validation.password.message}
-          />
-          <AuthInput
-            handleStandardChange={this.handleStandardChange}
-            value={passwordConfirm}
-            type="password"
-            name="passwordConfirm"
-            placeholder="Confirm Password"
-            marginBottom="1rem"
-            label="Confirm Password"
-            error={validation.passwordConfirm.message}
-          />
-          <ButtonMedium
-            clickEvent={(e) => { this.submit(e);}}
-            text="Sign Up Now!"
-            disabled={
-              isEmpty(name) ||
-              isEmpty(email) ||
-              isEmpty(password) ||
-              isEmpty(passwordConfirm)
-            }
-            color="btn-block btn-primary-light"
-            margin="1rem 0 0 0"
-          />
-          <Modal
-          isOpen={this.state.modalIsOpen}
-          onAfterOpen={this.afterOpenModal}
-          style= {customStyles}
-          ariaHideApp={false}
-          onRequestClose={this.closeModal}
-          contentLabel="Modal"
-        >
-          <h2 ref={subtitle => this.subtitle = subtitle}>Successfully Registered</h2>
-          <button onClick={this.closeModal}>close</button>
-          <button><Link to= "/">Log in</Link></button>
-        </Modal>
-        </Form>
-        <Link to="/" className="btn btn-link">
-          Already registered? Log in!
-        </Link>
+        ) : (
+          <React.Fragment>
+            <Logo />
+            <Form onSubmit={this.submit}>
+              <AuthInput
+                handleStandardChange={this.handleStandardChange}
+                value={name}
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                marginBottom="1rem"
+                label="Full Name"
+                error={validation.name.message}
+              />
+              <AuthInput
+                handleStandardChange={this.handleStandardChange}
+                value={email}
+                type="email"
+                name="email"
+                placeholder="Email"
+                marginBottom="1rem"
+                label="Email"
+                error={validation.email.message}
+              />
+              <AuthInput
+                handleStandardChange={this.handleStandardChange}
+                value={password}
+                type="password"
+                name="password"
+                placeholder="Password"
+                marginBottom="1rem"
+                label="Password"
+                error={validation.password.message}
+              />
+              <AuthInput
+                handleStandardChange={this.handleStandardChange}
+                value={passwordConfirm}
+                type="password"
+                name="passwordConfirm"
+                placeholder="Confirm Password"
+                marginBottom="1rem"
+                label="Confirm Password"
+                error={validation.passwordConfirm.message}
+              />
+              <ButtonMedium
+                clickEvent={this.submit}
+                Link
+                to="/"
+                text="Sign Up Now!"
+                disabled={
+                  isEmpty(name) ||
+                  isEmpty(email) ||
+                  isEmpty(password) ||
+                  isEmpty(passwordConfirm)
+                }
+                color="btn-block btn-primary-light"
+                margin="1rem 0 0 0"
+              />
+            </Form>
+          </React.Fragment>
+        )}
       </FormContainer>
     );
   }
@@ -212,6 +167,7 @@ class RegistrationForm extends Component {
 
 RegistrationForm.propTypes = {
   registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -219,7 +175,11 @@ const mapDispatchToProps = dispatch => ({
     dispatch(registerUser(name, email, password)),
 });
 
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(RegistrationForm);

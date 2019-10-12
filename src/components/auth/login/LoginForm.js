@@ -103,12 +103,6 @@ class LoginForm extends Component {
             margin="1rem 0 0 0"
           />
         </Form>
-<<<<<<< HEAD
-        <Link to="/sign-up" className="btn btn-link">
-          Register
-        </Link>
-=======
->>>>>>> 39921053c76e3b2c665f35224326eecb72bfbe09
       </FormContainer>
     );
   }

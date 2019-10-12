@@ -24,7 +24,7 @@ describe('The Input component without an error', () => {
   });
 
   it('has a label and an input', () => {
-    expect(wrapped.find('input').length).toEqual(1);
+    expect(wrapped.find('textarea').length).toEqual(1);
     expect(wrapped.find('label').length).toEqual(1);
   });
 
@@ -33,10 +33,10 @@ describe('The Input component without an error', () => {
   });
 
   it('has the correct properties', () => {
-    expect(wrapped.find('input').props().type).toEqual('password');
-    expect(wrapped.find('input').props().value).toEqual('Test');
-    expect(wrapped.find('input').props().name).toEqual('password');
-    expect(wrapped.find('input').props().placeholder).toEqual('Password');
+    expect(wrapped.find('textarea').props().type).toEqual('password');
+    expect(wrapped.find('textarea').props().value).toEqual('Test');
+    expect(wrapped.find('textarea').props().name).toEqual('password');
+    expect(wrapped.find('textarea').props().placeholder).toEqual('Password');
   })
   
 });
@@ -61,15 +61,15 @@ describe('The Input component with an Error', () => {
   });
 
   it('has a label and an input', () => {
-    expect(wrapped.find('input').length).toEqual(1);
+    expect(wrapped.find('textarea').length).toEqual(1);
     expect(wrapped.find('label').length).toEqual(1);
   });
 
   it('has the correct properties', () => {
-    expect(wrapped.find('input').props().type).toEqual('password');
-    expect(wrapped.find('input').props().value).toEqual('Test');
-    expect(wrapped.find('input').props().name).toEqual('password');
-    expect(wrapped.find('input').props().placeholder).toEqual('Password');
+    expect(wrapped.find('textarea').props().type).toEqual('password');
+    expect(wrapped.find('textarea').props().value).toEqual('Test');
+    expect(wrapped.find('textarea').props().name).toEqual('password');
+    expect(wrapped.find('textarea').props().placeholder).toEqual('Password');
   });
 
   it('renders the error', () => {

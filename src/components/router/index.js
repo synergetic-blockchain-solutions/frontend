@@ -56,28 +56,6 @@ export default class Router extends Component {
   render() {
     return (
       <Root>
-<<<<<<< HEAD
-        <Switch>
-          <PrivateRoute path="/dashboard" component={Dashboard} exact />
-          <PrivateRoute path="/families" component={ViewFamilies} exact />
-          <PrivateRoute path="/family/:id" component={ViewFamily} exact />
-          <PrivateRoute path="/create" component={CreateArtefact} exact />
-          <PrivateRoute path="/create-group" component={CreateGroup} exact />
-          <PrivateRoute path="/addMember" component={AddMember} exact />
-          <PrivateRoute
-            path="/my-artefacts"
-            component={ViewMyArtifacts}
-            exact
-          />
-          <PrivateRoute
-            path="/artefact/:id"
-            component={ViewSingleArtifact}
-            exact
-          />
-          <Route path="/sign-up" component={Register} exact />
-          <Route path="/" component={Login} exact />
-        </Switch>
-=======
         <React.Fragment>
           <NavBar />
           <Switch>
@@ -100,7 +78,6 @@ export default class Router extends Component {
             <Route path="/" component={Login} exact />
           </Switch>
         </React.Fragment>
->>>>>>> 39921053c76e3b2c665f35224326eecb72bfbe09
       </Root>
     );
   }
