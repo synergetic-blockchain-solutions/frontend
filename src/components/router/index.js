@@ -23,7 +23,7 @@ const CreateArtifact = Loadable({
 });
 
 const CreateGroup = Loadable({
-  loader: () => import('components/group/CreateGroup'),
+  loader: () => import('components/families/CreateGroup'),
   loading: Loading,
 });
 
@@ -42,8 +42,18 @@ const ViewSingleArtifact = Loadable({
   loading: Loading,
 });
 
+const EditArtifact = Loadable({
+  loader: () => import('components/artifact/EditArtifact'),
+  loading: Loading,
+});
+
 const ViewFamily = Loadable({
   loader: () => import('components/families/ViewFamily'),
+  loading: Loading,
+});
+
+const Profile = Loadable({
+  loader: () => import('components/profile/Profile'),
   loading: Loading,
 });
 
@@ -58,7 +68,11 @@ export default class Router extends Component {
             <PrivateRoute path="/families" component={ViewFamilies} exact />
             <PrivateRoute path="/family/:id" component={ViewFamily} exact />
             <PrivateRoute path="/create" component={CreateArtifact} exact />
-            <PrivateRoute path="/create-group" component={CreateGroup} exact />
+            <PrivateRoute
+              path="/families/create"
+              component={CreateGroup}
+              exact
+            />
             <PrivateRoute
               path="/my-artifacts"
               component={ViewMyArtifacts}
@@ -69,6 +83,12 @@ export default class Router extends Component {
               component={ViewSingleArtifact}
               exact
             />
+            <PrivateRoute
+              path="/artifact/edit/:id"
+              component={EditArtifact}
+              exact
+            />
+            <PrivateRoute path="/profile" component={Profile} exact />
             <Route path="/sign-up" component={Register} exact />
             <Route path="/" component={Login} exact />
           </Switch>

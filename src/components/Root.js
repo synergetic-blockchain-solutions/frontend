@@ -33,14 +33,15 @@ const Root = ({ children, initialState }) => {
   if (localStorage.token) {
     // Decode token and get user info and exp
     let token = JSON.parse(localStorage.getItem('token'));
+    let user = JSON.parse(localStorage.getItem('user'));
 
     // Set auth token header auth
     setAuthToken(token);
 
     token = jwtDecode(token);
-
+    const auth = { token, user };
     // Set user and isAuthenticated
-    store.dispatch(setCurrentUser(token));
+    store.dispatch(setCurrentUser(auth));
   }
 
   return (

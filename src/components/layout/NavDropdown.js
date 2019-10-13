@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import DropdownWrapper from 'components/common/dropdowns/DropdownWrapper';
 import UnstyledButton from 'components/common/buttons/UnstyledButton';
 import { logoutUser } from 'actions/auth';
@@ -43,6 +44,15 @@ const NavDropdownListItem = styled.li`
 `;
 
 const LogoutButton = styled(UnstyledButton)`
+  font-size: ${props => props.theme.fontSizes.prominent2};
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  color: inherit;
+`;
+
+const ProfileButton = styled(Link)`
+  display: block;
   font-size: ${props => props.theme.fontSizes.prominent2};
   height: 100%;
   width: 100%;
@@ -93,9 +103,9 @@ function NavDropdown(props) {
           </LogoutButton>
         </NavDropdownListItem>
         <NavDropdownListItem>
-          <LogoutButton>
+          <ProfileButton to="/profile">
             <LogoutIcon className="fas fa-user"></LogoutIcon>Profile
-          </LogoutButton>
+          </ProfileButton>
         </NavDropdownListItem>
       </NavDropdownList>
     </NavDropdownWrapper>

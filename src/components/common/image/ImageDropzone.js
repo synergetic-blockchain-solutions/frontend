@@ -77,6 +77,7 @@ class ImageDropzone extends Component {
 
   render() {
     const { dragOver } = this.state;
+    const { multiple } = this.props;
     return (
       <React.Fragment>
         <ImageContainer
@@ -96,15 +97,20 @@ class ImageDropzone extends Component {
           name="dropzone"
           type="file"
           onChange={this.onChange}
-          multiple
+          multiple={multiple}
         />
       </React.Fragment>
     );
   }
 }
 
+ImageDropzone.defaultProps = {
+  multiple: true,
+};
+
 ImageDropzone.propTypes = {
   recieveImage: PropTypes.func.isRequired,
+  multiple: PropTypes.bool.isRequired,
 };
 
 export default ImageDropzone;

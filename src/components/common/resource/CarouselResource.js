@@ -23,7 +23,7 @@ class Resource extends Component {
   };
 
   componentDidMount() {
-    const { artifactId, id, contentType } = this.props;
+    const { artifactId, id } = this.props;
 
     axios
       .get(

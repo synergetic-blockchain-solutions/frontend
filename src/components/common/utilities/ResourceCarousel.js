@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import AliceCarousel from 'react-alice-carousel';
-import Resource from 'components/common/resource/Resource';
+import Resource from 'components/common/resource/CarouselResource';
 
 const ResourceCarousel = props => {
   const { resources } = props;
@@ -18,6 +18,7 @@ const ResourceCarousel = props => {
             artifactId={resource.artifact}
           />
           <p className="legend">{resource.name}</p>
+          <p className="legend">{resource.description}</p>
         </div>
       );
     });

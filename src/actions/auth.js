@@ -3,6 +3,9 @@ import {
   LOGIN_REQUEST,
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
+  GET_MYSELF_REQUEST,
+  GET_MYSELF_SUCCESS,
+  GET_MYSELF_FAILURE,
   SET_CURRENT_USER,
   TOKEN_REFRESH_SUCCESS,
   TOKEN_REFRESH_REQUEST,
@@ -60,6 +63,19 @@ export const loginUser = (email, password) => ({
 });
 
 /**
+ * @route /user/me
+ * @method GET
+ * @desc get the user data
+ */
+export const getUsersOwnData = () => ({
+  [CALL_API]: {
+    endpoint: '/user/me',
+    method: 'GET',
+    types: [GET_MYSELF_REQUEST, GET_MYSELF_SUCCESS, GET_MYSELF_FAILURE],
+  },
+});
+
+/**
  * @route /api/logout
  * @method POST
  * @param none
@@ -90,16 +106,14 @@ export const attemptTokenRefresh = () => ({
 /**
  * @param {object} token
  * @param {object} user
- * @param {array} subjectTopics
  * @desc gets the token and user information
  * from localstorage and then sets them both in
  * the redux state
  */
-export const setCurrentUser = (token, user, subjectTopics) => ({
+export const setCurrentUser = ({ token, user }) => ({
   type: SET_CURRENT_USER,
   token,
   user,
-  subjectTopics,
 });
 
 /**

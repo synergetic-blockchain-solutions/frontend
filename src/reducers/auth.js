@@ -8,6 +8,9 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
+  GET_MYSELF_REQUEST,
+  GET_MYSELF_SUCCESS,
+  GET_MYSELF_FAILURE,
   TOKEN_REFRESH_SUCCESS,
   SAVE_REFRESH_TOKEN_PROMISE,
   CLEAR_REFRESH_TOKEN_PROMISE,
@@ -25,6 +28,7 @@ const initialState = {
   loading: false,
   errors: {},
   success: '',
+  user: {},
 };
 
 export default function(state = initialState, action) {
@@ -54,6 +58,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         token: action.token,
+        user: action.user,
       };
     case LOGIN_REQUEST:
       return {
@@ -75,6 +80,20 @@ export default function(state = initialState, action) {
         errors: {},
         loading: false,
         success: 'Successfully logged in',
+      };
+    case GET_MYSELF_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        success: '',
+        failure: {},
+      };
+    case GET_MYSELF_SUCCESS:
+      setLocalStorage(action.payload, 'user');
+      return {
+        ...state,
+        loading: false,
+        user: action.payload,
       };
     case TOKEN_REFRESH_SUCCESS:
       setAuthToken(action.payload.token);

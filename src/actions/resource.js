@@ -29,7 +29,7 @@ export const addResourceToArtifact = (id, formData) => ({
 });
 
 /**
- * @route /artifact/{artifactId}/resource/{resourceId}
+ * @route /artifact/{artifactId}/resource/{resourceId}/resource
  * @method GET
  * @param {number} artifactId
  * @param {number} resourceId
