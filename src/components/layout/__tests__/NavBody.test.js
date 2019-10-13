@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount} from 'enzyme';
 import TestRoot from 'TestRoot';
+import NavBody from '../NavBody';
 
 let wrapped;
 
