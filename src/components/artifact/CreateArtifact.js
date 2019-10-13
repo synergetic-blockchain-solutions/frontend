@@ -278,6 +278,7 @@ class CreateArtifact extends Component {
                 addElem={this.addOwner}
                 removeElem={this.removeOwner}
                 values={owners}
+                isUserSearch
               />
               <InputAdder
                 type="text"
@@ -287,6 +288,7 @@ class CreateArtifact extends Component {
                 addElem={this.addUser}
                 removeElem={this.removeUser}
                 values={sharedWith}
+                isUserSearch
               />
               <ButtonMedium
                 clickEvent={this.submit}

@@ -46,6 +46,8 @@ export const theme = {
     colorGrayMedium: '#e3e3e3',
     colorDanger: '#dc3545',
     colorWarning: '#E38C2A',
+    colorSuccess: '#C4AD57',
+    colorInfo: '#72DDE8',
   },
   fonts: {
     fontFancy: "'Signika', sans-serif",

@@ -10,7 +10,11 @@ import {
   REGISTER_FAILURE,
   GET_MYSELF_REQUEST,
   GET_MYSELF_SUCCESS,
-  GET_MYSELF_FAILURE,
+  GET_USER_BY_NAME_SUCCESS,
+  CLEAR_USER_BY_NAME,
+  UPDATE_USER_DATA_REQUEST,
+  UPDATE_USER_DATA_SUCCESS,
+  UPDATE_USER_DATA_FAILURE,
   TOKEN_REFRESH_SUCCESS,
   SAVE_REFRESH_TOKEN_PROMISE,
   CLEAR_REFRESH_TOKEN_PROMISE,
@@ -29,6 +33,7 @@ const initialState = {
   errors: {},
   success: '',
   user: {},
+  searchedUsers: [],
 };
 
 export default function(state = initialState, action) {
@@ -95,6 +100,16 @@ export default function(state = initialState, action) {
         loading: false,
         user: action.payload,
       };
+    case GET_USER_BY_NAME_SUCCESS:
+      return {
+        ...state,
+        searchedUsers: action.payload,
+      };
+    case CLEAR_USER_BY_NAME:
+      return {
+        ...state,
+        searchedUsers: [],
+      };
     case TOKEN_REFRESH_SUCCESS:
       setAuthToken(action.payload.token);
       setLocalStorage(action.payload.token, 'token');
@@ -121,6 +136,27 @@ export default function(state = initialState, action) {
       localStorage.clear();
       window.location.reload();
       return Object.assign({}, state, initialState);
+    case UPDATE_USER_DATA_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        success: '',
+        failure: {},
+      };
+    case UPDATE_USER_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: 'User Data Updated Successfully',
+        user: action.payload,
+      };
+    case UPDATE_USER_DATA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        success: '',
+        failure: action.payload,
+      };
     case CLEAR_ERRORS:
       return {
         ...state,

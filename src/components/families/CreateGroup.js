@@ -54,9 +54,9 @@ class Creategroup extends Component {
       nextProps.group.success === REGISTER_GROUP_SUCCESS &&
       !isEmpty(prevState.image)
     ) {
-      const formData = new FormData();
-      formData.append('image', prevState.image.file);
-      nextProps.addImageToGroup(nextProps.group.group.id, formData);
+      // const formData = new FormData();
+      // formData.append('image', prevState.image.file);
+      nextProps.addImageToGroup(nextProps.group.group.id, prevState.image.file);
     } else if (nextProps.group === ADD_GROUP_IMAGE_SUCCESS) {
       return { ...prevState, finished: true };
     } else if (

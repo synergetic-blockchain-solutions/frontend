@@ -6,6 +6,12 @@ import {
   GET_MYSELF_REQUEST,
   GET_MYSELF_SUCCESS,
   GET_MYSELF_FAILURE,
+  UPDATE_USER_DATA_REQUEST,
+  UPDATE_USER_DATA_SUCCESS,
+  UPDATE_USER_DATA_FAILURE,
+  GET_USER_BY_NAME_REQUEST,
+  GET_USER_BY_NAME_SUCCESS,
+  GET_USER_BY_NAME_FAILURE,
   SET_CURRENT_USER,
   TOKEN_REFRESH_SUCCESS,
   TOKEN_REFRESH_REQUEST,
@@ -20,6 +26,7 @@ import {
   CLEAR_SUCCESS,
   CLEAR_AUTH,
 } from 'actions/types';
+import { CLEAR_USER_BY_NAME } from './types';
 
 /**
  * @route /register
@@ -72,6 +79,52 @@ export const getUsersOwnData = () => ({
     endpoint: '/user/me',
     method: 'GET',
     types: [GET_MYSELF_REQUEST, GET_MYSELF_SUCCESS, GET_MYSELF_FAILURE],
+  },
+});
+
+/**
+ * @route /user?name&email
+ * @method GET
+ * @desc get users matching the search
+ */
+export const getUserByName = search => ({
+  [CALL_API]: {
+    endpoint: '/user',
+    method: 'GET',
+    query: {
+      name: search,
+    },
+    types: [
+      GET_USER_BY_NAME_REQUEST,
+      GET_USER_BY_NAME_SUCCESS,
+      GET_USER_BY_NAME_FAILURE,
+    ],
+  },
+});
+
+export const clearUserSearch = () => ({
+  type: CLEAR_USER_BY_NAME,
+});
+
+/**
+ * @route /user/:id
+ * @method PUT
+ * @desc get the user data
+ */
+export const updateUserData = (id, email, name, groups) => ({
+  [CALL_API]: {
+    endpoint: `/user/${id}`,
+    method: 'PUT',
+    body: {
+      email,
+      name,
+      groups,
+    },
+    types: [
+      UPDATE_USER_DATA_REQUEST,
+      UPDATE_USER_DATA_SUCCESS,
+      UPDATE_USER_DATA_FAILURE,
+    ],
   },
 });
 
