@@ -39,13 +39,14 @@ class FamilySummary extends Component {
       });
   }
   render() {
-    const { src, name, id } = this.props;
+    const { name, id } = this.props;
     const { image } = this.state;
+    console.log(this.state);
     return (
       <FamilyLink to={`/family/${id}`}>
         <SummaryContainer>
           <Summary
-            srcUrl={!isEmpty(src) ? `data:image/png;base64,${image}` : ''}
+            srcUrl={!isEmpty(image) ? `data:image/png;base64,${image}` : ''}
           >
             <FamilyTitle>{name}</FamilyTitle>
           </Summary>
