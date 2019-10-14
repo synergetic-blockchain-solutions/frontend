@@ -3,6 +3,9 @@ import {
   REGISTER_GROUP_REQUEST,
   REGISTER_GROUP_SUCCESS,
   REGISTER_GROUP_FAILURE,
+  UPDATE_GROUP_REQUEST,
+  UPDATE_GROUP_SUCCESS,
+  UPDATE_GROUP_FAILURE,
   GET_ALL_GROUPS_REQUEST,
   GET_ALL_GROUPS_SUCCESS,
   GET_ALL_GROUPS_FAILURE,
@@ -38,6 +41,29 @@ export const createGroup = (name, description, admins, members) => ({
       REGISTER_GROUP_SUCCESS,
       REGISTER_GROUP_FAILURE,
     ],
+  },
+});
+
+/**
+ * @route /group/:id
+ * @method PUT
+ * @param {string} name
+ * @param {string} description
+ * @param {array} admins
+ * @param {array} members
+ * @desc Create a group
+ */
+export const updateGroup = (id, name, description, admins, members) => ({
+  [CALL_API]: {
+    endpoint: `/group/${id}`,
+    method: 'PUT',
+    body: {
+      name,
+      description,
+      admins,
+      members,
+    },
+    types: [UPDATE_GROUP_REQUEST, UPDATE_GROUP_SUCCESS, UPDATE_GROUP_FAILURE],
   },
 });
 

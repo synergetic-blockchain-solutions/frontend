@@ -11,6 +11,9 @@ import {
   ADD_GROUP_IMAGE_REQUEST,
   ADD_GROUP_IMAGE_SUCCESS,
   ADD_GROUP_IMAGE_FAILURE,
+  UPDATE_GROUP_REQUEST,
+  UPDATE_GROUP_SUCCESS,
+  UPDATE_GROUP_FAILURE,
 } from 'actions/types';
 
 const initialState = {
@@ -96,6 +99,27 @@ export default function(state = initialState, action) {
         ...state,
         loading: false,
         failure: action.payload,
+      };
+    case UPDATE_GROUP_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        failure: {},
+        success: '',
+      };
+    case UPDATE_GROUP_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        group: action.payload,
+        success: 'User Successfully Added',
+      };
+    case UPDATE_GROUP_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        failure: action.payload,
+        success: '',
       };
     default:
       return state;

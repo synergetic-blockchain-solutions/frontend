@@ -37,13 +37,7 @@ class ViewFamilies extends Component {
         <ViewFamiliesTitle>View Families</ViewFamiliesTitle>
         {groups &&
           groups.map(group => {
-            return (
-              <FamilySummary
-                src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-                name={group.name}
-                id={group.id}
-              />
-            );
+            return <FamilySummary name={group.name} id={group.id} />;
           })}
         <EditButton to={`/families/create`}>
           <ButtonIcon className="fas fa-plus-circle"></ButtonIcon>

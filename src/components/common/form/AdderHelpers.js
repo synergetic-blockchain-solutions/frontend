@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import UnstyledButton from 'components/common/buttons/UnstyledButton';
+import { ButtonBase } from 'components/common/buttons/Button';
 
 export const AddedContainer = styled.div``;
 
@@ -22,4 +23,11 @@ export const AddedDelete = styled(UnstyledButton)`
   color: ${props => props.theme.colors.colorDanger};
   background-color: ${props => props.theme.colors.colorWhite};
   border-radius: 50%;
+`;
+
+export const ReccomendButton = styled(ButtonBase)`
+  padding: 0.5rem 2rem;
+  background-color: ${props => props.theme.colors.colorSuccess};
+  color: ${props => props.theme.colors.colorWhite};
+  border-radius: 20px;
 `;
