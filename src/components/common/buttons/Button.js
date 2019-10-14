@@ -8,12 +8,12 @@ export const ButtonBase = styled.button`
 
   :hover:enabled {
     cursor: pointer;
-    transform: translateY(-2px);
+    /* transform: translateY(-2px); */
     transition: 0.2s ease-in;
   }
 
   :active:enabled {
-    transform: translateY(1px);
+    /* transform: translateY(1px); */
     outline: none;
   }
 `;

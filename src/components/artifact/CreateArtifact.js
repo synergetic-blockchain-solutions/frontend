@@ -25,6 +25,11 @@ const DivSpacing = styled.div`
   margin: 1rem 0;
 `;
 
+const Title = styled.h1`
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+`;
+
 class CreateArtifact extends Component {
   validator = new FormValidator([
     {
@@ -207,9 +212,9 @@ class CreateArtifact extends Component {
           />
         ) : (
           <React.Fragment>
-            <h2>
-              <center>Add a new artifact</center>
-            </h2>
+            <Title>
+              <center>Add A New Artifact</center>
+            </Title>
             <Form onSubmit={this.submit}>
               <AuthInput
                 handleStandardChange={this.handleStandardChange}
@@ -218,7 +223,7 @@ class CreateArtifact extends Component {
                 name="name"
                 placeholder="Name"
                 marginBottom="1rem"
-                label="Name"
+                label="Name*"
                 error={validation.name.message}
               />
               <DivSpacing>
@@ -258,7 +263,7 @@ class CreateArtifact extends Component {
                 name="description"
                 placeholder="Description"
                 marginBottom="1rem"
-                label="Description"
+                label="Description*"
               />
               {!isEmpty(usersGroups) && (
                 <Select
@@ -273,8 +278,8 @@ class CreateArtifact extends Component {
               <InputAdder
                 type="text"
                 inputName="owners"
-                placeholder="Add names of people who have permission to edit this artifact"
-                label="Add names of people who have permission to edit this artifact"
+                placeholder="Add owners"
+                label="Add owners of the artifact (owners will be able to edit it)"
                 addElem={this.addOwner}
                 removeElem={this.removeOwner}
                 values={owners}
@@ -283,8 +288,8 @@ class CreateArtifact extends Component {
               <InputAdder
                 type="text"
                 name="sharedWith"
-                placeholder="Share this artifact with other Memory Books users"
-                label="Share Artifact with other memory books users by typing in their name here"
+                placeholder="Share artifact with other users"
+                label="Share artifact with other users"
                 addElem={this.addUser}
                 removeElem={this.removeUser}
                 values={sharedWith}

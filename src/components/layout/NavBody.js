@@ -21,10 +21,10 @@ const NavBarLink = styled(NavLink)`
     }
   }
 
-  color: ${props => props.theme.colorDarkBlue};
+  color: ${props => props.theme.colorWhite};
   width: fit-content;
   height: 7rem;
-  font-size: 1.6rem;
+  font-size: 2rem;
   text-decoration: none;
   padding: 2rem;
   display: flex;
@@ -41,6 +41,7 @@ const NavBarLinkCollapsing = styled(NavBarLink)`
 
 const NavLinkText = styled.span`
   margin-right: 2rem;
+  color: ${props => props.theme.colors.colorWhite};
 `;
 
 const NavBodyContainer = styled.div`
@@ -49,7 +50,7 @@ const NavBodyContainer = styled.div`
   width: fit-content;
 
   @media (max-width: ${props => props.theme.breakpoints.smallScreen}) {
-    background-color: ${props => props.theme.colors.colorPrimaryLight};
+    background-color: ${props => props.theme.colors.colorPrimary};
     display: ${props => (props.display === 'true' ? 'flex' : 'none')};
     flex-direction: column;
     position: absolute;
@@ -68,7 +69,7 @@ function NavBody(props) {
       {hasAuth ? (
         <React.Fragment>
           <NavBarLink to="/families">
-            <NavLinkText> Familys </NavLinkText>
+            <NavLinkText> Families </NavLinkText>
             <i className="fas fa-users"></i>
           </NavBarLink>
           <NavBarLink to="/my-artifacts">

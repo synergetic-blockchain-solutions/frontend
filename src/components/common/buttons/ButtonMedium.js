@@ -7,21 +7,20 @@ import { ButtonBase } from './Button';
 const Button = styled(ButtonBase)`
   width: 15rem;
   height: 4rem;
-  border: none;
-  border-radius: 30px;
   font-size: 1.6rem;
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
-  margin: ${props => props.margin};
+  margin: ${props => props.margin} auto;
   outline: none;
 
-  &.btn-primary-light {
+  &.dark-brown {
     color: ${props => props.theme.colors.colorWhite};
-    background-color: ${props => props.theme.colors.colorPrimaryLight};
+    background-color: ${props => props.theme.colors.colorDarkBrown};
+    border-bottom: 0.5rem solid ${props => props.theme.colors.colorDarkerBrown};
 
     :hover {
-      background-color: ${props =>
-        props.theme.colors.colorPrimaryLightDarkened};
+      border-bottom: 0.1rem solid
+        ${props => props.theme.colors.colorDarkerBrown};
     }
   }
 
@@ -46,7 +45,8 @@ const Button = styled(ButtonBase)`
   }
 
   &.btn-block {
-    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
   }
 `;
 

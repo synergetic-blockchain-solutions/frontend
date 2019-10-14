@@ -14,6 +14,10 @@ import Success from 'components/common/visual/Success';
 
 const Form = styled.form``;
 
+export const Center = styled.div`
+  text-align: center;
+`;
+
 class RegistrationForm extends Component {
   validator = new FormValidator([
     {
@@ -143,20 +147,22 @@ class RegistrationForm extends Component {
                 label="Confirm Password"
                 error={validation.passwordConfirm.message}
               />
-              <ButtonMedium
-                clickEvent={this.submit}
-                Link
-                to="/"
-                text="Sign Up Now!"
-                disabled={
-                  isEmpty(name) ||
-                  isEmpty(email) ||
-                  isEmpty(password) ||
-                  isEmpty(passwordConfirm)
-                }
-                color="btn-block btn-primary-light"
-                margin="1rem 0 0 0"
-              />
+              <Center>
+                <ButtonMedium
+                  clickEvent={this.submit}
+                  Link
+                  to="/"
+                  text="Sign Up Now!"
+                  disabled={
+                    isEmpty(name) ||
+                    isEmpty(email) ||
+                    isEmpty(password) ||
+                    isEmpty(passwordConfirm)
+                  }
+                  color="btn-block dark-brown"
+                  margin="1rem 0 0 0"
+                />
+              </Center>
             </Form>
           </React.Fragment>
         )}

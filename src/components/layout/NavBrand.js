@@ -9,7 +9,7 @@ import isEmpty from 'helpers/is-empty';
 const NavBrandContainer = styled(NavLink)`
   display: block;
   height: 5rem;
-  width: 7rem;
+  width: 10rem;
   margin-left: 2rem;
   margin-top: 1rem;
 `;

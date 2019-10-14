@@ -7,13 +7,12 @@ const ImageContainer = styled.label`
   display: block;
   position: relative;
   width: 100%;
-  height: 30rem;
+  height: 20rem;
   border: 2px dashed
     ${props =>
       props.dragOver
         ? props.theme.colors.primaryLight
         : props.theme.colors.colorBlack};
-  border-radius: 10px;
 `;
 
 const ImageText = styled.h3`
