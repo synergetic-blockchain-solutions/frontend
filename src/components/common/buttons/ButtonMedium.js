@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import debouncedButton from './debouncedButton';
+import { ButtonBase } from './Button';
 
-const Button = styled.button`
+const Button = styled(ButtonBase)`
   width: 15rem;
   height: 4rem;
   border: none;
@@ -14,22 +15,6 @@ const Button = styled.button`
   margin: ${props => props.margin};
   outline: none;
 
-  :disabled {
-    background-color: ${props => props.theme.colors.colorGrayLight2} !important;
-    cursor: auto;
-  }
-
-  :hover:enabled {
-    cursor: pointer;
-    transform: translateY(-2px);
-    transition: 0.2s ease-in;
-  }
-
-  :active:enabled {
-    transform: translateY(1px);
-    outline: none;
-  }
-
   &.btn-primary-light {
     color: ${props => props.theme.colors.colorWhite};
     background-color: ${props => props.theme.colors.colorPrimaryLight};
@@ -38,6 +23,26 @@ const Button = styled.button`
       background-color: ${props =>
         props.theme.colors.colorPrimaryLightDarkened};
     }
+  }
+
+  &.warning {
+    color: ${props => props.theme.colors.colorWhite};
+    background-color: ${props => props.theme.colors.colorWarning};
+  }
+
+  &.success {
+    color: ${props => props.theme.colors.colorWhite};
+    background-color: ${props => props.theme.colors.colorSuccess};
+  }
+
+  &.info {
+    color: ${props => props.theme.colors.colorWhite};
+    background-color: ${props => props.theme.colors.colorInfo};
+  }
+
+  &.gray {
+    color: ${props => props.theme.colors.colorWhite};
+    background-color: ${props => props.theme.colors.colorGrayMedium};
   }
 
   &.btn-block {

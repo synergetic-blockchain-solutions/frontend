@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import moment from 'moment';
 import AuthInput from 'components/common/inputs/AuthInput';
 import TextAreaInput from 'components/common/inputs/TextAreaInput';
 import ButtonMedium from 'components/common/buttons/ButtonMedium';
-//import isEmpty from 'helpers/is-empty';
 import { registerArtifact, resetArtifact } from 'actions/artifact';
 import { addResourceToArtifact } from 'actions/resource';
+import { getGroups } from 'actions/group';
 import { REGISTER_ARTIFACT_SUCCESS } from 'actions/types';
 import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/common/containers/FormDisplayContainer';
@@ -15,8 +16,10 @@ import ImageDropzone from 'components/common/image/ImageDropzone';
 import ImagePreview from 'components/common/image/ImagePreview';
 import isEmpty from 'helpers/is-empty';
 import Success from 'components/common/visual/Success';
+import InputAdder from 'components/common/form/InputAdder';
+import Select from 'components/common/inputs/Select';
 
-const Form = styled.form``;
+const Form = styled.div``;
 
 const DivSpacing = styled.div`
   margin: 1rem 0;
@@ -35,14 +38,19 @@ class CreateArtifact extends Component {
   state = {
     name: '',
     image: [],
-    tag: '',
-    dateTaken: '',
+    tag: [],
+    date: '',
     description: '',
-    addToFamilies: '',
-    address: '',
+    groups: [],
+    owners: [],
+    sharedWith: [],
     validation: this.validator.valid(),
     finished: false,
   };
+
+  componentDidMount() {
+    this.props.getGroups();
+  }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
@@ -54,12 +62,9 @@ class CreateArtifact extends Component {
         let formData = new FormData();
         formData.append(
           'metadata',
-          JSON.stringify({
-            name: 'flathem',
-            description: 'flathem',
-          })
+          JSON.stringify(prevState.image[file].metaData)
         );
-        formData.append('resource', prevState.image[file].file);
+        formData.append('resource', prevState.image[file].image.file);
         nextProps.addResourceToArtifact(
           nextProps.artifact.artifact.id,
           formData
@@ -87,8 +92,22 @@ class CreateArtifact extends Component {
 
   recieveImage = image => {
     this.setState(prevState => {
-      return { image: [...prevState.image, image] };
+      return {
+        image: [
+          ...prevState.image,
+          { image, metaData: { name: '', description: '', tags: [] } },
+        ],
+      };
     });
+  };
+
+  handleMetaDataChange = e => {
+    const [field, position] = e.target.name.split('-');
+    const { image } = this.state;
+    const newImages = image;
+    const changedImage = newImages[Number(position)];
+    changedImage.metaData[field] = e.target.value;
+    this.setState({ images: newImages });
   };
 
   deleteImage = e => {
@@ -100,6 +119,34 @@ class CreateArtifact extends Component {
     }));
   };
 
+  handleGroupSelect = groups => {
+    this.setState({ groups: groups });
+  };
+
+  addOwner = owner =>
+    this.setState(prevState => ({
+      owners: [...prevState.owners, owner],
+    }));
+
+  removeOwner = ownerIndex =>
+    this.setState(prevState => ({
+      owners: prevState.owners.filter((gr, index) => {
+        return index !== ownerIndex;
+      }),
+    }));
+
+  addUser = user =>
+    this.setState(prevState => ({
+      sharedWith: [...prevState.sharedWith, user],
+    }));
+
+  removeUser = userIndex =>
+    this.setState(prevState => ({
+      sharedWith: prevState.sharedWith.filter((gr, index) => {
+        return index !== userIndex;
+      }),
+    }));
+
   submit = e => {
     e.preventDefault();
 
@@ -110,26 +157,27 @@ class CreateArtifact extends Component {
     const {
       name,
       tag,
-      dateTaken,
+      date,
       description,
-      addToFamilies,
-      address,
+      groups,
+      sharedWith,
+      owners,
     } = this.state;
 
     if (validation.isValid) {
       this.props.registerArtifact(
         name,
-        tag,
-        dateTaken,
         description,
-        addToFamilies,
-        address
+        owners,
+        groups.map(group => group.value),
+        sharedWith,
+        tag,
+        moment(date).format()
       );
     }
   };
 
   render() {
-    console.log(this.state);
     // if the form has been submitted at least once
     // then check validity every time we render
     let validation = this.submitted
@@ -138,15 +186,15 @@ class CreateArtifact extends Component {
 
     const {
       name,
-      tag,
-      dateTaken,
+      date,
       description,
-      addToFamilies,
-      address,
+      owners,
+      sharedWith,
       image,
       finished,
     } = this.state;
 
+    const { usersGroups, user } = this.props;
     const { artifact } = this.props.artifact;
 
     return (
@@ -184,27 +232,21 @@ class CreateArtifact extends Component {
                 {image.map((img, index) => {
                   return (
                     <ImagePreview
-                      src={img.preview}
+                      src={img.image.preview}
                       deleteImage={this.deleteImage}
                       position={index}
+                      metaData={img.metaData}
+                      handleMetaDataChange={this.handleMetaDataChange}
+                      key={index}
                     />
                   );
                 })}
               </DivSpacing>
               <AuthInput
                 handleStandardChange={this.handleStandardChange}
-                value={tag}
-                type="text"
-                name="tag"
-                placeholder="Tag"
-                marginBottom="1rem"
-                label="Tag"
-              />
-              <AuthInput
-                handleStandardChange={this.handleStandardChange}
-                value={dateTaken}
+                value={date}
                 type="date"
-                name="dateTaken"
+                name="date"
                 placeholder="Date Taken"
                 marginBottom="1rem"
                 label="Date Taken"
@@ -218,23 +260,35 @@ class CreateArtifact extends Component {
                 marginBottom="1rem"
                 label="Description"
               />
-              <AuthInput
-                handleStandardChange={this.handleStandardChange}
-                value={addToFamilies}
+              {!isEmpty(usersGroups) && (
+                <Select
+                  groups={usersGroups.filter(
+                    usr => usr.id !== user.privateGroup.id
+                  )}
+                  handleSelect={this.handleGroupSelect}
+                  marginBottom="1rem"
+                  label="Select groups to share this artifact with"
+                />
+              )}
+              <InputAdder
                 type="text"
-                name="addToFamilies"
-                placeholder="Add To Families"
-                marginBottom="1rem"
-                label="Add To Families"
+                inputName="owners"
+                placeholder="Add names of people who have permission to edit this artifact"
+                label="Add names of people who have permission to edit this artifact"
+                addElem={this.addOwner}
+                removeElem={this.removeOwner}
+                values={owners}
+                isUserSearch
               />
-              <AuthInput
-                handleStandardChange={this.handleStandardChange}
-                value={address}
+              <InputAdder
                 type="text"
-                name="address"
-                placeholder="Address"
-                marginBottom="1rem"
-                label="Address"
+                name="sharedWith"
+                placeholder="Share this artifact with other Memory Books users"
+                label="Share Artifact with other memory books users by typing in their name here"
+                addElem={this.addUser}
+                removeElem={this.removeUser}
+                values={sharedWith}
+                isUserSearch
               />
               <ButtonMedium
                 clickEvent={this.submit}
@@ -256,36 +310,34 @@ CreateArtifact.propTypes = {
   artifact: PropTypes.object.isRequired,
   addResourceToArtifact: PropTypes.func.isRequired,
   resetArtifact: PropTypes.func.isRequired,
+  getGroups: PropTypes.func.isRequired,
+  usersGroups: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
   registerArtifact: (
     name,
-    image,
-    tag,
-    dateTaken,
     description,
-    addToFamilies,
-    address
+    owners,
+    groups,
+    sharedWith,
+    tag,
+    date
   ) =>
     dispatch(
-      registerArtifact(
-        name,
-        image,
-        tag,
-        dateTaken,
-        description,
-        addToFamilies,
-        address
-      )
+      registerArtifact(name, description, owners, groups, sharedWith, tag, date)
     ),
   addResourceToArtifact: (id, formData) =>
     dispatch(addResourceToArtifact(id, formData)),
   resetArtifact: () => dispatch(resetArtifact()),
+  getGroups: () => dispatch(getGroups()),
 });
 
 const mapStateToProps = state => ({
   artifact: state.artifact,
+  usersGroups: state.group.groups,
+  user: state.auth.user,
 });
 
 export default connect(

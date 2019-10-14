@@ -119,7 +119,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        resources: [...state.resources, new FormData(action.payload)],
+        resources: [...state.resources, action.payload],
       };
     case GET_ARTIFACT_RESOURCE_FAILURE:
       return {

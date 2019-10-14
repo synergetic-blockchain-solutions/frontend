@@ -35,6 +35,12 @@ class LoginForm extends Component {
     validation: this.validator.valid(),
   };
 
+  componentDidMount() {
+    if (!isEmpty(this.props.auth.token)) {
+      this.props.history.push('/dashboard');
+    }
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     if (!isEmpty(nextProps.auth.token)) {
       this.props.history.push('/dashboard');

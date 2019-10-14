@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import {
   SummaryContainer,
   Summary,
 } from 'components/common/summaries/BlockSummary';
+import isEmpty from 'helpers/is-empty';
 
 const FamilyTitle = styled.h2`
   position: absolute;
@@ -22,17 +24,36 @@ const FamilyLink = styled(Link)`
   width: 100%;
 `;
 
-function FamilySummary(props) {
-  const { src, name, id } = props;
-  return (
-    <FamilyLink to={`/family/${id}`}>
-      <SummaryContainer>
-        <Summary srcUrl={src}>
-          <FamilyTitle>{name}</FamilyTitle>
-        </Summary>
-      </SummaryContainer>
-    </FamilyLink>
-  );
+class FamilySummary extends Component {
+  state = {
+    image: '',
+  };
+  componentDidMount() {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/group/${this.props.id}/image`)
+      .then(res => {
+        this.setState({ image: res.data });
+      })
+      .catch(err => {
+        this.setState({ image: '' });
+      });
+  }
+  render() {
+    const { name, id } = this.props;
+    const { image } = this.state;
+    console.log(this.state);
+    return (
+      <FamilyLink to={`/family/${id}`}>
+        <SummaryContainer>
+          <Summary
+            srcUrl={!isEmpty(image) ? `data:image/png;base64,${image}` : ''}
+          >
+            <FamilyTitle>{name}</FamilyTitle>
+          </Summary>
+        </SummaryContainer>
+      </FamilyLink>
+    );
+  }
 }
 
 FamilySummary.propTypes = {
