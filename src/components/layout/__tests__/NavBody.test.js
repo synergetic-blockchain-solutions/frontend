@@ -5,13 +5,17 @@ import NavBody from '../NavBody';
 
 let wrapped;
 
+const props={
+  display: "display",
+  hasAuth: 'true'
+}
 
 
 describe('The NavBody component', () => {
   beforeEach(() => {
     wrapped = mount(
       <TestRoot>
-        <NavBody/>
+        <NavBody {...props}/>
       </TestRoot>
     );
     

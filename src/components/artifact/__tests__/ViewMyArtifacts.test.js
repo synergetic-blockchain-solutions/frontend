@@ -9,7 +9,7 @@ describe('The Create Artefact Component', () => {
   beforeEach(() => {
     wrapped = mount(
       <TestRoot>
-        <ViewMyArtifacts />
+        <ViewMyArtifacts/>
       </TestRoot>
     );
   });
@@ -25,7 +25,6 @@ describe('The Create Artefact Component', () => {
         wrapped.find('h1').length
     ).toEqual(1);
   });
-
  
   
   });
