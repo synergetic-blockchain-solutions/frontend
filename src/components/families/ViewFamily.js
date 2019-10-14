@@ -3,9 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { getGroup } from 'actions/group';
+import Page from 'components/common/containers/Page';
 
-const ViewFamilyPage = styled.section`
-  margin-top: 8rem;
+const ViewFamilyPage = styled(Page)``;
+
+const FamilyTitle = styled.h1`
+  font-size: 3rem;
+  text-align: center;
 `;
 
 class ViewFamily extends Component {
@@ -15,9 +19,13 @@ class ViewFamily extends Component {
 
   render() {
     const { group } = this.props;
-    const { name } = group;
-    console.log(this.props);
-    return <ViewFamilyPage>{name}</ViewFamilyPage>;
+    const { name, admins, albums, artifacts, description, id, members } = group;
+
+    return (
+      <ViewFamilyPage>
+        <FamilyTitle>{name}</FamilyTitle>
+      </ViewFamilyPage>
+    );
   }
 }
 

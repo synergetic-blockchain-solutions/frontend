@@ -6,7 +6,8 @@ import moment from 'moment';
 import AuthInput from 'components/common/inputs/AuthInput';
 import TextAreaInput from 'components/common/inputs/TextAreaInput';
 import ButtonMedium from 'components/common/buttons/ButtonMedium';
-import { registerArtifact, resetArtifact } from 'actions/artifact';
+//import isEmpty from 'helpers/is-empty';
+import { registerArtifact, resetArtifact, getArtifact } from 'actions/artifact';
 import { addResourceToArtifact } from 'actions/resource';
 import { getGroups } from 'actions/group';
 import { REGISTER_ARTIFACT_SUCCESS } from 'actions/types';
@@ -19,7 +20,7 @@ import Success from 'components/common/visual/Success';
 import InputAdder from 'components/common/form/InputAdder';
 import Select from 'components/common/inputs/Select';
 
-const Form = styled.div``;
+const Form = styled.form``;
 
 const DivSpacing = styled.div`
   margin: 1rem 0;
@@ -49,36 +50,31 @@ class CreateArtifact extends Component {
   };
 
   componentDidMount() {
+    this.props.getArtifact(Number(this.props.match.params.id));
     this.props.getGroups();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (
-      !isEmpty(nextProps.artifact.artifact) &&
-      nextProps.artifact.success === REGISTER_ARTIFACT_SUCCESS &&
-      !isEmpty(prevState.image)
-    ) {
-      for (let file in prevState.image) {
-        let formData = new FormData();
-        formData.append(
-          'metadata',
-          JSON.stringify(prevState.image[file].metaData)
-        );
-        formData.append('resource', prevState.image[file].image.file);
-        nextProps.addResourceToArtifact(
-          nextProps.artifact.artifact.id,
-          formData
-        );
-      }
+    const {
+      albums,
+      description,
+      groups,
+      id,
+      name,
+      owners,
+      resources,
+      tags,
+    } = nextProps.artifact.artifact;
+    if (!isEmpty(nextProps.artifact.artifact) && prevState.name === '') {
+      return {
+        ...prevState,
+        tag: tags,
+        description,
+        groups: groups.map(group => ({ value: id, label: group.name })),
+        name,
+        owners: owners.map(owner => owner.name),
+      };
     }
-
-    if (
-      nextProps.artifact.successCount === prevState.image.length &&
-      nextProps.artifact.success
-    ) {
-      return { finished: true };
-    }
-    return prevState;
   }
 
   componentWillUnmount() {
@@ -192,6 +188,7 @@ class CreateArtifact extends Component {
       sharedWith,
       image,
       finished,
+      groups,
     } = this.state;
 
     const { usersGroups } = this.props;
@@ -268,6 +265,7 @@ class CreateArtifact extends Component {
                   handleSelect={this.handleGroupSelect}
                   marginBottom="1rem"
                   label="Select the groups to share to (it will automatically add to your personal group)"
+                  selected={groups}
                 />
               )}
               <InputAdder
@@ -278,7 +276,6 @@ class CreateArtifact extends Component {
                 addElem={this.addOwner}
                 removeElem={this.removeOwner}
                 values={owners}
-                isUserSearch
               />
               <InputAdder
                 type="text"
@@ -288,7 +285,6 @@ class CreateArtifact extends Component {
                 addElem={this.addUser}
                 removeElem={this.removeUser}
                 values={sharedWith}
-                isUserSearch
               />
               <ButtonMedium
                 clickEvent={this.submit}
@@ -312,6 +308,7 @@ CreateArtifact.propTypes = {
   resetArtifact: PropTypes.func.isRequired,
   getGroups: PropTypes.func.isRequired,
   usersGroups: PropTypes.array.isRequired,
+  getArtifact: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -331,6 +328,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(addResourceToArtifact(id, formData)),
   resetArtifact: () => dispatch(resetArtifact()),
   getGroups: () => dispatch(getGroups()),
+  getArtifact: id => dispatch(getArtifact(id)),
 });
 
 const mapStateToProps = state => ({

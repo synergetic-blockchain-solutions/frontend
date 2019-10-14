@@ -9,31 +9,54 @@ import {
   GET_GROUP_REQUEST,
   GET_GROUP_SUCCESS,
   GET_GROUP_FAILURE,
+  ADD_GROUP_IMAGE_REQUEST,
+  ADD_GROUP_IMAGE_SUCCESS,
+  ADD_GROUP_IMAGE_FAILURE,
 } from './types';
 
 /**
- * @route CreateGroup
+ * @route /group
  * @method POST
- * @param {string} groupName
- * @param {ImageBitmap} coverPhoto
- * @param {string} details
- * @param {String} tag
- * @desc create an group for  user
+ * @param {string} name
+ * @param {string} description
+ * @param {array} admins
+ * @param {array} members
+ * @desc Create a group
  */
-export const registerGroup = (groupName, coverPhoto, details, tag) => ({
+export const createGroup = (name, description, admins, members) => ({
   [CALL_API]: {
-    endpoint: '/CreateGroup',
+    endpoint: '/group',
     method: 'POST',
     body: {
-      groupName: groupName,
-      coverPhoto: coverPhoto,
-      details: details,
-      tag: tag,
+      name,
+      description,
+      admins,
+      members,
     },
     types: [
       REGISTER_GROUP_REQUEST,
       REGISTER_GROUP_SUCCESS,
       REGISTER_GROUP_FAILURE,
+    ],
+  },
+});
+
+/**
+ * @route /group/{id}/image
+ * @method PUT
+ * @param {number} id,
+ * @param {FormData} formData
+ * @desc Add an image to a group
+ */
+export const addImageToGroup = (id, formData) => ({
+  [CALL_API]: {
+    endpoint: `/group/${id}/image`,
+    method: 'PUT',
+    body: formData,
+    types: [
+      ADD_GROUP_IMAGE_REQUEST,
+      ADD_GROUP_IMAGE_SUCCESS,
+      ADD_GROUP_IMAGE_FAILURE,
     ],
   },
 });

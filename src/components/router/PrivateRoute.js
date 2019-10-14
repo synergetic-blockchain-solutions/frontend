@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { getUsersOwnData } from 'actions/auth';
 import isEmpty from 'helpers/is-empty';
 
 /**
@@ -13,6 +14,14 @@ import isEmpty from 'helpers/is-empty';
  * getting the topics for the users subjects
  */
 class PrivateRoute extends Component {
+  componentDidMount() {
+    console.log(this.props);
+    console.log(this.props.user);
+    if (isEmpty(this.props.user)) {
+      this.props.getUsersOwnData();
+    }
+  }
+
   render() {
     const { component: Component, auth, ...rest } = this.props;
     return (
@@ -27,22 +36,21 @@ class PrivateRoute extends Component {
 }
 
 PrivateRoute.propTypes = {
-  auth: PropTypes.shape({
-    exp: PropTypes.number,
-    iat: PropTypes.number,
-    nbf: PropTypes.number,
-    sub: PropTypes.number,
-    iss: PropTypes.string,
-    jti: PropTypes.string,
-    prv: PropTypes.string,
-  }).isRequired,
-  user: PropTypes.shape({
-    subjects: PropTypes.arrayOf(PropTypes.object),
-  }),
+  auth: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  getUsersOwnData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   auth: state.auth.token,
+  user: state.auth.user,
 });
 
-export default connect(mapStateToProps)(PrivateRoute);
+const mapDispatchToProps = dispatch => ({
+  getUsersOwnData: () => dispatch(getUsersOwnData()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PrivateRoute);

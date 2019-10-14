@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getArtifacts } from 'actions/artifact';
 import ArtifactSummary from './ArtifactSummary';
+import isEmpty from 'helpers/is-empty';
 
 const MyArtifactsPage = styled.section`
   margin-top: 8rem;
@@ -12,6 +13,7 @@ const MyArtifactsPage = styled.section`
 
 const MyArtifactsPageTitle = styled.h1`
   margin-bottom: 2rem;
+  font-size: 3rem;
 `;
 
 class ViewMyArtifacts extends Component {
@@ -28,12 +30,17 @@ class ViewMyArtifacts extends Component {
         <MyArtifactsPageTitle>My Artifacts</MyArtifactsPageTitle>
         {artifacts &&
           artifacts.map(artifact => {
+            console.log(artifact);
             return (
               <ArtifactSummary
                 name={artifact.name}
                 description={artifact.description}
+                groups={artifact.groups}
                 id={artifact.id}
-                resources={artifact.resources}
+                owners={artifact.owners}
+                resource={
+                  !isEmpty(artifact.resources) ? artifact.resources[0] : null
+                }
                 key={artifact.id}
               />
             );

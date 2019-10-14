@@ -7,7 +7,7 @@ export const SummaryContainer = styled.div`
 export const Summary = styled.div`
   position: relative;
   border: 1px solid ${props => props.theme.colors.colorBlack};
-  padding: 1.5rem;
+  padding: 0;
   background-image: url("${props => props.srcUrl}");
   background-size: cover;
   height: 30rem;
@@ -23,4 +23,25 @@ export const Summary = styled.div`
     background-color: ${props => props.theme.colors.colorBlack};
     opacity: 0.3;
   }
+`;
+
+export const SummaryTitle = styled.h3`
+  text-align: center;
+  text-decoration: none;
+  font-size: 2.5rem;
+  color: ${props => props.theme.colors.colorWhite};
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 1rem 0;
+  opacity: 1;
+`;
+
+export const SummaryFooter = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 5rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 1rem;
+  color: ${props => props.theme.colors.colorWhite};
 `;

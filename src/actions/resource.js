@@ -37,7 +37,7 @@ export const addResourceToArtifact = (id, formData) => ({
  */
 export const getResource = (artifactId, resourceId) => ({
   [CALL_API]: {
-    endpoint: `/artifact/${artifactId}/resource/${resourceId}/resource`,
+    endpoint: `/artifact/${artifactId}/resource/${resourceId}`,
     method: 'GET',
     types: [
       GET_ARTIFACT_RESOURCE_REQUEST,

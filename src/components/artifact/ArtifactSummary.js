@@ -2,33 +2,56 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { getResource } from 'actions/resource';
+import axios from 'axios';
 import {
   SummaryContainer,
   Summary,
+  SummaryTitle,
+  SummaryFooter,
 } from 'components/common/summaries/BlockSummary';
 import isEmpty from 'helpers/is-empty';
 
 const SummaryLink = styled(Link)`
   display: block;
   width: 100%;
+  text-decoration: none;
 `;
 
 class ArtifactSummary extends Component {
+  state = {
+    image: '',
+  };
   componentDidMount() {
-    const { id, resources } = this.props;
-    if (!isEmpty(resources)) {
-      this.props.getResource(id, resources[0]);
+    const { id, resource } = this.props;
+    console.log(this.props);
+    if (!isEmpty(resource)) {
+      axios
+        .get(
+          `${process.env.REACT_APP_API_URL}/artifact/${id}/resource/${resource.id}/resource`
+        )
+        .then(res => {
+          this.setState({ image: res.data });
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
   render() {
-    const { name, description, id } = this.props;
+    const { name, description, groups, id, owners, resource } = this.props;
+    const { image } = this.state;
+    console.log(image);
     return (
       <SummaryLink to={`artifact/${id}`}>
         <SummaryContainer>
-          <Summary>{name}</Summary>
-          {description}
+          <Summary
+            srcUrl={
+              resource ? `data:${resource.contentType};base64,${image}` : ''
+            }
+          >
+            <SummaryTitle>{name}</SummaryTitle>
+            <SummaryFooter>{description}</SummaryFooter>
+          </Summary>
         </SummaryContainer>
       </SummaryLink>
     );
@@ -38,17 +61,11 @@ class ArtifactSummary extends Component {
 ArtifactSummary.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  resources: PropTypes.string.isRequired,
+  resource: PropTypes.array.isRequired,
   id: PropTypes.number.isRequired,
   getResource: PropTypes.func.isRequired,
+  groups: PropTypes.array.isRequired,
+  owners: PropTypes.array.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
-  getResource: (artifactId, resourceId) =>
-    dispatch(getResource(artifactId, resourceId)),
-});
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(ArtifactSummary);
+export default ArtifactSummary;

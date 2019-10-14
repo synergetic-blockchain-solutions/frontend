@@ -10,6 +10,7 @@ export default styled.div`
   border-radius: 30px;
   width: 50rem;
   min-width: 80%;
+  margin-bottom: 2rem;
 
   @media (max-width: ${props => props.theme.breakpoints.phoneScreen}) {
     width: calc(100vw - 2rem);

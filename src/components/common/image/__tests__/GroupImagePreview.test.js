@@ -1,17 +1,17 @@
 import React from 'react';
 import { mount} from 'enzyme';
 import TestRoot from 'TestRoot';
-import ImagePreview from '../ImagePreview';
+import GroupImagePreview from '../GroupImagePreview';
 
 let wrapped;
 
 
 
-describe('The ImagePreview component', () => {
+describe('The GroupImagePreview component', () => {
   beforeEach(() => {
     wrapped = mount(
       <TestRoot>
-        <ImagePreview/>
+        <GroupImagePreview/>
       </TestRoot>
     );
     

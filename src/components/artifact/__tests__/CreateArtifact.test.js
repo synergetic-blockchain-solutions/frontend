@@ -15,7 +15,7 @@ describe('The Create Artefact Component', () => {
   });
 
   it('Renders the correct amount of input elements', () => {
-    expect(wrapped.find('input').length).toEqual(6);
+    expect(wrapped.find('input').length).toEqual(5);
   });
 
   it('Renders the correct amount of textarea elements', () => {
@@ -49,26 +49,22 @@ describe('The Create Artefact Component', () => {
 
 
 
-    //image test component
-
-
-
     // Check the tag
     expect(
       wrapped
         .find('input')
-        .at(2)
+        .at(3)
         .props().value
     ).toEqual('');
     wrapped
       .find('input')
-      .at(2)
+      .at(3)
       .simulate('change', { target: { value: text, name: 'tag' } });
     wrapped.update();
     expect(
       wrapped
         .find('input')
-        .at(2)
+        .at(3)
         .props().value
     ).toEqual(text);
 
@@ -132,26 +128,7 @@ describe('The Create Artefact Component', () => {
         .at(4)
         .props().value
     ).toEqual(text);
-
-
-    // Check the address
-    expect(
-      wrapped
-        .find('input')
-        .at(5)
-        .props().value
-    ).toEqual('');
-    wrapped
-      .find('input')
-      .at(5)
-      .simulate('change', { target: { value: text, name: 'address' } });
-    wrapped.update();
-    expect(
-      wrapped
-        .find('input')
-        .at(5)
-        .props().value
-    ).toEqual(text);
+    
   });
   
   });

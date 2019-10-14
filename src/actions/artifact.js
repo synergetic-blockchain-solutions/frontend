@@ -15,23 +15,23 @@ import {
 /**
  * @route /artifact
  * @method POST
- * @param {string} title
- * @param {ImageBitmap} image
- * @param {string} tag
- * @param {Date} dateTaken
- * @param {String} details
- * @param {String} addToFamilies
- * @param {String} address
+ * @param {string} name
+ * @param {string} description
+ * @param {array} owners
+ * @param {array} groups
+ * @param {array} sharedWith
+ * @param {array} tag
+ * @param {string} date
  * @desc create an artifact for the user
  */
 export const registerArtifact = (
   name,
-  image,
-  tag,
-  dateTaken,
   description,
-  addToFamilies,
-  address
+  owners,
+  groups,
+  sharedWith,
+  tag,
+  date
 ) => ({
   [CALL_API]: {
     endpoint: '/artifact',
@@ -39,6 +39,11 @@ export const registerArtifact = (
     body: {
       name: name,
       description: description,
+      owners,
+      groups,
+      sharedWith,
+      tag,
+      date,
     },
     types: [
       REGISTER_ARTIFACT_REQUEST,

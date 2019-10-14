@@ -9,7 +9,7 @@ import isEmpty from 'helpers/is-empty';
 import { registerUser } from 'actions/auth';
 import { REGISTER_SUCCESS } from 'actions/types';
 import FormValidator from 'components/common/help-component/FormValidator';
-import FormContainer from 'components/auth/FormContainer';
+import FormContainer from 'components/common/containers/FormDisplayContainer';
 import Success from 'components/common/visual/Success';
 
 const Form = styled.form``;

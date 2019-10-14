@@ -7,7 +7,7 @@ import ButtonMedium from 'components/common/buttons/ButtonMedium';
 //import isEmpty from 'helpers/is-empty';
 import { registerGroup } from 'actions/group';
 import FormValidator from 'components/common/help-component/FormValidator';
-import FormContainer from 'components/auth/FormContainer';
+import FormContainer from 'components/common/containers/FormDisplayContainer';
 import ImageDropZone from "react-image-dropzone";
 
 const Form = styled.form``;

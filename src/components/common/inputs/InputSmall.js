@@ -1,7 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Label, Error, InputContainer, Input } from './InputHelpers';
+
+export const Input = styled.input`
+  font-size: 0.8rem;
+  border: 1px solid ${props => props.theme.colors.colorGrayMedium};
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  width: 20rem;
+  :focus {
+    outline: none;
+    border: 1px solid ${props => props.theme.colors.colorPrimaryLight};
+  }
+`;
+
+const Label = styled.label`
+  font-size: 0.8rem;
+  display: block;
+`;
+
+const Error = styled.p`
+  font-size: 0.8rem;
+  color: ${props => props.theme.colors.colorDanger};
+`;
+
+const InputContainer = styled.div`
+  margin-bottom: ${props => props.marginBottom};
+`;
 
 function AuthInput(props) {
   const {

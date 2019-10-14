@@ -75,7 +75,6 @@ class DropdownWrapper extends Component {
 }
 
 DropdownWrapper.propTypes = {
-  title: PropTypes.object.isRequired,
   button: PropTypes.element.isRequired,
 };
 

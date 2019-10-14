@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import UnstyledButton from 'components/common/buttons/UnstyledButton';
-import InputSmall from 'components/common/inputs/InputSmall';
 import { ButtonIcon } from 'components/common/icons/Icons';
 
 const ImageContainer = styled.div`
@@ -27,32 +26,14 @@ const DeleteButton = styled(UnstyledButton)`
 `;
 
 function ImagePreview(props) {
-  const { src, deleteImage, position, metaData, handleMetaDataChange } = props;
+  const { src, deleteImage } = props;
   console.log(props);
   return (
     <ImageContainer>
-      <DeleteButton name={position} onClickEvent={deleteImage}>
+      <DeleteButton onClick={deleteImage}>
         <ButtonIcon className="fas fa-times-circle"></ButtonIcon>
       </DeleteButton>
       <Image src={src} />
-      <InputSmall
-        value={metaData.name}
-        handleStandardChange={handleMetaDataChange}
-        type="text"
-        name={`name-${position}`}
-        placeholder="File Name"
-        marginBottom="1rem"
-        label="File Name"
-      />
-      <InputSmall
-        value={metaData.description}
-        handleStandardChange={handleMetaDataChange}
-        type="text"
-        name={`description-${position}`}
-        placeholder="Description"
-        marginBottom="1rem"
-        label="Description"
-      />
     </ImageContainer>
   );
 }
@@ -60,9 +41,6 @@ function ImagePreview(props) {
 ImagePreview.propTypes = {
   src: PropTypes.string.isRequired,
   deleteImage: PropTypes.func.isRequired,
-  position: PropTypes.number.isRequired,
-  metaData: PropTypes.object.isRequired,
-  handleMetaDataChange: PropTypes.func.isRequired,
 };
 
 export default ImagePreview;
