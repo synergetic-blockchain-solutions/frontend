@@ -9,7 +9,7 @@ import ButtonMedium from 'components/common/buttons/ButtonMedium';
 import isEmpty from 'helpers/is-empty';
 import { loginUser } from 'actions/auth';
 import FormValidator from 'components/common/help-component/FormValidator';
-import FormContainer from 'components/auth/FormContainer';
+import FormContainer from 'components/common/containers/FormDisplayContainer';
 
 const Form = styled.form``;
 
