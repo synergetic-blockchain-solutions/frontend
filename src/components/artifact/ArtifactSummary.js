@@ -23,11 +23,11 @@ class ArtifactSummary extends Component {
   };
   componentDidMount() {
     const { id, resource } = this.props;
-    console.log(this.props);
+    const file = typeof resource === 'number' ? resource : resource.id;
     if (!isEmpty(resource)) {
       axios
         .get(
-          `${process.env.REACT_APP_API_URL}/artifact/${id}/resource/${resource.id}/resource`
+          `${process.env.REACT_APP_API_URL}/artifact/${id}/resource/${file}/resource`
         )
         .then(res => {
           this.setState({ image: res.data });
@@ -40,9 +40,9 @@ class ArtifactSummary extends Component {
   render() {
     const { name, description, groups, id, owners, resource } = this.props;
     const { image } = this.state;
-    console.log(image);
+
     return (
-      <SummaryLink to={`artifact/${id}`}>
+      <SummaryLink to={`/artifact/${id}`}>
         <SummaryContainer>
           <Summary
             srcUrl={

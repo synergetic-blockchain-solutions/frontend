@@ -194,11 +194,9 @@ class CreateArtifact extends Component {
       finished,
     } = this.state;
 
-    const { usersGroups } = this.props;
+    const { usersGroups, user } = this.props;
     const { artifact } = this.props.artifact;
 
-    console.log(this.props);
-    console.log(this.state);
     return (
       <FormContainer>
         {finished ? (
@@ -264,17 +262,19 @@ class CreateArtifact extends Component {
               />
               {!isEmpty(usersGroups) && (
                 <Select
-                  groups={usersGroups}
+                  groups={usersGroups.filter(
+                    usr => usr.id !== user.privateGroup.id
+                  )}
                   handleSelect={this.handleGroupSelect}
                   marginBottom="1rem"
-                  label="Select the groups to share to (it will automatically add to your personal group)"
+                  label="Select groups to share this artifact with"
                 />
               )}
               <InputAdder
                 type="text"
                 inputName="owners"
-                placeholder="Add owners that will be able to edit the information of this artifact"
-                label="Add Emails of other users who you would like to be able to edit this artifact"
+                placeholder="Add names of people who have permission to edit this artifact"
+                label="Add names of people who have permission to edit this artifact"
                 addElem={this.addOwner}
                 removeElem={this.removeOwner}
                 values={owners}
@@ -284,7 +284,7 @@ class CreateArtifact extends Component {
                 type="text"
                 name="sharedWith"
                 placeholder="Share this artifact with other Memory Books users"
-                label="Share Artifact with other memory books users by typing in their email here"
+                label="Share Artifact with other memory books users by typing in their name here"
                 addElem={this.addUser}
                 removeElem={this.removeUser}
                 values={sharedWith}
@@ -312,6 +312,7 @@ CreateArtifact.propTypes = {
   resetArtifact: PropTypes.func.isRequired,
   getGroups: PropTypes.func.isRequired,
   usersGroups: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -336,6 +337,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   artifact: state.artifact,
   usersGroups: state.group.groups,
+  user: state.auth.user,
 });
 
 export default connect(

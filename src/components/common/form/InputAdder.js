@@ -3,20 +3,13 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import AuthInput from 'components/common/inputs/AuthInput';
-import { ButtonBase } from 'components/common/buttons/Button';
 import Adder from './Adder';
+import { ReccomendButton } from './AdderHelpers';
 import { getUserByName, clearUserSearch } from 'actions/auth';
 import isEmpty from 'helpers/is-empty';
 
 const Container = styled.div`
   margin-bottom: 1rem;
-`;
-
-const ReccomendButton = styled(ButtonBase)`
-  padding: 0.5rem 2rem;
-  background-color: ${props => props.theme.colors.colorSuccess};
-  color: ${props => props.theme.colors.colorWhite};
-  border-radius: 20px;
 `;
 
 const ReccomendationContainer = styled.div`
@@ -37,8 +30,8 @@ class InputAdder extends Component {
     }
   };
 
-  addInput = e => {
-    const [id, name] = e.target.name.split('-');
+  addInput = input => {
+    const { id, name } = input;
     this.props.addElem(id);
     this.setState(prevState => ({
       value: '',
@@ -80,7 +73,9 @@ class InputAdder extends Component {
               return (
                 <ReccomendButton
                   name={`${user.id}-${user.name}`}
-                  onClick={this.addInput}
+                  onClick={() =>
+                    this.addInput({ id: user.id, name: user.name })
+                  }
                 >
                   <h4>{user.name}</h4>
                   <p>{user.email}</p>
