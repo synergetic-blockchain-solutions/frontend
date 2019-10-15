@@ -35,7 +35,7 @@ function ToggleFamilyView(props) {
         View Artifacts
       </ButtonLeft>
       <ButtonMiddle
-        selected={view === 'info'}
+        selected={view === 'albums'}
         onClick={() => toggleView('info')}
         className="dark-gray"
       >

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import AliceCarousel from 'react-alice-carousel';
@@ -19,6 +20,12 @@ const ResourceCarousel = props => {
           />
           <p className="legend">{resource.name}</p>
           <p className="legend">{resource.description}</p>
+          <Link
+            target="_blank"
+            to={`/artifact/${resource.artifact}/resource/${resource.id}`}
+          >
+            Open Image In New Tab
+          </Link>
         </div>
       );
     });

@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import AuthInput from 'components/common/inputs/AuthInput';
 import Logo from 'components/common/visual/Logo';
-import ButtonMedium from 'components/common/buttons/ButtonMedium';
+import ButtonLarge from 'components/common/buttons/ButtonLarge';
 import isEmpty from 'helpers/is-empty';
 import { loginUser } from 'actions/auth';
 import FormValidator from 'components/common/help-component/FormValidator';
@@ -44,7 +44,7 @@ class LoginForm extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (!isEmpty(nextProps.auth.token)) {
-      this.props.history.push('/dashboard');
+      this.props.history.push('/my-artifacts');
     }
     return true;
   }
@@ -103,11 +103,11 @@ class LoginForm extends Component {
             error={validation.password.message}
           />
           <Center>
-            <ButtonMedium
+            <ButtonLarge
               clickEvent={this.submit}
               text="Log In"
               disabled={isEmpty(email) || isEmpty(password)}
-              color="btn-block btn-primary-light"
+              color="dark-brown"
               margin="1rem 0 0 0"
             />
           </Center>

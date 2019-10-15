@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import AuthInput from 'components/common/inputs/AuthInput';
 import Logo from 'components/common/visual/Logo';
-import ButtonMedium from 'components/common/buttons/ButtonMedium';
+import ButtonLarge from 'components/common/buttons/ButtonLarge';
 import isEmpty from 'helpers/is-empty';
 import { registerUser } from 'actions/auth';
 import { REGISTER_SUCCESS } from 'actions/types';
@@ -19,6 +20,8 @@ export const Center = styled.div`
 `;
 
 class RegistrationForm extends Component {
+  _isMounted = false;
+
   validator = new FormValidator([
     {
       field: 'name',
@@ -62,11 +65,30 @@ class RegistrationForm extends Component {
     success: false,
   };
 
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.auth.success === REGISTER_SUCCESS) {
-      return { success: true };
+      return {
+        name: '',
+        email: '',
+        password: '',
+        passwordConfirm: '',
+        success: true,
+      };
+    } else {
+      return { ...prevState };
     }
   }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (nextProps.auth.success === REGISTER_SUCCESS) {
+  //     this.props.history.push('/');
+  //   }
+  //   return true;
+  // }
 
   passwordMatch = (confirmation, state) => state.password === confirmation;
 
@@ -85,6 +107,17 @@ class RegistrationForm extends Component {
       this.props.registerUser(name, email, password);
     }
   };
+
+  componentWillUnmount() {
+    this.setState({
+      name: '',
+      email: '',
+      password: '',
+      passwordConfirm: '',
+      success: false,
+    });
+    this._isMounted = false;
+  }
 
   render() {
     // if the form has been submitted at least once
@@ -148,7 +181,7 @@ class RegistrationForm extends Component {
                 error={validation.passwordConfirm.message}
               />
               <Center>
-                <ButtonMedium
+                <ButtonLarge
                   clickEvent={this.submit}
                   Link
                   to="/"
@@ -185,7 +218,9 @@ const mapStateToProps = state => ({
   auth: state.auth,
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RegistrationForm);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(RegistrationForm)
+);

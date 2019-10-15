@@ -17,7 +17,7 @@ const NavBrandContainer = styled(NavLink)`
 function NavBrand(props) {
   const { token } = props;
   return (
-    <NavBrandContainer to={isEmpty(token) ? '/' : '/dashboard'}>
+    <NavBrandContainer to={isEmpty(token) ? '/' : '/my-artifacts'}>
       <Logo />
     </NavBrandContainer>
   );

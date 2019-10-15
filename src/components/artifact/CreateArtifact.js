@@ -5,11 +5,12 @@ import styled from 'styled-components';
 import moment from 'moment';
 import AuthInput from 'components/common/inputs/AuthInput';
 import TextAreaInput from 'components/common/inputs/TextAreaInput';
-import ButtonMedium from 'components/common/buttons/ButtonMedium';
+import ButtonLarge from 'components/common/buttons/ButtonLarge';
 import { registerArtifact, resetArtifact } from 'actions/artifact';
 import { addResourceToArtifact } from 'actions/resource';
 import { getGroups } from 'actions/group';
 import { REGISTER_ARTIFACT_SUCCESS } from 'actions/types';
+import { Center, MY1X0 } from 'components/common/containers/GeneralContainers';
 import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/common/containers/FormDisplayContainer';
 import ImageDropzone from 'components/common/image/ImageDropzone';
@@ -20,10 +21,6 @@ import InputAdder from 'components/common/form/InputAdder';
 import Select from 'components/common/inputs/Select';
 
 const Form = styled.div``;
-
-const DivSpacing = styled.div`
-  margin: 1rem 0;
-`;
 
 const Title = styled.h1`
   font-size: 2.5rem;
@@ -226,14 +223,14 @@ class CreateArtifact extends Component {
                 label="Name*"
                 error={validation.name.message}
               />
-              <DivSpacing>
+              <MY1X0>
                 <ImageDropzone
                   recieveImage={this.recieveImage}
                   image={this.recieveImage}
                   images={image}
                 />
-              </DivSpacing>
-              <DivSpacing>
+              </MY1X0>
+              <MY1X0>
                 {image.map((img, index) => {
                   return (
                     <ImagePreview
@@ -246,7 +243,7 @@ class CreateArtifact extends Component {
                     />
                   );
                 })}
-              </DivSpacing>
+              </MY1X0>
               <AuthInput
                 handleStandardChange={this.handleStandardChange}
                 value={date}
@@ -279,7 +276,7 @@ class CreateArtifact extends Component {
                 type="text"
                 inputName="owners"
                 placeholder="Add owners"
-                label="Add owners of the artifact (owners will be able to edit it)"
+                label="Add owners of the artifact (owners can edit it)"
                 addElem={this.addOwner}
                 removeElem={this.removeOwner}
                 values={owners}
@@ -295,13 +292,15 @@ class CreateArtifact extends Component {
                 values={sharedWith}
                 isUserSearch
               />
-              <ButtonMedium
-                clickEvent={this.submit}
-                text="Add Artifact"
-                color="btn-block btn-primary-light"
-                margin="1rem 0 0 0"
-                disabled={isEmpty(name) || isEmpty(description)}
-              />
+              <Center>
+                <ButtonLarge
+                  clickEvent={this.submit}
+                  text="Add Artifact"
+                  color="dark-brown"
+                  margin="1rem 0 0 0"
+                  disabled={isEmpty(name) || isEmpty(description)}
+                />
+              </Center>
             </Form>
           </React.Fragment>
         )}

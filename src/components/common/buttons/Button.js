@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 export const ButtonBase = styled.button`
   :disabled {
     background-color: ${props => props.theme.colors.colorGrayLight2} !important;
+    border: none !important;
     cursor: auto;
   }
 
@@ -158,4 +159,9 @@ export const ButtonLink = styled(ButtonLinkBase)`
     margin-left: auto;
     margin-right: auto;
   }
+`;
+
+export const ButtonLarge = styled(Button)`
+  height: 5rem;
+  font-size: 2rem;
 `;

@@ -57,6 +57,11 @@ const Profile = Loadable({
   loading: Loading,
 });
 
+const ResourcePage = Loadable({
+  loader: () => import('components/resource/ResourcePage'),
+  loading: Loading,
+});
+
 export default class Router extends Component {
   render() {
     return (
@@ -64,10 +69,14 @@ export default class Router extends Component {
         <React.Fragment>
           <NavBar />
           <Switch>
-            <PrivateRoute path="/dashboard" component={Dashboard} exact />
             <PrivateRoute path="/families" component={ViewFamilies} exact />
             <PrivateRoute path="/family/:id" component={ViewFamily} exact />
             <PrivateRoute path="/create" component={CreateArtifact} exact />
+            <PrivateRoute
+              path="/artifact/:artifactId/resource/:resourceId"
+              exact
+              component={ResourcePage}
+            />
             <PrivateRoute
               path="/families/create"
               component={CreateGroup}

@@ -28,6 +28,7 @@ const FamilyTitle = styled.h2``;
 class ViewFamily extends Component {
   state = {
     showGroupInfo: false,
+    view: 'artifacts',
   };
 
   componentDidMount() {
@@ -39,12 +40,12 @@ class ViewFamily extends Component {
   render() {
     const { group } = this.props;
     const { name, admins, albums, artifacts, description, id, members } = group;
-    const { showGroupInfo } = this.state;
+    const { showGroupInfo, view } = this.state;
 
     return (
       <ViewFamilyPage>
         {id && <FamilyBanner name={name} id={id} description={description} />}
-        <ToggleFamilyView toggleView={this.toggleGroupInfo} />
+        <ToggleFamilyView toggleView={this.toggleGroupInfo} view={view} />
         {showGroupInfo ? (
           <FamilyArtifacts>
             <Container>

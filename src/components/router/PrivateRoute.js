@@ -15,8 +15,6 @@ import isEmpty from 'helpers/is-empty';
  */
 class PrivateRoute extends Component {
   componentDidMount() {
-    console.log(this.props);
-    console.log(this.props.user);
     if (isEmpty(this.props.user)) {
       this.props.getUsersOwnData();
     }
