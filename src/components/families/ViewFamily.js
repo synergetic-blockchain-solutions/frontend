@@ -5,13 +5,16 @@ import styled from 'styled-components';
 import { getGroup } from 'actions/group';
 import Page from 'components/common/containers/Page';
 import FamilyBanner from './FamilyBanner';
-import ArtifactSummary from 'components/artifact/ArtifactSummary';
 import AddMemberModal from 'components/common/modals/AddMemberModal';
 import Container from 'components/common/containers/FormDisplayContainer';
+import Artifacts from 'components/artifact/Artifacts';
 import ToggleFamilyView from './ToggleFamilyView';
 import isEmpty from 'helpers/is-empty';
 
-const ViewFamilyPage = styled(Page)``;
+const ViewFamilyPage = styled(Page)`
+  padding: 2rem;
+  padding-top: 20rem;
+`;
 
 const FamilyArtifacts = styled.div`
   margin: 0 auto 2rem auto;
@@ -49,26 +52,7 @@ class ViewFamily extends Component {
             </Container>
           </FamilyArtifacts>
         ) : (
-          <FamilyArtifacts>
-            {artifacts &&
-              artifacts.map(artifact => {
-                return (
-                  <ArtifactSummary
-                    name={artifact.name}
-                    description={artifact.description}
-                    groups={artifact.groups}
-                    id={artifact.id}
-                    owners={artifact.owners}
-                    resource={
-                      !isEmpty(artifact.resources)
-                        ? artifact.resources[0]
-                        : null
-                    }
-                    key={artifact.id}
-                  />
-                );
-              })}
-          </FamilyArtifacts>
+          <Artifacts artifacts={artifacts} />
         )}
         <AddMemberModal groupName={name} group={group} />
       </ViewFamilyPage>

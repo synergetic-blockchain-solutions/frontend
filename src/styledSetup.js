@@ -45,6 +45,8 @@ export const theme = {
     colorLighterBrown: '#f0e6e2',
     colorWhite: '#fff',
     colorBlack: '#000',
+    colorGrayDark: '#6c757d',
+    colorGrayDarker: '#545b62',
     colorGrayLight2: '#b2b2b2',
     colorGrayMedium: '#e3e3e3',
     colorDanger: '#dc3545',

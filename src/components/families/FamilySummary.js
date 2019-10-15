@@ -21,7 +21,9 @@ const FamilyTitle = styled.h2`
 
 const FamilyLink = styled(Link)`
   display: block;
-  width: 100%;
+  width: fit-content;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
 `;
 
 class FamilySummary extends Component {

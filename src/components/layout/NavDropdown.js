@@ -18,7 +18,8 @@ const NavDropdownList = styled.ul`
 const NavDropdownListItem = styled.li`
   display: inline-block;
   width: 100%;
-  height: 3.5rem;
+  height: 3rem;
+  line-height: 3rem;
   font-size: 1.6rem;
   text-align: center;
   text-decoration: none;
@@ -45,7 +46,7 @@ const LogoutButton = styled(UnstyledButton)`
 `;
 
 const ProfileButton = styled(Link)`
-  display: block;
+  display: inline-block;
   font-size: ${props => props.theme.fontSizes.prominent2};
   text-decoration: none;
   height: 100%;

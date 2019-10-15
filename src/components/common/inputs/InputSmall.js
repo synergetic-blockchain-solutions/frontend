@@ -5,7 +5,7 @@ import styled from 'styled-components';
 export const Input = styled.input`
   font-size: 0.8rem;
   border: 1px solid ${props => props.theme.colors.colorGrayMedium};
-  border-radius: 5px;
+  box-shadow: 0.2rem 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
   padding: 0.5rem 1rem;
   width: 20rem;
   :focus {
@@ -17,6 +17,7 @@ export const Input = styled.input`
 const Label = styled.label`
   font-size: 0.8rem;
   display: block;
+  padding: 1rem 0;
 `;
 
 const Error = styled.p`

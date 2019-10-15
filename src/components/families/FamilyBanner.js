@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import {
-  SummaryTitle,
-  SummaryFooter,
-} from 'components/common/summaries/BlockSummary';
 import isEmpty from 'helpers/is-empty';
 
 const FamilyBannerContainer = styled.div`
@@ -15,10 +11,6 @@ const FamilyBannerContainer = styled.div`
   height: 20rem;
   width: 100%;
   background: url(${props => props.srcUrl});
-`;
-
-const FamilyBannerTitle = styled(SummaryTitle)`
-  height: 5rem;
 `;
 
 class FamilyBanner extends Component {
@@ -40,14 +32,10 @@ class FamilyBanner extends Component {
 
   render() {
     const { image } = this.state;
-    const { name, description } = this.props;
     return (
       <FamilyBannerContainer
         srcUrl={!isEmpty(image) ? `data:image/png;base64,${image}` : ''}
-      >
-        <FamilyBannerTitle>{name}</FamilyBannerTitle>
-        <SummaryFooter>{description}</SummaryFooter>
-      </FamilyBannerContainer>
+      ></FamilyBannerContainer>
     );
   }
 }

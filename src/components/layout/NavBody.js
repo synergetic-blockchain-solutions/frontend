@@ -14,14 +14,7 @@ const moveInLeft = keyframes`
 `;
 
 const NavBarLink = styled(NavLink)`
-  @media (max-width: ${props => props.theme.breakpoints.smallScreen}) {
-    width: 100%;
-    &:not(:last-child) {
-      border-bottom: 1px solid ${props => props.theme.colorGrayLight2};
-    }
-  }
-
-  color: ${props => props.theme.colorWhite};
+  color: ${props => props.theme.colors.colorWhite};
   width: fit-content;
   height: 7rem;
   font-size: 2rem;
@@ -30,6 +23,13 @@ const NavBarLink = styled(NavLink)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  @media (max-width: ${props => props.theme.breakpoints.smallScreen}) {
+    width: 100%;
+    &:not(:last-child) {
+      border-bottom: 1px solid ${props => props.theme.colorGrayLight2};
+    }
+  }
 `;
 
 const NavBarLinkCollapsing = styled(NavBarLink)`

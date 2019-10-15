@@ -12,6 +12,13 @@ const ViewFamiliesPage = styled.section`
   padding: 2rem;
 `;
 
+const ViewFamiliesContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  flex-wrap: wrap;
+`;
+
 const ViewFamiliesTitle = styled.h1`
   font-size: 2rem;
   margin-bottom: 1rem;
@@ -35,10 +42,13 @@ class ViewFamilies extends Component {
     return (
       <ViewFamiliesPage>
         <ViewFamiliesTitle>View Families</ViewFamiliesTitle>
-        {groups &&
-          groups.map(group => {
-            return <FamilySummary name={group.name} id={group.id} />;
-          })}
+        <ViewFamiliesContainer>
+          {groups &&
+            groups.map(group => {
+              return <FamilySummary name={group.name} id={group.id} />;
+            })}
+        </ViewFamiliesContainer>
+
         <EditButton to={`/families/create`}>
           <ButtonIcon className="fas fa-plus-circle"></ButtonIcon>
         </EditButton>
