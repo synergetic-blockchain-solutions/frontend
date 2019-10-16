@@ -10,16 +10,22 @@ import {
 
 let wrapped;
 
-const props={
-  name: '',
-  description: ''
-}
-
 describe('The ArtifactSummary component', () => {
   beforeEach(() => {
+
+    const props={
+      name: "testname",
+      description: "testDesc",
+      resource: [],
+      id: 1,
+      getResource: jest.fn(),
+      groups: [],
+      owners: [],
+    }
+
     wrapped = mount(
       <TestRoot>
-        <ArtifactSummary {...props} description= "testd" name="testn"/>
+        <ArtifactSummary {...props}/>
       </TestRoot>
     );
     
@@ -33,19 +39,11 @@ describe('The ArtifactSummary component', () => {
     ).toEqual(1);
   });
 
-  it('renders the summary container', ()=>{
+  it('Renders the SummaryContainer', () => {
     expect(
-        shallow(
-            <SummaryContainer/>
-        ).length
+        wrapped.find(SummaryContainer).length
     ).toEqual(1);
   });
-
-  /*it('renders the nameof the artifact',()=>{
-    expect(
-      wrapped.prop('name')
-    ).toEqual("testn");
-  });*/
   
 });
 

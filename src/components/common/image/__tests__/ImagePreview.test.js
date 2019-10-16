@@ -9,9 +9,18 @@ let wrapped;
 
 describe('The ImagePreview component', () => {
   beforeEach(() => {
+
+    const props={
+      src: "sourceTest",
+      deleteImage: jest.fn(),
+      position: 1,
+      metaData: {},
+      handleMetaDataChange: jest.fn(),
+    }
+
     wrapped = mount(
       <TestRoot>
-        <ImagePreview/>
+        <ImagePreview {...props}/>
       </TestRoot>
     );
     
@@ -20,7 +29,7 @@ describe('The ImagePreview component', () => {
   it('Renders one ImageContainer', () => {
     expect(
         wrapped.find('div').length
-    ).toEqual(1);
+    ).toEqual(3);
   });
 
   /*
