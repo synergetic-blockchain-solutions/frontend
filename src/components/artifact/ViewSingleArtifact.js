@@ -25,7 +25,7 @@ const InfoSeperator = styled.div`
   margin-bottom: 2rem;
 `;
 
-const EditButton = styled(Link)`
+export const EditButton = styled(Link)`
   position: absolute;
   bottom: 2rem;
   right: 2rem;

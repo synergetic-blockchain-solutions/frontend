@@ -63,9 +63,13 @@ const NavBodyContainer = styled.div`
 `;
 
 function NavBody(props) {
-  const { display, hasAuth } = props;
+  const { display, hasAuth, bodyRef } = props;
   return (
-    <NavBodyContainer hasAuth={hasAuth} display={display.toString()}>
+    <NavBodyContainer
+      ref={bodyRef}
+      hasAuth={hasAuth}
+      display={display.toString()}
+    >
       {hasAuth ? (
         <React.Fragment>
           <NavBarLink to="/families">
@@ -108,6 +112,7 @@ function NavBody(props) {
 NavBody.propTypes = {
   display: PropTypes.bool.isRequired,
   hasAuth: PropTypes.bool.isRequired,
+  bodyRef: PropTypes.bool.isRequired,
 };
 
 export default NavBody;
