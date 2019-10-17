@@ -24,8 +24,9 @@ class ArtifactSummary extends Component {
 
   componentDidMount() {
     const { id, resource } = this.props;
-    const file = typeof resource === 'number' ? resource : resource.id;
+
     if (!isEmpty(resource)) {
+      const file = typeof resource === 'number' ? resource : resource.id;
       axios
         .get(
           `${process.env.REACT_APP_API_URL}/artifact/${id}/resource/${file}/resource`

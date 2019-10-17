@@ -12,10 +12,13 @@ import { ButtonLink } from 'components/common/buttons/Button';
 
 const ImageContainer = styled.div`
   margin-bottom: 1rem;
+  margin-right: 2rem;
+  width: fit-content;
 `;
 
 const MetaDataContainer = styled.div`
-  max-width: 50rem;
+  margin-top: 5rem;
+  min-width: 40rem;
 `;
 
 const LargeImage = styled.img`
@@ -25,6 +28,18 @@ const LargeImage = styled.img`
 
 const ResPage = styled(Page)`
   padding: 1.5rem;
+`;
+
+const Flex = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+`;
+
+const Title = styled.h2`
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
 `;
 
 class ResourcePage extends Component {
@@ -73,31 +88,34 @@ class ResourcePage extends Component {
       owners && owners.findIndex(owner => owner.id === user.id) !== -1;
     return (
       <ResPage>
-        <ImageContainer>
-          <LargeImage
-            src={`data:${contentType};base64,${image}`}
-            alt="user upload"
-          />
-        </ImageContainer>
-        <MetaDataContainer>
-          <Field fieldName="Name:" value={name} />
-          <Field fieldName="Description:" value={description} />
-        </MetaDataContainer>
-        {edit && (
-          <ButtonLink
-            className="dark-brown"
-            to={`/artifact/${artifactId}/resource/${resourceId}/edit`}
-          >
-            Edit Resource
-          </ButtonLink>
-        )}
-        {edit && (
-          <EditButton
-            to={`/artifact/${artifactId}/resource/${resourceId}/edit`}
-          >
-            <ButtonIcon className="fas fa-edit"></ButtonIcon>
-          </EditButton>
-        )}
+        <Flex>
+          <ImageContainer>
+            <Title>{name}</Title>
+            <LargeImage
+              src={`data:${contentType};base64,${image}`}
+              alt="user upload"
+            />
+          </ImageContainer>
+          <MetaDataContainer>
+            <Field fieldName="Description:" value={description} />
+            {edit && (
+              <ButtonLink
+                className="dark-brown"
+                to={`/artifact/${artifactId}/resource/${resourceId}/edit`}
+              >
+                Edit Image
+              </ButtonLink>
+            )}
+          </MetaDataContainer>
+
+          {edit && (
+            <EditButton
+              to={`/artifact/${artifactId}/resource/${resourceId}/edit`}
+            >
+              <ButtonIcon className="fas fa-edit"></ButtonIcon>
+            </EditButton>
+          )}
+        </Flex>
       </ResPage>
     );
   }

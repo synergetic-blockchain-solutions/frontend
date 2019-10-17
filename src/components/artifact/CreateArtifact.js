@@ -19,13 +19,9 @@ import isEmpty from 'helpers/is-empty';
 import Success from 'components/common/visual/Success';
 import InputAdder from 'components/common/form/InputAdder';
 import Select from 'components/common/inputs/Select';
+import { Title } from './artifact-helpers';
 
 const Form = styled.div``;
-
-const Title = styled.h1`
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-`;
 
 class CreateArtifact extends Component {
   validator = new FormValidator([
@@ -209,9 +205,7 @@ class CreateArtifact extends Component {
           />
         ) : (
           <React.Fragment>
-            <Title>
-              <center>Add A New Artifact</center>
-            </Title>
+            <Title>Add A New Artifact</Title>
             <Form onSubmit={this.submit}>
               <AuthInput
                 handleStandardChange={this.handleStandardChange}

@@ -5,6 +5,9 @@ import {
   GET_ARTIFACT_RESOURCE_REQUEST,
   GET_ARTIFACT_RESOURCE_SUCCESS,
   GET_ARTIFACT_RESOURCE_FAILURE,
+  DELETE_ARTIFCT_RESOURCE_REQUEST,
+  DELETE_ARTIFCT_RESOURCE_SUCCESS,
+  DELETE_ARTIFCT_RESOURCE_FAILURE,
   CALL_API,
 } from './types';
 
@@ -43,6 +46,25 @@ export const getResource = (artifactId, resourceId) => ({
       GET_ARTIFACT_RESOURCE_REQUEST,
       GET_ARTIFACT_RESOURCE_SUCCESS,
       GET_ARTIFACT_RESOURCE_FAILURE,
+    ],
+  },
+});
+
+/**
+ * @route /artifact/{artifactId}/resource/{resourceId}/resource
+ * @method GET
+ * @param {number} artifactId
+ * @param {number} resourceId
+ * @desc get a resource from an artifact
+ */
+export const deleteResource = (artifactId, resourceId) => ({
+  [CALL_API]: {
+    endpoint: `/artifact/${artifactId}/resource/${resourceId}`,
+    method: 'DELETE',
+    types: [
+      DELETE_ARTIFCT_RESOURCE_REQUEST,
+      DELETE_ARTIFCT_RESOURCE_SUCCESS,
+      DELETE_ARTIFCT_RESOURCE_FAILURE,
     ],
   },
 });

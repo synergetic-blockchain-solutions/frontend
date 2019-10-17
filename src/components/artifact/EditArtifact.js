@@ -19,6 +19,7 @@ import isEmpty from 'helpers/is-empty';
 import Success from 'components/common/visual/Success';
 import InputAdder from 'components/common/form/InputAdder';
 import Select from 'components/common/inputs/Select';
+import { Title } from './artifact-helpers';
 
 const Form = styled.form``;
 
@@ -68,7 +69,7 @@ class CreateArtifact extends Component {
         description,
         groups: groups.map(group => ({ value: id, label: group.name })),
         name,
-        owners: owners.map(owner => owner.name),
+        owners: owners.map(owner => ({ name: owner.name, id: owner.id })),
       };
     }
   }
@@ -104,6 +105,7 @@ class CreateArtifact extends Component {
 
   deleteImage = e => {
     const name = e.target.name.toString();
+    console.log(name);
     this.setState(prevState => ({
       image: prevState.image.filter((img, index) => {
         return index.toString() !== name;
@@ -190,8 +192,6 @@ class CreateArtifact extends Component {
     const { usersGroups, user } = this.props;
     const { artifact } = this.props.artifact;
 
-    console.log(this.props);
-    console.log(this.state);
     return (
       <FormContainer>
         {finished ? (
@@ -202,9 +202,7 @@ class CreateArtifact extends Component {
           />
         ) : (
           <React.Fragment>
-            <h2>
-              <center>Add a new artifact</center>
-            </h2>
+            <Title>Add a new artifact</Title>
             <Form onSubmit={this.submit}>
               <AuthInput
                 handleStandardChange={this.handleStandardChange}

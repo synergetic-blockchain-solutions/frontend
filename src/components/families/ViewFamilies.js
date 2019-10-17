@@ -38,15 +38,17 @@ class ViewFamilies extends Component {
   }
 
   render() {
-    const { groups } = this.props;
+    const { groups, user } = this.props;
     return (
       <ViewFamiliesPage>
         <ViewFamiliesTitle>View Families</ViewFamiliesTitle>
         <ViewFamiliesContainer>
           {groups &&
-            groups.map(group => {
-              return <FamilySummary name={group.name} id={group.id} />;
-            })}
+            groups
+              .filter(grp => grp.id !== user.privateGroup.id)
+              .map(group => {
+                return <FamilySummary name={group.name} id={group.id} />;
+              })}
         </ViewFamiliesContainer>
 
         <EditButton to={`/families/create`}>
@@ -59,6 +61,7 @@ class ViewFamilies extends Component {
 
 const mapStateToProps = state => ({
   groups: state.group.groups,
+  user: state.auth.user,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -68,6 +71,7 @@ const mapDispatchToProps = dispatch => ({
 ViewFamilies.propTypes = {
   getGroups: PropTypes.func.isRequired,
   groups: PropTypes.arrayOf(PropTypes.object).isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default connect(

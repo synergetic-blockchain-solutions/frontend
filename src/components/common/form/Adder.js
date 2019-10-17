@@ -10,8 +10,12 @@ function Adder(props) {
       {values.map((value, index) => {
         return (
           <AddedElem key={index}>
-            {value}
-            <AddedDelete type="button" onClick={removeGroup} name={index}>
+            {value.name}
+            <AddedDelete
+              type="button"
+              onClick={() => removeGroup(value.id)}
+              name={index}
+            >
               <ButtonIcon className="fas fa-times-circle"></ButtonIcon>
             </AddedDelete>
           </AddedElem>

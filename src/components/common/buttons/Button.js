@@ -79,8 +79,10 @@ export const Button = styled(ButtonBase)`
   }
 
   &.gray {
-    color: ${props => props.theme.colors.colorWhite};
+    color: ${props => props.theme.colors.colorBlack};
     background-color: ${props => props.theme.colors.colorGrayMedium};
+    border: 1px solid
+      ${props => darken(0.2, props.theme.colors.colorGrayMedium)};
   }
 
   &.dark-gray {
@@ -96,9 +98,22 @@ export const Button = styled(ButtonBase)`
     }
   }
 
+  &.danger {
+    color: ${props => props.theme.colors.colorWhite};
+    background-color: ${props => props.theme.colors.colorDanger};
+
+    :hover {
+      background-color: ${props => darken(0.1, props.theme.colors.colorDanger)};
+    }
+  }
+
   &.btn-block {
     margin-left: auto;
     margin-right: auto;
+  }
+
+  &.mr-2 {
+    margin-right: 2rem;
   }
 `;
 

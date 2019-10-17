@@ -31,7 +31,7 @@ function ImagePreview(props) {
   console.log(props);
   return (
     <ImageContainer>
-      <DeleteButton name={position} onClickEvent={deleteImage}>
+      <DeleteButton name={position} onClick={deleteImage}>
         <ButtonIcon className="fas fa-times-circle"></ButtonIcon>
       </DeleteButton>
       <Image src={src} />

@@ -53,7 +53,7 @@ class ViewSingleArtifact extends Component {
 
     return (
       <Container>
-        <SingleArtifactTitle>Artifact Name: {name}</SingleArtifactTitle>
+        <SingleArtifactTitle>{name}</SingleArtifactTitle>
         <InfoSeperator>
           <ResourceCarousel resources={resources} />
         </InfoSeperator>

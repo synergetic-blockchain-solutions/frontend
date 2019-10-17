@@ -26,8 +26,12 @@ export const AddedDelete = styled(UnstyledButton)`
 `;
 
 export const ReccomendButton = styled(ButtonBase)`
-  padding: 0.5rem 2rem;
-  background-color: ${props => props.theme.colors.colorSuccess};
+  /* padding: 0.5rem 2rem;
+  background-color: ${props => props.theme.colors.colorSuccess}; */
   color: ${props => props.theme.colors.colorWhite};
-  border-radius: 20px;
+  width: 100%;
+  height: 3rem;
+  border-bottom: 1px solid ${props => props.theme.colors.colorWhite};
+  background-color: ${props => props.theme.colors.colorSuccess};
+  /* border-radius: 20px; */
 `;
