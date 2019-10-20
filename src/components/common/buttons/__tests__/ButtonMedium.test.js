@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount} from 'enzyme';
 import TestRoot from 'TestRoot';
 import ButtonMedium from '../ButtonMedium';
 
@@ -31,6 +31,7 @@ describe('The button component', () => {
   it('has the correct classes', () => {
     expect(wrapped.find('button').hasClass('btn-primary-light')).toEqual(true);
   });
+
 });
 
 describe('The button component', () => {

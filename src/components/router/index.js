@@ -27,6 +27,7 @@ const CreateGroup = Loadable({
   loading: Loading,
 });
 
+
 const ViewFamilies = Loadable({
   loader: () => import('components/families/ViewFamilies'),
   loading: Loading,

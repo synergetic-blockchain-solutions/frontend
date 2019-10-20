@@ -11,7 +11,7 @@ const LogoContainer = styled.div`
   border-radius: 30px;
   text-align: center;
   width: 90%;
-  margin: 0 auto;
+
 `;
 
 const LogoMotto = styled.h3`
