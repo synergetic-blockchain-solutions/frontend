@@ -3,6 +3,8 @@ import { darken } from 'polished';
 import { Link } from 'react-router-dom';
 
 export const ButtonBase = styled.button`
+  min-width: fit-content;
+  padding: 0rem 2rem;
   :disabled {
     background-color: ${props => props.theme.colors.colorGrayLight2} !important;
     border: none !important;

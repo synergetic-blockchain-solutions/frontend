@@ -55,7 +55,7 @@ class Creategroup extends Component {
       !isEmpty(prevState.image)
     ) {
       nextProps.addImageToGroup(nextProps.group.group.id, prevState.image.file);
-    } else if (nextProps.group === ADD_GROUP_IMAGE_SUCCESS) {
+    } else if (nextProps.group.success === ADD_GROUP_IMAGE_SUCCESS) {
       return { ...prevState, finished: true };
     } else if (
       nextProps.group.success === REGISTER_GROUP_SUCCESS &&
@@ -132,7 +132,7 @@ class Creategroup extends Component {
       <FormContainer>
         {finished ? (
           <Success
-            text="group Was Created Successfully"
+            text="Group Successfully Created"
             linkAddress={`/family/${group.id}`}
             linkText="Click Here To View group"
           />
@@ -198,7 +198,7 @@ class Creategroup extends Component {
               <ButtonMedium
                 clickEvent={this.submit}
                 text="Create Group"
-                color="btn-block btn-primary-light"
+                color="dark-brown"
                 margin="1rem 0 0 0"
                 disabled={isEmpty(name) || isEmpty(description)}
               />

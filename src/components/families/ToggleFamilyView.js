@@ -36,7 +36,7 @@ function ToggleFamilyView(props) {
       </ButtonLeft>
       <ButtonMiddle
         selected={view === 'albums'}
-        onClick={() => toggleView('info')}
+        onClick={() => toggleView('albums')}
         className="dark-gray"
       >
         View Albums

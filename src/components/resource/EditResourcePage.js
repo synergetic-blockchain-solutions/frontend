@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import Page from 'components/common/containers/Page';
 import AuthInput from 'components/common/inputs/AuthInput';
-import UnstyledButton from 'components/common/buttons/UnstyledButton';
-import { ButtonIcon } from 'components/common/icons/Icons';
 import ButtonLarge from 'components/common/buttons/ButtonMedium';
 import ConfirmModal from 'components/common/modals/ConfirmationModal';
 
@@ -38,7 +37,7 @@ const Flex = styled.div`
   flex-wrap: wrap;
 `;
 
-const Title = styled.h2`
+export const LinkTitle = styled(Link)`
   font-size: 2.5rem;
   margin-bottom: 2rem;
 `;
@@ -121,9 +120,10 @@ class ResourcePage extends Component {
 
   render() {
     const { image, contentType, name, description } = this.state;
-    console.log(this.state);
+    const { artifactId } = this.props.match.params;
     return (
       <ResPage>
+        <LinkTitle to={`/artifact/${artifactId}`}>Back to Artifact</LinkTitle>
         <Flex>
           <ImageContainer>
             <LargeImage

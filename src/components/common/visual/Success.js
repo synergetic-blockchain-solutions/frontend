@@ -5,6 +5,7 @@ import { ButtonLink } from 'components/common/buttons/Button';
 
 const SuccessContainer = styled.div`
   position: relative;
+  text-align: center;
   width: 100%;
   padding: 8rem 1rem;
 `;
@@ -25,6 +26,8 @@ const LinkText = styled(ButtonLink)`
   left: 50%;
   top: calc(50% + 4rem);
   transform: translate(-50%, -50%);
+  width: fit-content;
+  padding: 0rem 2rem;
 `;
 
 function Success(props) {

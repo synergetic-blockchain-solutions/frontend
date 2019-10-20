@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import FamilySummary from './FamilySummary';
 import { getGroups } from 'actions/group';
-import { ButtonIcon } from 'components/common/icons/Icons';
+import NoContent from 'components/common/containers/NoContent';
+import isEmpty from 'helpers/is-empty';
+import { ButtonLink } from 'components/common/buttons/Button';
 
 const ViewFamiliesPage = styled.section`
   margin-top: 8rem;
@@ -20,16 +21,15 @@ const ViewFamiliesContainer = styled.div`
 `;
 
 const ViewFamiliesTitle = styled.h1`
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
 `;
 
-const EditButton = styled(Link)`
-  position: absolute;
-  bottom: 5rem;
-  right: 4rem;
-  color: ${props => props.theme.colors.colorWarning};
-  font-size: 7rem;
+const Flex = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 2rem;
 `;
 
 class ViewFamilies extends Component {
@@ -39,21 +39,29 @@ class ViewFamilies extends Component {
 
   render() {
     const { groups, user } = this.props;
+    const nonPersonalGroups = groups.filter(
+      grp => grp.id !== user.privateGroup.id
+    );
     return (
       <ViewFamiliesPage>
-        <ViewFamiliesTitle>View Families</ViewFamiliesTitle>
+        <Flex>
+          <ViewFamiliesTitle>View Families</ViewFamiliesTitle>
+          <ButtonLink className="dark-brown" to="/families/create">
+            Create Family
+          </ButtonLink>
+        </Flex>
+
         <ViewFamiliesContainer>
-          {groups &&
-            groups
+          {!isEmpty(nonPersonalGroups) ? (
+            nonPersonalGroups
               .filter(grp => grp.id !== user.privateGroup.id)
               .map(group => {
                 return <FamilySummary name={group.name} id={group.id} />;
-              })}
+              })
+          ) : (
+            <NoContent text="You Arent A Part Of Any Groups Yet" />
+          )}
         </ViewFamiliesContainer>
-
-        <EditButton to={`/families/create`}>
-          <ButtonIcon className="fas fa-plus-circle"></ButtonIcon>
-        </EditButton>
       </ViewFamiliesPage>
     );
   }

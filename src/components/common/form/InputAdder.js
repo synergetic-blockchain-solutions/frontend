@@ -33,13 +33,10 @@ class InputAdder extends Component {
     visible: false,
   };
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.values !== this.props.values) {
-      this.setState(prevState => ({
-        added: [...prevState.added, ...nextProps.values],
-      }));
-    }
-    return true;
+  componentDidMount() {
+    this.setState(prevState => ({
+      added: [...prevState.added, ...this.props.initialValues],
+    }));
   }
 
   handleStandardChange = e => {
@@ -88,7 +85,6 @@ class InputAdder extends Component {
       userSearch,
     } = this.props;
     const { value, added, visible } = this.state;
-    console.log(this.state);
     return (
       <Container>
         <AuthInput
@@ -128,7 +124,7 @@ class InputAdder extends Component {
 InputAdder.propTypes = {
   type: PropTypes.string.isRequired,
   inputName: PropTypes.string.isRequired,
-  values: PropTypes.array.isRequired,
+  initialValues: PropTypes.array.isRequired,
   placeholder: PropTypes.string.isRequired,
   marginBottom: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
@@ -142,7 +138,7 @@ InputAdder.propTypes = {
 
 InputAdder.defaultProps = {
   marginBottom: '1rem',
-  values: [],
+  initialValues: [],
   isUserSearch: false,
 };
 

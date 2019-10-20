@@ -5,10 +5,10 @@ import styled from 'styled-components';
 import moment from 'moment';
 import AuthInput from 'components/common/inputs/AuthInput';
 import TextAreaInput from 'components/common/inputs/TextAreaInput';
-import { registerArtifact, resetArtifact, getArtifact } from 'actions/artifact';
+import { updateArtifact, resetArtifact, getArtifact } from 'actions/artifact';
 import { addResourceToArtifact } from 'actions/resource';
 import { getGroups } from 'actions/group';
-import { REGISTER_ARTIFACT_SUCCESS } from 'actions/types';
+import { UPDATE_ARTIFACT_SUCCESS } from 'actions/types';
 import { Center, MY1X0 } from 'components/common/containers/GeneralContainers';
 import ButtonLarge from 'components/common/buttons/ButtonLarge';
 import FormValidator from 'components/common/help-component/FormValidator';
@@ -19,7 +19,8 @@ import isEmpty from 'helpers/is-empty';
 import Success from 'components/common/visual/Success';
 import InputAdder from 'components/common/form/InputAdder';
 import Select from 'components/common/inputs/Select';
-import { Title } from './artifact-helpers';
+import ResourcePreview from 'components/common/image/ResourcePreview';
+import { Title, Subtitle } from './artifact-helpers';
 
 const Form = styled.form``;
 
@@ -60,6 +61,7 @@ class CreateArtifact extends Component {
       name,
       owners,
       resources,
+      date,
       tags,
     } = nextProps.artifact.artifact;
     if (!isEmpty(nextProps.artifact.artifact) && prevState.name === '') {
@@ -70,8 +72,35 @@ class CreateArtifact extends Component {
         groups: groups.map(group => ({ value: id, label: group.name })),
         name,
         owners: owners.map(owner => ({ name: owner.name, id: owner.id })),
+        date: date,
       };
     }
+    if (
+      !isEmpty(nextProps.artifact.artifact) &&
+      nextProps.artifact.success === UPDATE_ARTIFACT_SUCCESS &&
+      !isEmpty(prevState.image)
+    ) {
+      for (let file in prevState.image) {
+        let formData = new FormData();
+        formData.append(
+          'metadata',
+          JSON.stringify(prevState.image[file].metaData)
+        );
+        formData.append('resource', prevState.image[file].image.file);
+        nextProps.addResourceToArtifact(
+          nextProps.artifact.artifact.id,
+          formData
+        );
+      }
+    }
+
+    if (
+      nextProps.artifact.successCount === prevState.image.length &&
+      nextProps.artifact.success
+    ) {
+      return { finished: true };
+    }
+    return prevState;
   }
 
   componentWillUnmount() {
@@ -148,6 +177,8 @@ class CreateArtifact extends Component {
     this.setState({ validation });
     this.submitted = true;
 
+    const { artifact } = this.props.artifact;
+
     const {
       name,
       tag,
@@ -159,14 +190,16 @@ class CreateArtifact extends Component {
     } = this.state;
 
     if (validation.isValid) {
-      this.props.registerArtifact(
+      this.props.updateArtifact(
         name,
         description,
-        owners,
-        groups.map(group => group.value),
+        owners.map(own => own.id),
+        groups.map(gr => gr.value).filter(gr => gr !== this.props.user.id),
         sharedWith,
         tag,
-        moment(date).format()
+        date,
+        artifact.resources.map(res => res.id),
+        artifact.id
       );
     }
   };
@@ -202,7 +235,7 @@ class CreateArtifact extends Component {
           />
         ) : (
           <React.Fragment>
-            <Title>Add a new artifact</Title>
+            <Title>Edit Artifact</Title>
             <Form onSubmit={this.submit}>
               <AuthInput
                 handleStandardChange={this.handleStandardChange}
@@ -214,7 +247,23 @@ class CreateArtifact extends Component {
                 label="Name"
                 error={validation.name.message}
               />
+              {!isEmpty(artifact.resources) && (
+                <MY1X0>
+                  <Subtitle>Uploading Images</Subtitle>
+                  {artifact.resources.map(res => {
+                    return (
+                      <ResourcePreview
+                        contentType={res.contentType}
+                        description={res.description}
+                        artifactId={artifact.id}
+                        id={res.id}
+                      />
+                    );
+                  })}
+                </MY1X0>
+              )}
               <MY1X0>
+                <Subtitle>Upload More Images</Subtitle>
                 <ImageDropzone
                   recieveImage={this.recieveImage}
                   image={this.recieveImage}
@@ -270,7 +319,7 @@ class CreateArtifact extends Component {
                 label="Add owners of the artifact (owners can edit it)"
                 addElem={this.addOwner}
                 removeElem={this.removeOwner}
-                values={owners}
+                initialValues={owners}
                 isUserSearch
               />
               <InputAdder
@@ -280,13 +329,13 @@ class CreateArtifact extends Component {
                 label="Share artifact with other users"
                 addElem={this.addUser}
                 removeElem={this.removeUser}
-                values={sharedWith}
+                initialValues={sharedWith}
                 isUserSearch
               />
               <Center>
                 <ButtonLarge
                   clickEvent={this.submit}
-                  text="Add Artifact"
+                  text="Submit Changes"
                   color="dark-brown"
                   margin="1rem 0 0 0"
                   disabled={isEmpty(name) || isEmpty(description)}
@@ -301,7 +350,7 @@ class CreateArtifact extends Component {
 }
 
 CreateArtifact.propTypes = {
-  registerArtifact: PropTypes.func.isRequired,
+  updateArtifact: PropTypes.func.isRequired,
   artifact: PropTypes.object.isRequired,
   addResourceToArtifact: PropTypes.func.isRequired,
   resetArtifact: PropTypes.func.isRequired,
@@ -312,17 +361,29 @@ CreateArtifact.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  registerArtifact: (
+  updateArtifact: (
     name,
     description,
     owners,
     groups,
     sharedWith,
     tag,
-    date
+    date,
+    resources,
+    id
   ) =>
     dispatch(
-      registerArtifact(name, description, owners, groups, sharedWith, tag, date)
+      updateArtifact(
+        name,
+        description,
+        owners,
+        groups,
+        sharedWith,
+        tag,
+        date,
+        resources,
+        id
+      )
     ),
   addResourceToArtifact: (id, formData) =>
     dispatch(addResourceToArtifact(id, formData)),

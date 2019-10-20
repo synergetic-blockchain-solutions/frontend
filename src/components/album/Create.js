@@ -6,24 +6,21 @@ import moment from 'moment';
 import AuthInput from 'components/common/inputs/AuthInput';
 import TextAreaInput from 'components/common/inputs/TextAreaInput';
 import ButtonLarge from 'components/common/buttons/ButtonLarge';
-import { registerArtifact, resetArtifact } from 'actions/artifact';
-import { addResourceToArtifact } from 'actions/resource';
+import { CREATE_ALBUM_SUCCESS } from 'actions/types';
+import { createAlbum, resetAlbum } from 'actions/album';
 import { getGroups } from 'actions/group';
-import { REGISTER_ARTIFACT_SUCCESS } from 'actions/types';
 import { Center, MY1X0 } from 'components/common/containers/GeneralContainers';
 import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/common/containers/FormDisplayContainer';
-import ImageDropzone from 'components/common/image/ImageDropzone';
-import ImagePreview from 'components/common/image/ImagePreview';
 import isEmpty from 'helpers/is-empty';
 import Success from 'components/common/visual/Success';
 import InputAdder from 'components/common/form/InputAdder';
 import Select from 'components/common/inputs/Select';
-import { Title } from './artifact-helpers';
+import { Title } from 'components/artifact/artifact-helpers';
 
 const Form = styled.div``;
 
-class CreateArtifact extends Component {
+class CreateAlbum extends Component {
   validator = new FormValidator([
     {
       field: 'name',
@@ -35,9 +32,6 @@ class CreateArtifact extends Component {
 
   state = {
     name: '',
-    image: [],
-    tag: [],
-    date: '',
     description: '',
     groups: [],
     owners: [],
@@ -50,72 +44,22 @@ class CreateArtifact extends Component {
     this.props.getGroups();
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  shouldComponentUpdate(nextProps, nextState) {
     if (
-      !isEmpty(nextProps.artifact.artifact) &&
-      nextProps.artifact.success === REGISTER_ARTIFACT_SUCCESS &&
-      !isEmpty(prevState.image)
+      nextProps.album.success === CREATE_ALBUM_SUCCESS &&
+      !this.state.finished
     ) {
-      for (let file in prevState.image) {
-        let formData = new FormData();
-        formData.append(
-          'metadata',
-          JSON.stringify(prevState.image[file].metaData)
-        );
-        formData.append('resource', prevState.image[file].image.file);
-        nextProps.addResourceToArtifact(
-          nextProps.artifact.artifact.id,
-          formData
-        );
-      }
+      this.setState({ finished: true });
     }
-
-    if (
-      nextProps.artifact.successCount === prevState.image.length &&
-      nextProps.artifact.success
-    ) {
-      return { finished: true };
-    }
-    return prevState;
+    return true;
   }
 
   componentWillUnmount() {
-    this.props.resetArtifact();
+    this.props.resetAlbum();
   }
-
-  submitted = false;
 
   handleStandardChange = e =>
     this.setState({ [e.target.name]: e.target.value });
-
-  recieveImage = image => {
-    this.setState(prevState => {
-      return {
-        image: [
-          ...prevState.image,
-          { image, metaData: { name: '', description: '', tags: [] } },
-        ],
-      };
-    });
-  };
-
-  handleMetaDataChange = e => {
-    const [field, position] = e.target.name.split('-');
-    const { image } = this.state;
-    const newImages = image;
-    const changedImage = newImages[Number(position)];
-    changedImage.metaData[field] = e.target.value;
-    this.setState({ images: newImages });
-  };
-
-  deleteImage = e => {
-    const name = e.target.name.toString();
-    this.setState(prevState => ({
-      image: prevState.image.filter((img, index) => {
-        return index.toString() !== name;
-      }),
-    }));
-  };
 
   handleGroupSelect = groups => {
     this.setState({ groups: groups });
@@ -152,25 +96,15 @@ class CreateArtifact extends Component {
     this.setState({ validation });
     this.submitted = true;
 
-    const {
-      name,
-      tag,
-      date,
-      description,
-      groups,
-      sharedWith,
-      owners,
-    } = this.state;
+    const { name, description, groups, sharedWith, owners } = this.state;
 
     if (validation.isValid) {
-      this.props.registerArtifact(
+      this.props.createAlbum(
         name,
         description,
         owners,
         groups.map(group => group.value),
-        sharedWith,
-        tag,
-        moment(date).format()
+        sharedWith
       );
     }
   };
@@ -182,30 +116,24 @@ class CreateArtifact extends Component {
       ? this.validator.validate(this.state)
       : this.state.validation;
 
-    const {
-      name,
-      date,
-      description,
-      owners,
-      sharedWith,
-      image,
-      finished,
-    } = this.state;
+    const { name, description, finished } = this.state;
 
     const { usersGroups, user } = this.props;
-    const { artifact } = this.props.artifact;
+    const { album } = this.props.album;
+
+    console.log(this.state);
 
     return (
       <FormContainer>
         {finished ? (
           <Success
-            text="Artifact Was Created Successfully"
-            linkAddress={`/artifact/${artifact.id}`}
-            linkText="Click Here To View Artifact"
+            text="Album Was Created Successfully"
+            linkAddress={`/album/${album.id}`}
+            linkText="Click Here To View Album"
           />
         ) : (
           <React.Fragment>
-            <Title>Add A New Artifact</Title>
+            <Title>Add A New Album</Title>
             <Form onSubmit={this.submit}>
               <AuthInput
                 handleStandardChange={this.handleStandardChange}
@@ -216,36 +144,6 @@ class CreateArtifact extends Component {
                 marginBottom="1rem"
                 label="Name*"
                 error={validation.name.message}
-              />
-              <MY1X0>
-                <ImageDropzone
-                  recieveImage={this.recieveImage}
-                  image={this.recieveImage}
-                  images={image}
-                />
-              </MY1X0>
-              <MY1X0>
-                {image.map((img, index) => {
-                  return (
-                    <ImagePreview
-                      src={img.image.preview}
-                      deleteImage={this.deleteImage}
-                      position={index}
-                      metaData={img.metaData}
-                      handleMetaDataChange={this.handleMetaDataChange}
-                      key={index}
-                    />
-                  );
-                })}
-              </MY1X0>
-              <AuthInput
-                handleStandardChange={this.handleStandardChange}
-                value={date}
-                type="date"
-                name="date"
-                placeholder="Date Taken"
-                marginBottom="1rem"
-                label="Date Taken"
               />
               <TextAreaInput
                 handleStandardChange={this.handleStandardChange}
@@ -263,14 +161,14 @@ class CreateArtifact extends Component {
                   )}
                   handleSelect={this.handleGroupSelect}
                   marginBottom="1rem"
-                  label="Select groups to share this artifact with"
+                  label="Select groups to share this album with"
                 />
               )}
               <InputAdder
                 type="text"
                 inputName="owners"
                 placeholder="Add owners"
-                label="Add owners of the artifact (owners can edit it)"
+                label="Add owners of the album (owners can edit it)"
                 addElem={this.addOwner}
                 removeElem={this.removeOwner}
                 isUserSearch
@@ -278,8 +176,8 @@ class CreateArtifact extends Component {
               <InputAdder
                 type="text"
                 name="sharedWith"
-                placeholder="Share artifact with other users"
-                label="Share artifact with other users"
+                placeholder="Share album with other users"
+                label="Share album with other users"
                 addElem={this.addUser}
                 removeElem={this.removeUser}
                 isUserSearch
@@ -287,7 +185,7 @@ class CreateArtifact extends Component {
               <Center>
                 <ButtonLarge
                   clickEvent={this.submit}
-                  text="Add Artifact"
+                  text="Create Album"
                   color="dark-brown"
                   margin="1rem 0 0 0"
                   disabled={isEmpty(name) || isEmpty(description)}
@@ -301,37 +199,24 @@ class CreateArtifact extends Component {
   }
 }
 
-CreateArtifact.propTypes = {
-  registerArtifact: PropTypes.func.isRequired,
-  artifact: PropTypes.object.isRequired,
-  addResourceToArtifact: PropTypes.func.isRequired,
-  resetArtifact: PropTypes.func.isRequired,
+CreateAlbum.propTypes = {
+  createAlbum: PropTypes.func.isRequired,
+  album: PropTypes.object.isRequired,
+  resetAlbum: PropTypes.func.isRequired,
   getGroups: PropTypes.func.isRequired,
   usersGroups: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
-  registerArtifact: (
-    name,
-    description,
-    owners,
-    groups,
-    sharedWith,
-    tag,
-    date
-  ) =>
-    dispatch(
-      registerArtifact(name, description, owners, groups, sharedWith, tag, date)
-    ),
-  addResourceToArtifact: (id, formData) =>
-    dispatch(addResourceToArtifact(id, formData)),
-  resetArtifact: () => dispatch(resetArtifact()),
+  createAlbum: (name, description, owners, groups, sharedWith) =>
+    dispatch(createAlbum(name, description, owners, groups, sharedWith)),
   getGroups: () => dispatch(getGroups()),
+  resetAlbum: () => dispatch(resetAlbum()),
 });
 
 const mapStateToProps = state => ({
-  artifact: state.artifact,
+  album: state.album,
   usersGroups: state.group.groups,
   user: state.auth.user,
 });
@@ -339,4 +224,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreateArtifact);
+)(CreateAlbum);

@@ -9,6 +9,7 @@ import { getArtifact } from 'actions/artifact';
 import { ButtonIcon } from 'components/common/icons/Icons';
 import { EditButton } from 'components/artifact/ViewSingleArtifact';
 import { ButtonLink } from 'components/common/buttons/Button';
+import { LinkTitle } from './EditResourcePage';
 
 const ImageContainer = styled.div`
   margin-bottom: 1rem;
@@ -88,6 +89,7 @@ class ResourcePage extends Component {
       owners && owners.findIndex(owner => owner.id === user.id) !== -1;
     return (
       <ResPage>
+        <LinkTitle to={`/artifact/${artifactId}`}>Back to Artifact</LinkTitle>
         <Flex>
           <ImageContainer>
             <Title>{name}</Title>

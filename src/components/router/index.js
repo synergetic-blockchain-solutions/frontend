@@ -4,7 +4,6 @@ import Loadable from 'react-loadable';
 import Loading from 'components/common/loading/Loading';
 import PrivateRoute from './PrivateRoute';
 import Root from 'components/Root';
-import Dashboard from 'components/dashboard';
 import NavBar from 'components/layout/NavBar';
 
 const Login = Loadable({
@@ -67,6 +66,21 @@ const ResourceEditPage = Loadable({
   loading: Loading,
 });
 
+const CreateOptions = Loadable({
+  loader: () => import('components/single-pages/CreateOptions'),
+  loading: Loading,
+});
+
+const CreateAlbum = Loadable({
+  loader: () => import('components/album/Create'),
+  loading: Loading,
+});
+
+const ViewAlbum = Loadable({
+  loader: () => import('components/album/ViewAlbum'),
+  loading: Loading,
+});
+
 export default class Router extends Component {
   render() {
     return (
@@ -76,7 +90,14 @@ export default class Router extends Component {
           <Switch>
             <PrivateRoute path="/families" component={ViewFamilies} exact />
             <PrivateRoute path="/family/:id" component={ViewFamily} exact />
-            <PrivateRoute path="/create" component={CreateArtifact} exact />
+            <PrivateRoute path="/create" component={CreateOptions} exact />
+            <PrivateRoute path="/album/create" component={CreateAlbum} exact />
+            <PrivateRoute path="/album/:id" component={ViewAlbum} exact />
+            <PrivateRoute
+              path="/artifact/create"
+              component={CreateArtifact}
+              exact
+            />
             <PrivateRoute
               path="/artifact/:artifactId/resource/:resourceId/edit"
               component={ResourceEditPage}
