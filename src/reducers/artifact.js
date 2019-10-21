@@ -2,6 +2,9 @@ import {
   REGISTER_ARTIFACT_REQUEST,
   REGISTER_ARTIFACT_SUCCESS,
   REGISTER_ARTIFACT_FAILURE,
+  UPDATE_ARTIFACT_REQUEST,
+  UPDATE_ARTIFACT_SUCCESS,
+  UPDATE_ARTIFACT_FAILURE,
   GET_ALL_ARTIFACTS_REQUEST,
   GET_ALL_ARTIFACTS_SUCCESS,
   GET_ALL_ARTIFACTS_FAILURE,
@@ -45,6 +48,28 @@ export default function(state = initialState, action) {
         artifact: action.payload,
       };
     case REGISTER_ARTIFACT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        success: '',
+        failure: action.payload,
+      };
+    case UPDATE_ARTIFACT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        success: '',
+        failure: {},
+      };
+    case UPDATE_ARTIFACT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: UPDATE_ARTIFACT_SUCCESS,
+        artifact: action.payload,
+        failure: {},
+      };
+    case UPDATE_ARTIFACT_FAILURE:
       return {
         ...state,
         loading: false,

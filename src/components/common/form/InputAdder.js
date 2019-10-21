@@ -9,19 +9,35 @@ import { getUserByName, clearUserSearch } from 'actions/auth';
 import isEmpty from 'helpers/is-empty';
 
 const Container = styled.div`
+  position: relative;
   margin-bottom: 1rem;
 `;
 
 const ReccomendationContainer = styled.div`
-  margin-top: -1rem;
-  margin-bottom: 1rem;
+  display: ${props => (props.visible ? 'block' : 'none')};
+  position: absolute;
+  bottom: 0rem;
+  left: 0;
+  transform: translateY(100%);
+  width: 20rem;
+  background-color: ${props => props.theme.colors.colorDarkBrown};
+  z-index: ${props => props.theme.zIndex.important};
+  max-height: 8rem;
+  overflow: auto;
 `;
 
 class InputAdder extends Component {
   state = {
     value: '',
     added: [],
+    visible: false,
   };
+
+  componentDidMount() {
+    this.setState(prevState => ({
+      added: [...prevState.added, ...this.props.initialValues],
+    }));
+  }
 
   handleStandardChange = e => {
     this.setState({ value: e.target.value });
@@ -31,31 +47,44 @@ class InputAdder extends Component {
   };
 
   addInput = input => {
+    console.log('here');
     const { id, name } = input;
     this.props.addElem(id);
     this.setState(prevState => ({
       value: '',
-      added: [...prevState.added, name],
+      added: [...prevState.added, { id: id, name: name }],
     }));
     if (this.props.isUserSearch) {
       this.props.clearUserSearch();
     }
   };
 
-  removeGroup = e => this.props.removeElem(Number(e.target.name));
+  removeGroup = id => {
+    const delId = id;
+    this.setState(prevState => ({
+      added: prevState.added.filter(val => val.id !== delId),
+    }));
+    this.props.removeElem(id);
+  };
+
+  focus = () => {
+    this.setState({ visible: true });
+  };
+
+  unFocus = () => {
+    setTimeout(() => this.setState({ visible: false }), 500);
+  };
 
   render() {
     const {
       type,
       inputName,
-      values,
       placeholder,
       marginBottom,
       label,
       userSearch,
     } = this.props;
-    const { value, added } = this.state;
-
+    const { value, added, visible } = this.state;
     return (
       <Container>
         <AuthInput
@@ -66,13 +95,15 @@ class InputAdder extends Component {
           placeholder={placeholder}
           marginBottom={marginBottom}
           label={label}
+          onFocus={this.focus}
+          onBlur={this.unFocus}
+          autoComplete={false}
         />
         {!isEmpty(userSearch) && (
-          <ReccomendationContainer>
+          <ReccomendationContainer visible={visible}>
             {userSearch.map(user => {
               return (
                 <ReccomendButton
-                  name={`${user.id}-${user.name}`}
                   onClick={() =>
                     this.addInput({ id: user.id, name: user.name })
                   }
@@ -93,7 +124,7 @@ class InputAdder extends Component {
 InputAdder.propTypes = {
   type: PropTypes.string.isRequired,
   inputName: PropTypes.string.isRequired,
-  values: PropTypes.array.isRequired,
+  initialValues: PropTypes.array.isRequired,
   placeholder: PropTypes.string.isRequired,
   marginBottom: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
@@ -107,7 +138,7 @@ InputAdder.propTypes = {
 
 InputAdder.defaultProps = {
   marginBottom: '1rem',
-  values: [],
+  initialValues: [],
   isUserSearch: false,
 };
 

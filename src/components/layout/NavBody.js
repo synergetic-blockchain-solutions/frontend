@@ -14,22 +14,22 @@ const moveInLeft = keyframes`
 `;
 
 const NavBarLink = styled(NavLink)`
+  color: ${props => props.theme.colors.colorWhite};
+  width: fit-content;
+  height: 7rem;
+  font-size: 2rem;
+  text-decoration: none;
+  padding: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
   @media (max-width: ${props => props.theme.breakpoints.smallScreen}) {
     width: 100%;
     &:not(:last-child) {
       border-bottom: 1px solid ${props => props.theme.colorGrayLight2};
     }
   }
-
-  color: ${props => props.theme.colorDarkBlue};
-  width: fit-content;
-  height: 7rem;
-  font-size: 1.6rem;
-  text-decoration: none;
-  padding: 2rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 `;
 
 const NavBarLinkCollapsing = styled(NavBarLink)`
@@ -41,6 +41,7 @@ const NavBarLinkCollapsing = styled(NavBarLink)`
 
 const NavLinkText = styled.span`
   margin-right: 2rem;
+  color: ${props => props.theme.colors.colorWhite};
 `;
 
 const NavBodyContainer = styled.div`
@@ -49,7 +50,7 @@ const NavBodyContainer = styled.div`
   width: fit-content;
 
   @media (max-width: ${props => props.theme.breakpoints.smallScreen}) {
-    background-color: ${props => props.theme.colors.colorPrimaryLight};
+    background-color: ${props => props.theme.colors.colorPrimary};
     display: ${props => (props.display === 'true' ? 'flex' : 'none')};
     flex-direction: column;
     position: absolute;
@@ -62,13 +63,17 @@ const NavBodyContainer = styled.div`
 `;
 
 function NavBody(props) {
-  const { display, hasAuth } = props;
+  const { display, hasAuth, bodyRef } = props;
   return (
-    <NavBodyContainer hasAuth={hasAuth} display={display.toString()}>
+    <NavBodyContainer
+      ref={bodyRef}
+      hasAuth={hasAuth}
+      display={display.toString()}
+    >
       {hasAuth ? (
         <React.Fragment>
           <NavBarLink to="/families">
-            <NavLinkText> Familys </NavLinkText>
+            <NavLinkText> Families </NavLinkText>
             <i className="fas fa-users"></i>
           </NavBarLink>
           <NavBarLink to="/my-artifacts">
@@ -107,6 +112,7 @@ function NavBody(props) {
 NavBody.propTypes = {
   display: PropTypes.bool.isRequired,
   hasAuth: PropTypes.bool.isRequired,
+  bodyRef: PropTypes.bool.isRequired,
 };
 
 export default NavBody;

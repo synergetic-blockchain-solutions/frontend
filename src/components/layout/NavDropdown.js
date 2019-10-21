@@ -19,27 +19,21 @@ const NavDropdownListItem = styled.li`
   display: inline-block;
   width: 100%;
   height: 3rem;
+  line-height: 3rem;
   font-size: 1.6rem;
   text-align: center;
   text-decoration: none;
-  color: ${props => props.theme.colors.colorPrimaryLight};
+  color: ${props => props.theme.colors.colorPrimary};
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
 
   :hover {
-    background-color: ${props => props.theme.colors.colorPrimaryLight};
+    background-color: ${props => props.theme.colors.colorPrimary};
     color: ${props => props.theme.colors.colorWhite};
   }
 
   :not(:last-child) {
-    border-bottom: 1px solid ${props => props.theme.colors.colorPrimaryLight};
-  }
-
-  :last-child {
-    border-bottom-left-radius: ${props =>
-      props.theme.borders.borderRadiusSmall};
-    border-bottom-right-radius: ${props =>
-      props.theme.borders.borderRadiusSmall};
+    border-bottom: 1px solid ${props => props.theme.colors.colorPrimary};
   }
 `;
 
@@ -52,8 +46,9 @@ const LogoutButton = styled(UnstyledButton)`
 `;
 
 const ProfileButton = styled(Link)`
-  display: block;
+  display: inline-block;
   font-size: ${props => props.theme.fontSizes.prominent2};
+  text-decoration: none;
   height: 100%;
   width: 100%;
   cursor: pointer;
@@ -79,11 +74,15 @@ const ProfileContainer = styled.span`
   height: 7rem;
   width: 10rem;
   margin-right: 2rem;
-  color: ${props => props.theme.colors.colorPrimaryDarkBlue};
+  color: ${props => props.theme.colors.colorWhite};
 `;
 
 const LogoutIcon = styled.i`
   margin-right: 1rem;
+`;
+
+const VertCenter = styled.span`
+  margin: auto 0;
 `;
 
 function NavDropdown(props) {
@@ -98,14 +97,15 @@ function NavDropdown(props) {
     >
       <NavDropdownList>
         <NavDropdownListItem>
+          <ProfileButton to="/profile">
+            <LogoutIcon className="fas fa-user"></LogoutIcon>
+            <VertCenter>Profile</VertCenter>
+          </ProfileButton>
+        </NavDropdownListItem>
+        <NavDropdownListItem>
           <LogoutButton onClick={props.logoutUser}>
             <LogoutIcon className="fas fa-power-off"></LogoutIcon>Logout
           </LogoutButton>
-        </NavDropdownListItem>
-        <NavDropdownListItem>
-          <ProfileButton to="/profile">
-            <LogoutIcon className="fas fa-user"></LogoutIcon>Profile
-          </ProfileButton>
         </NavDropdownListItem>
       </NavDropdownList>
     </NavDropdownWrapper>

@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 export const Input = styled.textarea`
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   border: 1px solid ${props => props.theme.colors.colorGrayMedium};
-  border-radius: 5px;
   padding: 1rem 1rem;
   width: 100%;
   height: 15rem;
   resize: none;
+  margin-top: 1rem;
+  box-shadow: 0.2rem 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
+
   :focus {
     outline: none;
     border: 1px solid ${props => props.theme.colors.colorPrimaryLight};
@@ -17,7 +19,7 @@ export const Input = styled.textarea`
 `;
 
 const Label = styled.label`
-  font-size: 1.2rem;
+  font-size: 1.6rem;
 `;
 
 const Error = styled.p`

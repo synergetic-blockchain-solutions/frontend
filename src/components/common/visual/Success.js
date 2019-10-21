@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { ButtonLink } from 'components/common/buttons/Button';
 
 const SuccessContainer = styled.div`
   position: relative;
+  text-align: center;
   width: 100%;
-  padding: 8rem 4rem;
+  padding: 8rem 1rem;
 `;
 
 const SuccessText = styled.h2`
@@ -14,16 +15,19 @@ const SuccessText = styled.h2`
   position: absolute;
   left: 50%;
   top: 50%;
+  width: 100%;
   transform: translate(-50%, -50%);
 `;
 
-const LinkText = styled(Link)`
+const LinkText = styled(ButtonLink)`
   position: absolute;
   margin-top: 2rem;
   font-size: 1.8rem;
   left: 50%;
   top: calc(50% + 4rem);
   transform: translate(-50%, -50%);
+  width: fit-content;
+  padding: 0rem 2rem;
 `;
 
 function Success(props) {
@@ -31,7 +35,9 @@ function Success(props) {
   return (
     <SuccessContainer>
       <SuccessText>{text}</SuccessText>
-      <LinkText to={linkAddress}>{linkText}</LinkText>
+      <LinkText className="dark-brown" to={linkAddress}>
+        {linkText}
+      </LinkText>
     </SuccessContainer>
   );
 }

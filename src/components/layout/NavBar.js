@@ -18,7 +18,13 @@ const Nav = styled.nav`
   width: 100%;
   height: 7rem;
   background-color: ${props => props.theme.colors.colorPrimary};
+  background-image: linear-gradient(
+    to right,
+    ${props => props.theme.colors.colorPrimary},
+    ${props => props.theme.colors.colorPrimaryLight}
+  );
   z-index: ${props => props.theme.zIndex.header};
+  box-shadow: 0.2rem 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
 `;
 
 const NavDropdownButton = styled.button`
@@ -26,7 +32,7 @@ const NavDropdownButton = styled.button`
     display: block;
     margin-right: 2rem;
     font-size: 4rem;
-    color: ${props => props.theme.colors.colorDarkBlue};
+    color: ${props => props.theme.colors.colorWhite};
     cursor: pointer;
   }
 
@@ -38,7 +44,20 @@ class NavBar extends Component {
     display: false,
   };
 
-  toggle = () => this.setState(prevState => ({ display: !prevState.display }));
+  showDropDown = e => {
+    e.preventDefault();
+    this.setState({ display: true }, () => {
+      document.addEventListener('click', this.closeDropDown);
+    });
+  };
+
+  closeDropDown = e => {
+    if (this.dropdownMenu && !this.dropdownMenu.contains(e.target)) {
+      this.setState({ display: false }, () => {
+        document.removeEventListener('click', this.closeDropDown);
+      });
+    }
+  };
 
   render() {
     const { display } = this.state;
@@ -47,12 +66,18 @@ class NavBar extends Component {
     return (
       <Nav>
         <NavBrand />
-        <NavDropdownButton onClick={this.toggle}>
+        <NavDropdownButton onClick={this.showDropDown}>
           <i className="fas fa-bars"></i>
         </NavDropdownButton>
         {!isEmpty(auth) ? (
           <React.Fragment>
-            <NavBody hasAuth display={display} />
+            <NavBody
+              bodyRef={element => {
+                this.dropdownMenu = element;
+              }}
+              hasAuth
+              display={display}
+            />
             <NavDropdown />
           </React.Fragment>
         ) : (

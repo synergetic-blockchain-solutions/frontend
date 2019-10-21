@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const Input = styled.input`
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   border: 1px solid ${props => props.theme.colors.colorGrayMedium};
-  border-radius: 5px;
+  box-shadow: 0.2rem 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
   padding: 1rem 1rem;
   width: 100%;
   :focus {
@@ -13,7 +13,9 @@ export const Input = styled.input`
 `;
 
 export const Label = styled.label`
-  font-size: 1.2rem;
+  display: inline-block;
+  font-size: 1.6rem;
+  padding-bottom: 1rem;
 `;
 
 export const Error = styled.p`

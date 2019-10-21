@@ -25,7 +25,7 @@ const InfoSeperator = styled.div`
   margin-bottom: 2rem;
 `;
 
-const EditButton = styled(Link)`
+export const EditButton = styled(Link)`
   position: absolute;
   bottom: 2rem;
   right: 2rem;
@@ -53,7 +53,7 @@ class ViewSingleArtifact extends Component {
 
     return (
       <Container>
-        <SingleArtifactTitle>Artifact Name: {name}</SingleArtifactTitle>
+        <SingleArtifactTitle>{name}</SingleArtifactTitle>
         <InfoSeperator>
           <ResourceCarousel resources={resources} />
         </InfoSeperator>
