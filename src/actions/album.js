@@ -8,6 +8,9 @@ import {
   GET_ALBUM_REQUEST,
   GET_ALBUM_SUCCESS,
   GET_ALBUM_FAILURE,
+  ADD_TO_ALBUM_REQUEST,
+  ADD_TO_ALBUM_FAILURE,
+  ADD_TO_ALBUM_SUCCESS,
   RESET_ALBUM,
   CALL_API,
 } from './types';
@@ -20,8 +23,8 @@ import {
  * @param {array} owners
  * @param {array} groups
  * @param {array} sharedWith
- * @param {array} ALBUMs
- * @desc create an ALBUM for the user
+ * @param {array} albums
+ * @desc create an album for the user
  */
 export const createAlbum = (
   name,
@@ -29,7 +32,7 @@ export const createAlbum = (
   owners,
   groups,
   sharedWith,
-  ALBUMs = []
+  artifacts = []
 ) => ({
   [CALL_API]: {
     endpoint: '/album',
@@ -40,7 +43,7 @@ export const createAlbum = (
       owners,
       groups,
       sharedWith,
-      ALBUMs,
+      artifacts,
     },
     types: [CREATE_ALBUM_REQUEST, CREATE_ALBUM_SUCCESS, CREATE_ALBUM_FAILURE],
   },
@@ -78,6 +81,19 @@ export const getAlbum = id => ({
     endpoint: `/album/${id}`,
     method: 'GET',
     types: [GET_ALBUM_REQUEST, GET_ALBUM_SUCCESS, GET_ALBUM_FAILURE],
+  },
+});
+
+/**
+ * @route /album/{albumID}/artifact/{artifactID}
+ * @method PUT
+ * @desc add an artifact to an album
+ */
+export const addArtifactToAlbum = (id, artifactId) => ({
+  [CALL_API]: {
+    endpoint: `/album/${id}/artifact/${artifactId}`,
+    method: 'PUT',
+    types: [ADD_TO_ALBUM_REQUEST, ADD_TO_ALBUM_SUCCESS, ADD_TO_ALBUM_FAILURE],
   },
 });
 

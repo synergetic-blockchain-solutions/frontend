@@ -19,6 +19,10 @@ const Title = styled.h1`
   margin-top: 1rem;
 `;
 
+const Container = styled.div`
+  margin: 0 2rem;
+`;
+
 class ViewAlbum extends Component {
   componentDidMount() {
     this.props.getAlbum(this.props.match.params.id);
@@ -33,7 +37,9 @@ class ViewAlbum extends Component {
             Add Artifact
           </ButtonLinkLarge>
         </Flex>
-        <Artifacts artifacts={artifacts} />
+        <Container>
+          <Artifacts artifacts={artifacts} />
+        </Container>
       </Page>
     );
   }

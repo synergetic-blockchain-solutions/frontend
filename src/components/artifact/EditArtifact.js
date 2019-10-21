@@ -69,7 +69,7 @@ class CreateArtifact extends Component {
         ...prevState,
         tag: tags,
         description,
-        groups: groups.map(group => ({ value: id, label: group.name })),
+        groups: groups.map(group => ({ value: group.id, label: group.name })),
         name,
         owners: owners.map(owner => ({ name: owner.name, id: owner.id })),
         date: date,

@@ -238,15 +238,18 @@ class CreateArtifact extends Component {
                   );
                 })}
               </MY1X0>
-              <AuthInput
-                handleStandardChange={this.handleStandardChange}
-                value={date}
-                type="date"
-                name="date"
-                placeholder="Date Taken"
-                marginBottom="1rem"
-                label="Date Taken"
-              />
+              {
+                // <AuthInput
+                //   handleStandardChange={this.handleStandardChange}
+                //   value={date}
+                //   type="date"
+                //   name="date"
+                //   placeholder="Date Taken"
+                //   marginBottom="1rem"
+                //   label="Date Taken"
+                // />s
+              }
+
               <TextAreaInput
                 handleStandardChange={this.handleStandardChange}
                 value={description}
