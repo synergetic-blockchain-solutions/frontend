@@ -182,3 +182,9 @@ export const ButtonLarge = styled(Button)`
   height: 5rem;
   font-size: 2rem;
 `;
+
+export const ButtonLinkLarge = styled(ButtonLink)`
+  height: 5rem;
+  font-size: 2rem;
+  line-height: 5rem;
+`;

@@ -16,6 +16,8 @@ const MyArtifactsPage = styled.section`
 `;
 
 const MyArtifactsPageToggler = styled.div`
+  display: flex;
+
   margin-bottom: 2rem;
 `;
 
@@ -37,7 +39,7 @@ const ViewMyArtifactsHeader = styled.div`
 
 class ViewMyArtifacts extends Component {
   state = {
-    viewArtifacts: false,
+    viewArtifacts: true,
   };
 
   componentDidMount() {

@@ -17,6 +17,13 @@ const ViewFamilyPage = styled(Page)`
   padding-top: 20rem;
 `;
 
+const Flex = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+`;
+
 const FamilyArtifacts = styled.div`
   /* background-color: ${props => props.theme.colors.colorLightBrown}; */
   margin: 0 auto;
@@ -112,10 +119,12 @@ class ViewFamily extends Component {
     return (
       <ViewFamilyPage>
         {id && <FamilyBanner name={name} id={id} description={description} />}
-        <ToggleFamilyView toggleView={this.toggleGroupInfo} view={view} />
+        <Flex>
+          <ToggleFamilyView toggleView={this.toggleGroupInfo} view={view} />
+          <AddMemberModal groupName={name} group={group} />
+        </Flex>
 
         {output}
-        <AddMemberModal groupName={name} group={group} />
       </ViewFamilyPage>
     );
   }

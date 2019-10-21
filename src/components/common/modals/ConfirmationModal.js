@@ -17,6 +17,7 @@ const customStyles = {
     borderRadius: '20px',
     height: '60vh',
     width: '60vw',
+    minWidth: '45rem',
   },
 };
 

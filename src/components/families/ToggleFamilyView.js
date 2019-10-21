@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import { Button } from 'components/common/buttons/Button';
 
 const MyArtifactsPageToggler = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
   margin-bottom: 2rem;
 `;
 
@@ -21,6 +24,7 @@ const ButtonMiddle = styled(Button)`
 const ButtonRight = styled(Button)`
   border: 2px solid ${props => props.theme.colors.colorGrayDarker};
   border-left: 1px solid ${props => props.theme.colors.colorGrayDarker};
+  margin-right: 2rem;
 `;
 
 function ToggleFamilyView(props) {
