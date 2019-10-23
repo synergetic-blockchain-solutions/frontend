@@ -97,6 +97,7 @@ class ImageDropzone extends Component {
           type="file"
           onChange={this.onChange}
           multiple={multiple}
+          accept="image/png, image/jpeg"
         />
       </React.Fragment>
     );

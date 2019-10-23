@@ -16,9 +16,8 @@ const Container = styled.div`
 const ReccomendationContainer = styled.div`
   display: ${props => (props.visible ? 'block' : 'none')};
   position: absolute;
-  bottom: 0rem;
+  top: 6.5rem;
   left: 0;
-  transform: translateY(100%);
   width: 20rem;
   background-color: ${props => props.theme.colors.colorDarkBrown};
   z-index: ${props => props.theme.zIndex.important};

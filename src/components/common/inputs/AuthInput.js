@@ -39,7 +39,7 @@ function AuthInput(props) {
 
 AuthInput.defaultProps = {
   marginBottom: '0',
-  autoComplete: true,
+  autoComplete: false,
 };
 
 AuthInput.propTypes = {
