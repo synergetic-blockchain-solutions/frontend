@@ -218,16 +218,9 @@ const mapStateToProps = state => ({
   auth: state.auth,
 });
 
-<<<<<<< HEAD
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RegistrationForm);
-=======
 export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
   )(RegistrationForm)
 );
->>>>>>> 6dc139ab7b0e2e15cb27cf164dd5f1492d6554f4

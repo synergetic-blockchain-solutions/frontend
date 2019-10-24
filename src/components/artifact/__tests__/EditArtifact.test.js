@@ -1,21 +1,33 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import TestRoot from 'TestRoot';
-import CreateArtifact from '../CreateArtifact';
+import EditArtifact from '../EditArtifact';
 
 let wrapped;
 
-describe('The Create Artefact Component', () => {
+describe('The Edit Artefact Component', () => {
   beforeEach(() => {
+
+    const props={
+        updateArtifact: jest.fn(),
+        artifact: {},
+        addResourceToArtifact: jest.fn(),
+        resetArtifact: jest.fn(),
+        getGroups: jest.fn(),
+        usersGroups: [{}],
+        getArtifact: jest.fn(),
+        user: {},
+    }
+
     wrapped = mount(
       <TestRoot>
-        <CreateArtifact />
+        <EditArtifact {...props}/>
       </TestRoot>
     );
   });
 
   it('Renders the correct amount of input elements', () => {
-    expect(wrapped.find('input').length).toEqual(4);
+    expect(wrapped.find('input').length).toEqual(5);
   });
 
   it('Renders the correct amount of textarea elements', () => {

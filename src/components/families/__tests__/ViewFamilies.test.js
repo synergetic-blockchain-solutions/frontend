@@ -7,9 +7,16 @@ let wrapped;
 
 describe('The ViewFamilies Component', () => {
   beforeEach(() => {
+
+    const props={
+      getGroups: jest.fn(),
+      groups: [{}],
+      user: {},
+    }
+
     wrapped = mount(
       <TestRoot>
-        <ViewFamilies />
+        <ViewFamilies {...props}/>
       </TestRoot>
     );
   });
@@ -23,7 +30,7 @@ describe('The ViewFamilies Component', () => {
   it('Renders the ViewFamiliesTitle', () => {
     expect(
         wrapped.find('h1').length
-    ).toEqual(1);
+    ).toEqual(2);
   });
 
  

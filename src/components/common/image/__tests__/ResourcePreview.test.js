@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount} from 'enzyme';
 import TestRoot from 'TestRoot';
-import FamilyBanner from '../FamilyBanner';
+import ResourcePreview from '../ResourcePreview';
 
 let wrapped;
 
@@ -9,21 +9,28 @@ describe('The Adder Component', () => {
   beforeEach(() => {
 
     const props={
-        id: 1,
-        name: "testName",
-        description: "testDescription",
+        contentType: "testString",
+        description: "testString",
+        artifactId: 12,
+        id: 12,
     }
 
     wrapped = mount(
       <TestRoot>
-        <FamilyBanner{...props}/>
+        <ResourcePreview {...props}/>
       </TestRoot>
     );
   });
 
-  it('Renders the FamilyBannerContainer', () => {
+  it('Renders the PreviewContainer', () => {
     expect(
         wrapped.find('div').length
+    ).toEqual(1);
+  });
+
+  it('Renders the Image component', () => {
+    expect(
+        wrapped.find('img').length
     ).toEqual(1);
   });
  

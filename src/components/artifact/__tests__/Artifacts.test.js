@@ -1,30 +1,28 @@
 import React from 'react';
 import { mount} from 'enzyme';
 import TestRoot from 'TestRoot';
-import FamilyBanner from '../FamilyBanner';
+import Artifacts from '../Artifacts';
 
 let wrapped;
 
-describe('The Adder Component', () => {
+describe('The Artifacts Component', () => {
   beforeEach(() => {
 
     const props={
-        id: 1,
-        name: "testName",
-        description: "testDescription",
+        artifacts: [{}],
     }
 
     wrapped = mount(
       <TestRoot>
-        <FamilyBanner{...props}/>
+        <Artifacts {...props}/>
       </TestRoot>
     );
   });
 
-  it('Renders the FamilyBannerContainer', () => {
+  it('Renders the ArtifactsContainer', () => {
     expect(
         wrapped.find('div').length
-    ).toEqual(1);
+    ).toEqual(3);
   });
  
   
