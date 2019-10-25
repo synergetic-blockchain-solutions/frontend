@@ -2,6 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import TestRoot from 'TestRoot';
 import CreateArtifact from '../CreateArtifact';
+import { MY1X0 } from 'components/common/containers/GeneralContainers';
 
 let wrapped;
 
@@ -26,6 +27,10 @@ describe('The Create Artefact Component', () => {
     expect(wrapped.find('button').length).toEqual(1);
   });
 
+  it('Renders the correct amount of image fields', () => {
+    expect(wrapped.find(MY1X0).length).toEqual(2);
+  });
+
   it('All Inputs responds to change', () => {
     const text = 'Hello Worlds!';
     // Check the title
@@ -48,86 +53,6 @@ describe('The Create Artefact Component', () => {
     ).toEqual(text);
 
 
-
-    // Check the tag
-    expect(
-      wrapped
-        .find('input')
-        .at(3)
-        .props().value
-    ).toEqual('');
-    wrapped
-      .find('input')
-      .at(3)
-      .simulate('change', { target: { value: text, name: 'tag' } });
-    wrapped.update();
-    expect(
-      wrapped
-        .find('input')
-        .at(3)
-        .props().value
-    ).toEqual(text);
-
-
-    /*const date = new Date(2018, 11, 24);
-    // Check the date
-    expect(
-      wrapped
-        .find('input')
-        .at(3)
-        .props().value
-    ).toEqual('');
-    wrapped
-      .find('input')
-      .at(3)
-      .simulate('change', { target: { value: date, name: 'date' } });
-    wrapped.update();
-    expect(
-      wrapped
-        .find('input')
-        .at(3)
-        .props().value
-    ).toEqual(date);
-
-
-    // Check the details
-    expect(
-      wrapped
-        .find('textarea')
-        .at(0)
-        .props().value
-    ).toEqual('');
-    wrapped
-      .find('textarea')
-      .at(0)
-      .simulate('change', { target: { value: text, name: 'details' } });
-    wrapped.update();
-    expect(
-      wrapped
-        .find('textarea')
-        .at(0)
-        .props().value
-    ).toEqual(text);*/
-
-
-    // Check the addToFamilie3
-    expect(
-      wrapped
-        .find('input')
-        .at(4)
-        .props().value
-    ).toEqual('');
-    wrapped
-      .find('input')
-      .at(4)
-      .simulate('change', { target: { value: text, name: 'addToFamilies' } });
-    wrapped.update();
-    expect(
-      wrapped
-        .find('input')
-        .at(4)
-        .props().value
-    ).toEqual(text);
     
   });
   
