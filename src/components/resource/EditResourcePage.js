@@ -127,7 +127,11 @@ class ResourcePage extends Component {
         <Flex>
           <ImageContainer>
             <LargeImage
-              src={`data:${contentType};base64,${image}`}
+              src={
+                image
+                  ? `data:${contentType};base64,${image}`
+                  : 'https://upload.wikimedia.org/wikipedia/commons/6/6c/No_image_3x4.svg'
+              }
               alt="user upload"
             />
             <ConfirmModal

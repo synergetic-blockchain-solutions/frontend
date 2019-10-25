@@ -170,7 +170,7 @@ class CreateArtifact extends Component {
         groups.map(group => group.value),
         sharedWith,
         tag,
-        moment(date).format()
+        !isEmpty(date) ? moment(date).format() : null
       );
     }
   };
@@ -194,6 +194,9 @@ class CreateArtifact extends Component {
 
     const { usersGroups, user } = this.props;
     const { artifact } = this.props.artifact;
+
+    console.log(this.state);
+    console.log(moment(date).format());
 
     return (
       <FormContainer>
@@ -238,17 +241,15 @@ class CreateArtifact extends Component {
                   );
                 })}
               </MY1X0>
-              {
-                // <AuthInput
-                //   handleStandardChange={this.handleStandardChange}
-                //   value={date}
-                //   type="date"
-                //   name="date"
-                //   placeholder="Date Taken"
-                //   marginBottom="1rem"
-                //   label="Date Taken"
-                // />s
-              }
+              <AuthInput
+                handleStandardChange={this.handleStandardChange}
+                value={date}
+                type="date"
+                name="date"
+                placeholder="Date Taken"
+                marginBottom="1rem"
+                label="Date Taken"
+              />
 
               <TextAreaInput
                 handleStandardChange={this.handleStandardChange}

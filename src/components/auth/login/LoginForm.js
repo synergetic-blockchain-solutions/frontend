@@ -11,8 +11,13 @@ import { loginUser } from 'actions/auth';
 import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/common/containers/FormDisplayContainer';
 import { Center } from 'components/auth/register/RegistrationForm';
+import { Error } from 'components/common/inputs/InputHelpers';
 
 const Form = styled.form``;
+
+export const ErrorMessage = styled(Error)`
+  margin: 1rem 0;
+`;
 
 class LoginForm extends Component {
   validator = new FormValidator([
@@ -38,7 +43,7 @@ class LoginForm extends Component {
 
   componentDidMount() {
     if (!isEmpty(this.props.auth.token)) {
-      this.props.history.push('/dashboard');
+      this.props.history.push('/my-artifacts');
     }
   }
 
@@ -75,8 +80,7 @@ class LoginForm extends Component {
       : this.state.validation;
 
     const { email, password } = this.state;
-
-    console.log(this.props);
+    const { errors } = this.props.auth;
 
     return (
       <FormContainer>
@@ -102,6 +106,11 @@ class LoginForm extends Component {
             label="Password"
             error={validation.password.message}
           />
+          {!isEmpty(errors) && (
+            <ErrorMessage>
+              Either the password or the email are incorrect
+            </ErrorMessage>
+          )}
           <Center>
             <ButtonLarge
               clickEvent={this.submit}

@@ -147,7 +147,7 @@ class Creategroup extends Component {
                 name="name"
                 placeholder="Name"
                 marginBottom="1rem"
-                label="Name"
+                label="Name*"
                 error={validation.name.message}
               />
               <DivSpacing>
@@ -173,7 +173,7 @@ class Creategroup extends Component {
                 name="description"
                 placeholder="Description"
                 marginBottom="1rem"
-                label="Description"
+                label="Description*"
               />
               <InputAdder
                 type="text"

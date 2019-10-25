@@ -46,7 +46,7 @@ export const registerArtifact = (
       groups,
       sharedWith,
       tag,
-      date,
+      dateTaken: date,
     },
     types: [
       REGISTER_ARTIFACT_REQUEST,

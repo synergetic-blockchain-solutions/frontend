@@ -82,7 +82,13 @@ class NavBar extends Component {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <NavBody hasAuth={!isEmpty(auth)} display={display} />
+            <NavBody
+              bodyRef={element => {
+                this.dropdownMenu = element;
+              }}
+              hasAuth={!isEmpty(auth)}
+              display={display}
+            />
           </React.Fragment>
         )}
       </Nav>

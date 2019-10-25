@@ -189,13 +189,16 @@ class CreateArtifact extends Component {
       owners,
     } = this.state;
 
+    console.log(groups);
+    console.log(owners);
+
     if (validation.isValid) {
       this.props.updateArtifact(
         name,
         description,
-        owners.map(own => own.id),
+        owners.map(own => (typeof own === 'number' ? own : own.id)),
         groups.map(gr => gr.value).filter(gr => gr !== this.props.user.id),
-        sharedWith,
+        sharedWith.map(own => (typeof own === 'number' ? own : own.id)),
         tag,
         date,
         artifact.resources.map(res => res.id),
@@ -284,15 +287,6 @@ class CreateArtifact extends Component {
                   );
                 })}
               </MY1X0>
-              <AuthInput
-                handleStandardChange={this.handleStandardChange}
-                value={date}
-                type="date"
-                name="date"
-                placeholder="Date Taken"
-                marginBottom="1rem"
-                label="Date Taken"
-              />
               <TextAreaInput
                 handleStandardChange={this.handleStandardChange}
                 value={description}

@@ -60,12 +60,12 @@ class AddMemberModal extends Component {
 
   render() {
     const { modalIsOpen } = this.state;
-    const { confirmationText } = this.props;
+    const { confirmationText, btnText } = this.props;
     return (
       <React.Fragment>
         <ButtonLarge
           color="danger"
-          text="Delete Image"
+          text={btnText}
           clickEvent={this.openModal}
         />
         <Modal
@@ -102,9 +102,12 @@ class AddMemberModal extends Component {
 AddMemberModal.propTypes = {
   confirmAction: PropTypes.func.isRequired,
   confirmationText: PropTypes.string.isRequired,
+  btnText: PropTypes.string.isRequired,
 };
 
-AddMemberModal.defaultProps = {};
+AddMemberModal.defaultProps = {
+  btnText: 'Delete Image',
+};
 
 const mapStateToProps = state => ({});
 

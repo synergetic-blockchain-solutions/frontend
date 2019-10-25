@@ -8,6 +8,7 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
+  DELETE_USER_SUCCESS,
   GET_MYSELF_REQUEST,
   GET_MYSELF_SUCCESS,
   GET_USER_BY_NAME_SUCCESS,
@@ -56,7 +57,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        errors: action.payload,
+        errors: action.payload.data.message,
         success: '',
       };
     case SET_CURRENT_USER:
@@ -74,7 +75,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        errors: action.payload,
+        errors: LOGIN_FAILURE,
       };
     case LOGIN_SUCCESS:
       setAuthToken(action.payload.token);
@@ -134,7 +135,6 @@ export default function(state = initialState, action) {
       };
     case LOGOUT_SUCCESS:
       localStorage.clear();
-      window.location.reload();
       return Object.assign({}, state, initialState);
     case UPDATE_USER_DATA_REQUEST:
       return {
@@ -157,6 +157,9 @@ export default function(state = initialState, action) {
         success: '',
         failure: action.payload,
       };
+    case DELETE_USER_SUCCESS:
+      localStorage.clear();
+      return Object.assign({}, state, initialState);
     case CLEAR_ERRORS:
       return {
         ...state,

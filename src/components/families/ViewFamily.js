@@ -111,7 +111,7 @@ class ViewFamily extends Component {
       output = (
         <NoContent text="There Aren't Any Albums Added To This Group Yet" />
       );
-      if (albums) {
+      if (!isEmpty(albums)) {
         output = <Albums albums={albums} />;
       }
     }
