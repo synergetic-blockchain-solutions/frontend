@@ -9,6 +9,7 @@ import { getArtifact } from 'actions/artifact';
 import { ButtonIcon } from 'components/common/icons/Icons';
 import { EditButton } from 'components/artifact/ViewSingleArtifact';
 import { ButtonLink } from 'components/common/buttons/Button';
+import { FlexedCenter } from 'components/common/containers/Flexed';
 import { LinkTitle } from './EditResourcePage';
 
 const ImageContainer = styled.div`
@@ -29,13 +30,6 @@ const LargeImage = styled.img`
 
 const ResPage = styled(Page)`
   padding: 1.5rem;
-`;
-
-const Flex = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
 `;
 
 const Title = styled.h2`
@@ -90,7 +84,7 @@ class ResourcePage extends Component {
     return (
       <ResPage>
         <LinkTitle to={`/artifact/${artifactId}`}>Back to Artifact</LinkTitle>
-        <Flex>
+        <FlexedCenter>
           <ImageContainer>
             <Title>{name}</Title>
             <LargeImage
@@ -121,7 +115,7 @@ class ResourcePage extends Component {
               <ButtonIcon className="fas fa-edit"></ButtonIcon>
             </EditButton>
           )}
-        </Flex>
+        </FlexedCenter>
       </ResPage>
     );
   }

@@ -1,20 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import ArtifactSummary from './ArtifactSummary';
+import { FlexedCenter } from 'components/common/containers/Flexed';
 import isEmpty from 'helpers/is-empty';
-
-const ArtifactsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  flex-wrap: wrap;
-`;
 
 function Artifacts(props) {
   const { artifacts } = props;
   return (
-    <ArtifactsContainer>
+    <FlexedCenter>
       {artifacts &&
         artifacts.map(artifact => {
           return (
@@ -31,7 +24,7 @@ function Artifacts(props) {
             />
           );
         })}
-    </ArtifactsContainer>
+    </FlexedCenter>
   );
 }
 

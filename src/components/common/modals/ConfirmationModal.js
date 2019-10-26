@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
-import UnstyledButton from 'components/common/buttons/UnstyledButton';
+import { Flex } from 'components/common/containers/Flexed';
 import ButtonLarge from 'components/common/buttons/ButtonMedium';
 
 Modal.setAppElement('#root');
@@ -21,9 +21,7 @@ const customStyles = {
   },
 };
 
-const Flex = styled.div`
-  display: flex;
-  flex-direction: row;
+const Flexed = styled(Flex)`
   padding: 2rem;
 `;
 
@@ -79,7 +77,7 @@ class AddMemberModal extends Component {
               <ModalTitle>
                 Are you sure you want to {confirmationText}?
               </ModalTitle>
-              <Flex>
+              <Flexed>
                 <ButtonLarge
                   color="danger mr-2"
                   text="Confirm Delete"
@@ -90,7 +88,7 @@ class AddMemberModal extends Component {
                   text="Cancel"
                   clickEvent={this.closeModal}
                 />
-              </Flex>
+              </Flexed>
             </ModalSeperator>
           </ModalCenter>
         </Modal>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { getGroup } from 'actions/group';
+import { FlexedBetween } from 'components/common/containers/Flexed';
 import Page from 'components/common/containers/Page';
 import FamilyBanner from './FamilyBanner';
 import AddMemberModal from 'components/common/modals/AddMemberModal';
@@ -15,13 +16,6 @@ import isEmpty from 'helpers/is-empty';
 const ViewFamilyPage = styled(Page)`
   padding: 2rem;
   padding-top: 20rem;
-`;
-
-const Flex = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
 `;
 
 const FamilyArtifacts = styled.div`
@@ -119,10 +113,10 @@ class ViewFamily extends Component {
     return (
       <ViewFamilyPage>
         {id && <FamilyBanner name={name} id={id} description={description} />}
-        <Flex>
+        <FlexedBetween>
           <ToggleFamilyView toggleView={this.toggleGroupInfo} view={view} />
           <AddMemberModal groupName={name} group={group} />
-        </Flex>
+        </FlexedBetween>
 
         {output}
       </ViewFamilyPage>

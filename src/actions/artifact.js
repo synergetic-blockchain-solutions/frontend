@@ -34,7 +34,8 @@ export const registerArtifact = (
   groups,
   sharedWith,
   tag,
-  date
+  date,
+  album
 ) => ({
   [CALL_API]: {
     endpoint: '/artifact',
@@ -47,6 +48,7 @@ export const registerArtifact = (
       sharedWith,
       tag,
       dateTaken: date,
+      album: album,
     },
     types: [
       REGISTER_ARTIFACT_REQUEST,

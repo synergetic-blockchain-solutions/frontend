@@ -3,10 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import moment from 'moment';
+import qs from 'query-string';
+import { Link } from 'react-router-dom';
 import AuthInput from 'components/common/inputs/AuthInput';
 import TextAreaInput from 'components/common/inputs/TextAreaInput';
 import ButtonLarge from 'components/common/buttons/ButtonLarge';
 import { registerArtifact, resetArtifact } from 'actions/artifact';
+import { getAlbums } from 'actions/album';
 import { addResourceToArtifact } from 'actions/resource';
 import { getGroups } from 'actions/group';
 import { REGISTER_ARTIFACT_SUCCESS } from 'actions/types';
@@ -22,6 +25,12 @@ import Select from 'components/common/inputs/Select';
 import { Title } from './artifact-helpers';
 
 const Form = styled.div``;
+
+const AlreadyAdded = styled.h3`
+  font-size: 1.4rem;
+  color: ${props => props.theme.colors.colorDarkBrown};
+  margin-bottom: 1.5rem;
+`;
 
 class CreateArtifact extends Component {
   validator = new FormValidator([
@@ -42,12 +51,20 @@ class CreateArtifact extends Component {
     groups: [],
     owners: [],
     sharedWith: [],
+    albums: [],
     validation: this.validator.valid(),
     finished: false,
+    query: {},
   };
 
   componentDidMount() {
     this.props.getGroups();
+    this.props.getAlbums();
+    const query = qs.parse(this.props.location.search);
+    this.setState(prevState => ({
+      albums: prevState.albums.concat([Number(query.album)]),
+      query: !isEmpty(query) ? query : {},
+    }));
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -121,6 +138,10 @@ class CreateArtifact extends Component {
     this.setState({ groups: groups });
   };
 
+  handleAlbumSelect = album => {
+    this.setState({ albums: album });
+  };
+
   addOwner = owner =>
     this.setState(prevState => ({
       owners: [...prevState.owners, owner],
@@ -160,6 +181,8 @@ class CreateArtifact extends Component {
       groups,
       sharedWith,
       owners,
+      albums,
+      query,
     } = this.state;
 
     if (validation.isValid) {
@@ -170,7 +193,11 @@ class CreateArtifact extends Component {
         groups.map(group => group.value),
         sharedWith,
         tag,
-        !isEmpty(date) ? moment(date).format() : null
+        !isEmpty(date) ? moment(date).format() : null,
+        albums
+          .map(alb => alb.value)
+          .concat([Number(query.album)])
+          .filter(alb => !isEmpty(alb))
       );
     }
   };
@@ -182,21 +209,15 @@ class CreateArtifact extends Component {
       ? this.validator.validate(this.state)
       : this.state.validation;
 
-    const {
-      name,
-      date,
-      description,
-      owners,
-      sharedWith,
-      image,
-      finished,
-    } = this.state;
+    const { name, date, description, image, finished, query } = this.state;
 
-    const { usersGroups, user } = this.props;
+    const { usersGroups, user, albums } = this.props;
     const { artifact } = this.props.artifact;
-
-    console.log(this.state);
-    console.log(moment(date).format());
+    let selectedAlbum = {};
+    if (albums) {
+      selectedAlbum = albums.find(alb => alb.id === Number(query.album));
+      selectedAlbum = selectedAlbum ? selectedAlbum : {};
+    }
 
     return (
       <FormContainer>
@@ -270,6 +291,21 @@ class CreateArtifact extends Component {
                   label="Select groups to share this artifact with"
                 />
               )}
+              {!isEmpty(albums) && (
+                <React.Fragment>
+                  <Select
+                    groups={albums.filter(alb => alb.id !== selectedAlbum.id)}
+                    handleSelect={this.handleAlbumSelect}
+                    marginBottom="1rem"
+                    label="Select albums to add this artifact to"
+                  />
+                  {!isEmpty(query.album) && (
+                    <AlreadyAdded>
+                      You've selected to add to {selectedAlbum.name}{' '}
+                    </AlreadyAdded>
+                  )}
+                </React.Fragment>
+              )}
               <InputAdder
                 type="text"
                 inputName="owners"
@@ -311,8 +347,10 @@ CreateArtifact.propTypes = {
   addResourceToArtifact: PropTypes.func.isRequired,
   resetArtifact: PropTypes.func.isRequired,
   getGroups: PropTypes.func.isRequired,
+  getAlbums: PropTypes.func.isRequired,
   usersGroups: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
+  albums: PropTypes.array.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -323,21 +361,33 @@ const mapDispatchToProps = dispatch => ({
     groups,
     sharedWith,
     tag,
-    date
+    date,
+    albums
   ) =>
     dispatch(
-      registerArtifact(name, description, owners, groups, sharedWith, tag, date)
+      registerArtifact(
+        name,
+        description,
+        owners,
+        groups,
+        sharedWith,
+        tag,
+        date,
+        albums
+      )
     ),
   addResourceToArtifact: (id, formData) =>
     dispatch(addResourceToArtifact(id, formData)),
   resetArtifact: () => dispatch(resetArtifact()),
   getGroups: () => dispatch(getGroups()),
+  getAlbums: () => dispatch(getAlbums()),
 });
 
 const mapStateToProps = state => ({
   artifact: state.artifact,
   usersGroups: state.group.groups,
   user: state.auth.user,
+  albums: state.album.albums,
 });
 
 export default connect(

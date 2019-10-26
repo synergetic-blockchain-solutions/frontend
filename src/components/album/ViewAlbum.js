@@ -5,12 +5,10 @@ import styled from 'styled-components';
 import { getAlbum } from 'actions/album';
 import Page from 'components/common/containers/Page';
 import { ButtonLinkLarge } from 'components/common/buttons/Button';
+import { FlexedBetween } from 'components/common/containers/Flexed';
 import Artifacts from 'components/artifact/Artifacts';
 
-const Flex = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+const Flex = styled(FlexedBetween)`
   margin: 2rem;
 `;
 

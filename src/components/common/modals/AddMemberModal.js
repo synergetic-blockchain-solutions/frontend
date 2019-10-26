@@ -7,6 +7,7 @@ import { updateGroup } from 'actions/group';
 import Modal from 'react-modal';
 import { Button } from 'components/common/buttons/Button';
 import SearchBar from 'components/common/inputs/SearchBar';
+import { FlexedBetween } from 'components/common/containers/Flexed';
 import isEmpty from 'helpers/is-empty';
 
 Modal.setAppElement('#root');
@@ -56,10 +57,7 @@ const ModalResults = styled.div`
   width: 100%;
 `;
 
-const Result = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+const Result = styled(FlexedBetween)`
   padding: 0.5rem 2rem;
   border-bottom: 1px solid ${props => props.theme.colors.colorDarkBrown};
 `;

@@ -2,13 +2,7 @@ import React, { Component } from 'react';
 import Page from 'components/common/containers/Page';
 import styled from 'styled-components';
 import { ButtonLink } from 'components/common/buttons/Button';
-
-const Flex = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  flex-wrap: wrap;
-`;
+import { FlexedAround } from 'components/common/containers/Flexed';
 
 const Option = styled(ButtonLink)`
   background-color: ${props => props.theme.colors.colorDarkBrown};
@@ -33,7 +27,7 @@ class CreateOptions extends Component {
   render() {
     return (
       <Page>
-        <Flex>
+        <FlexedAround>
           <OptionContainer>
             <OptionTitle>Create Album</OptionTitle>
             <Option to="/album/create">
@@ -46,7 +40,7 @@ class CreateOptions extends Component {
               <i className="far fa-file-image"></i>
             </Option>
           </OptionContainer>
-        </Flex>
+        </FlexedAround>
       </Page>
     );
   }

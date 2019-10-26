@@ -11,17 +11,11 @@ import ProfileElement from './ProfileElement';
 import ProfileArrayElement from './ProfileArrayElement';
 import { updateUserData, getUsersOwnData, deleteUser } from 'actions/auth';
 import ConfirmationModal from 'components/common/modals/ConfirmationModal';
+import { FlexedCenter } from 'components/common/containers/Flexed';
 
 const Welcome = styled.h1`
   text-align: center;
   margin-bottom: 2rem;
-`;
-
-const ButtonsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
 `;
 
 class Profile extends Component {
@@ -145,14 +139,14 @@ class Profile extends Component {
                 label="Your Artifacts:"
                 value={ownedArtifacts}
               />
-              <ButtonsContainer>
+              <FlexedCenter>
                 <ButtonMedium
                   clickEvent={this.toggleEdit}
                   text="Edit Details"
                   disabled={false}
                   color="warning"
                 />
-              </ButtonsContainer>
+              </FlexedCenter>
             </React.Fragment>
           ) : (
             <React.Fragment>
@@ -182,25 +176,26 @@ class Profile extends Component {
                 }))}
                 removeGroup={this.removeGroup}
               />
+              {
+                // <h2>Your Albums: </h2>
+                // <Adder
+                //   values={newAlbums.map(group => ({
+                //     name: group.name,
+                //     id: group.id,
+                //   }))}
+                //   removeGroup={this.removeAlbum}
+                // />
+                // <h2>Your Artifacts: </h2>
+                // <Adder
+                //   values={newArtifacts.map(group => ({
+                //     name: group.name,
+                //     id: group.id,
+                //   }))}
+                //   removeGroup={this.removeArtifact}
+                // />
+              }
 
-              <h2>Your Albums: </h2>
-              <Adder
-                values={newAlbums.map(group => ({
-                  name: group.name,
-                  id: group.id,
-                }))}
-                removeGroup={this.removeAlbum}
-              />
-
-              <h2>Your Artifacts: </h2>
-              <Adder
-                values={newArtifacts.map(group => ({
-                  name: group.name,
-                  id: group.id,
-                }))}
-                removeGroup={this.removeArtifact}
-              />
-              <ButtonsContainer>
+              <FlexedCenter>
                 <ButtonMedium
                   clickEvent={this.submit}
                   text="Update Details"
@@ -215,11 +210,11 @@ class Profile extends Component {
                   margin="1rem"
                 />
                 <ConfirmationModal
-                  confirmAction={() =>  this.props.deleteUser(id)}
+                  confirmAction={() => this.props.deleteUser(id)}
                   confirmationText="delete your account"
                   btnText="Delete Account"
                 />
-              </ButtonsContainer>
+              </FlexedCenter>
             </React.Fragment>
           )}
         </FormContainer>

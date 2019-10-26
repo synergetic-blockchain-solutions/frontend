@@ -6,6 +6,7 @@ import { getArtifacts } from 'actions/artifact';
 import { getAlbums } from 'actions/album';
 import Artifacts from './Artifacts';
 import { Button, ButtonLink } from 'components/common/buttons/Button';
+import { Flex, FlexedBetween } from 'components/common/containers/Flexed';
 import isEmpty from 'helpers/is-empty';
 import NoContent from 'components/common/containers/NoContent';
 import Albums from 'components/album/Albums';
@@ -15,9 +16,7 @@ const MyArtifactsPage = styled.section`
   width: 100%;
 `;
 
-const MyArtifactsPageToggler = styled.div`
-  display: flex;
-
+const MyArtifactsPageToggler = styled(Flex)`
   margin-bottom: 2rem;
 `;
 
@@ -28,13 +27,6 @@ const ButtonLeft = styled(Button)`
 
 const ButtonRight = styled(Button)`
   border: 2px solid ${props => props.theme.colors.colorGrayDarker};
-`;
-
-const ViewMyArtifactsHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
 `;
 
 class ViewMyArtifacts extends Component {
@@ -54,7 +46,7 @@ class ViewMyArtifacts extends Component {
     const { viewArtifacts } = this.state;
     return (
       <MyArtifactsPage>
-        <ViewMyArtifactsHeader>
+        <FlexedBetween>
           <MyArtifactsPageToggler>
             <ButtonLeft
               selected={viewArtifacts}
@@ -71,10 +63,13 @@ class ViewMyArtifacts extends Component {
               View Albums
             </ButtonRight>
           </MyArtifactsPageToggler>
-          <ButtonLink className="dark-brown" to="/artifact/create">
-            Create Artifact
+          <ButtonLink
+            className="dark-brown"
+            to={viewArtifacts ? '/artifact/create' : '/album/create'}
+          >
+            {viewArtifacts ? 'Create Artifact' : 'Create Album'}
           </ButtonLink>
-        </ViewMyArtifactsHeader>
+        </FlexedBetween>
         {viewArtifacts ? (
           !isEmpty(artifacts) ? (
             <Artifacts artifacts={artifacts} />
