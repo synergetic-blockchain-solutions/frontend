@@ -48,7 +48,9 @@ class ArtifactSummary extends Component {
         <SummaryContainer>
           <Summary
             srcUrl={
-              resource ? `data:${resource.contentType};base64,${image}` : ''
+              resource
+                ? `data:${resource.contentType};base64,${image}`
+                : 'https://upload.wikimedia.org/wikipedia/commons/6/6c/No_image_3x4.svg'
             }
           />
           <SummaryTitle>{name}</SummaryTitle>

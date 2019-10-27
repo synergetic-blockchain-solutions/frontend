@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Button } from 'components/common/buttons/Button';
+import { Flex } from 'components/common/containers/Flexed';
 
-const MyArtifactsPageToggler = styled.div`
-  display: flex;
-  flex-direction: row;
+const MyArtifactsPageToggler = styled(Flex)`
   justify-content: left;
   margin-bottom: 2rem;
 `;

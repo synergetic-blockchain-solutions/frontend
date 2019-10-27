@@ -7,17 +7,14 @@ import { getGroups } from 'actions/group';
 import NoContent from 'components/common/containers/NoContent';
 import isEmpty from 'helpers/is-empty';
 import { ButtonLink } from 'components/common/buttons/Button';
+import {
+  FlexedBetween,
+  FlexedCenter,
+} from 'components/common/containers/Flexed';
 
 const ViewFamiliesPage = styled.section`
   margin-top: 8rem;
   padding: 2rem;
-`;
-
-const ViewFamiliesContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  flex-wrap: wrap;
 `;
 
 const ViewFamiliesTitle = styled.h1`
@@ -25,10 +22,7 @@ const ViewFamiliesTitle = styled.h1`
   margin-bottom: 1rem;
 `;
 
-const Flex = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+const Flex = styled(FlexedBetween)`
   margin-bottom: 2rem;
 `;
 
@@ -51,7 +45,7 @@ class ViewFamilies extends Component {
           </ButtonLink>
         </Flex>
 
-        <ViewFamiliesContainer>
+        <FlexedCenter>
           {!isEmpty(nonPersonalGroups) ? (
             nonPersonalGroups
               .filter(grp => grp.id !== user.privateGroup.id)
@@ -61,7 +55,7 @@ class ViewFamilies extends Component {
           ) : (
             <NoContent text="You Arent A Part Of Any Groups Yet" />
           )}
-        </ViewFamiliesContainer>
+        </FlexedCenter>
       </ViewFamiliesPage>
     );
   }

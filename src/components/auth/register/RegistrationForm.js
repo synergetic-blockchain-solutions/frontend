@@ -9,6 +9,7 @@ import ButtonLarge from 'components/common/buttons/ButtonLarge';
 import isEmpty from 'helpers/is-empty';
 import { registerUser } from 'actions/auth';
 import { REGISTER_SUCCESS } from 'actions/types';
+import { Error } from 'components/common/inputs/InputHelpers';
 import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/common/containers/FormDisplayContainer';
 import Success from 'components/common/visual/Success';
@@ -17,6 +18,10 @@ const Form = styled.form``;
 
 export const Center = styled.div`
   text-align: center;
+`;
+
+export const ErrorMessage = styled(Error)`
+  margin: 1rem 0;
 `;
 
 class RegistrationForm extends Component {
@@ -54,6 +59,13 @@ class RegistrationForm extends Component {
       validWhen: true,
       message: 'Password and password confirmation do not match.',
     },
+    {
+      field: 'password',
+      // notice that we are passing a custom function here
+      method: (confirmation, state) => state.password.length > 5,
+      validWhen: true,
+      message: 'Password length must be greater than or equal to 6',
+    },
   ]);
 
   state = {
@@ -82,13 +94,6 @@ class RegistrationForm extends Component {
       return { ...prevState };
     }
   }
-
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (nextProps.auth.success === REGISTER_SUCCESS) {
-  //     this.props.history.push('/');
-  //   }
-  //   return true;
-  // }
 
   passwordMatch = (confirmation, state) => state.password === confirmation;
 
@@ -127,6 +132,9 @@ class RegistrationForm extends Component {
       : this.state.validation;
 
     const { name, email, password, passwordConfirm, success } = this.state;
+    const { errors } = this.props.auth;
+
+    console.log(this.props.auth);
 
     return (
       <FormContainer>
@@ -180,6 +188,7 @@ class RegistrationForm extends Component {
                 label="Confirm Password"
                 error={validation.passwordConfirm.message}
               />
+              {!isEmpty(errors) && <ErrorMessage>{errors}</ErrorMessage>}
               <Center>
                 <ButtonLarge
                   clickEvent={this.submit}

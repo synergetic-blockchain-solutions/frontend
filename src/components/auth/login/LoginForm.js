@@ -11,10 +11,19 @@ import { loginUser } from 'actions/auth';
 import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/common/containers/FormDisplayContainer';
 import { Center } from 'components/auth/register/RegistrationForm';
+import { Error } from 'components/common/inputs/InputHelpers';
 
 const Form = styled.form``;
 
+export const ErrorMessage = styled(Error)`
+  margin: 1rem 0;
+`;
+
+/**
+ * @desc LoginForm is the form for the user to login to the website
+ */
 class LoginForm extends Component {
+  //  check that there is a valid email and there is a password
   validator = new FormValidator([
     {
       field: 'email',
@@ -37,15 +46,18 @@ class LoginForm extends Component {
   };
 
   componentDidMount() {
+    // send the user to their dashboard page if they have a token
     if (!isEmpty(this.props.auth.token)) {
-      this.props.history.push('/dashboard');
+      this.props.history.push('/my-artifacts');
     }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    // if we get newprops with a token then send them to the dashboard
     if (!isEmpty(nextProps.auth.token)) {
       this.props.history.push('/my-artifacts');
     }
+    // always update
     return true;
   }
 
@@ -54,13 +66,18 @@ class LoginForm extends Component {
   handleStandardChange = e =>
     this.setState({ [e.target.name]: e.target.value });
 
+  // submit the form
   submit = e => {
     e.preventDefault();
 
+    // check that it is valid
     const validation = this.validator.validate(this.state);
+
+    // update the validation of the state
     this.setState({ validation });
     this.submitted = true;
 
+    // send the password and email to the api if it is valid
     const { email, password } = this.state;
     if (validation.isValid) {
       this.props.loginUser(email, password);
@@ -75,8 +92,7 @@ class LoginForm extends Component {
       : this.state.validation;
 
     const { email, password } = this.state;
-
-    console.log(this.props);
+    const { errors } = this.props.auth;
 
     return (
       <FormContainer>
@@ -102,6 +118,11 @@ class LoginForm extends Component {
             label="Password"
             error={validation.password.message}
           />
+          {!isEmpty(errors) && (
+            <ErrorMessage>
+              Either the password or the email are incorrect
+            </ErrorMessage>
+          )}
           <Center>
             <ButtonLarge
               clickEvent={this.submit}

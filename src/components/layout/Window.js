@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import loadingSrc from 'assets/loading.gif';
+import { centerXY } from 'components/common/styled-helpers/mixins';
 
 const WindowView = styled.div`
   position: relative;
@@ -16,10 +17,8 @@ const WindowView = styled.div`
 `;
 
 const Image = styled.img`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  ${centerXY}
+  z-index: 9999;
 `;
 
 function Window(props) {

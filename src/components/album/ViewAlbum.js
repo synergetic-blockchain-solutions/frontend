@@ -5,12 +5,10 @@ import styled from 'styled-components';
 import { getAlbum } from 'actions/album';
 import Page from 'components/common/containers/Page';
 import { ButtonLinkLarge } from 'components/common/buttons/Button';
+import { FlexedBetween } from 'components/common/containers/Flexed';
 import Artifacts from 'components/artifact/Artifacts';
 
-const Flex = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+const Flex = styled(FlexedBetween)`
   margin: 2rem;
 `;
 
@@ -19,8 +17,17 @@ const Title = styled.h1`
   margin-top: 1rem;
 `;
 
+const Description = styled.p`
+  font-size: 1.8rem;
+  margin-top: 1rem;
+`;
+
 const Container = styled.div`
   margin: 0 2rem;
+`;
+
+const TitleContainer = styled.div`
+  max-width: 50rem;
 `;
 
 class ViewAlbum extends Component {
@@ -28,12 +35,20 @@ class ViewAlbum extends Component {
     this.props.getAlbum(this.props.match.params.id);
   }
   render() {
-    const { artifacts } = this.props.album;
+    const { album } = this.props;
+    const { artifacts, id, name, description } = album;
     return (
       <Page>
         <Flex>
-          <Title>View Albums</Title>
-          <ButtonLinkLarge className="dark-brown" to="/artifact/create">
+          <TitleContainer>
+            <Title>{name}</Title>
+            <Description>{description}</Description>
+          </TitleContainer>
+
+          <ButtonLinkLarge
+            className="dark-brown"
+            to={`/artifact/create?album=${id}`}
+          >
             Add Artifact
           </ButtonLinkLarge>
         </Flex>

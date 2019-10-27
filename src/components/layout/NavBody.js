@@ -112,7 +112,7 @@ function NavBody(props) {
 NavBody.propTypes = {
   display: PropTypes.bool.isRequired,
   hasAuth: PropTypes.bool.isRequired,
-  bodyRef: PropTypes.bool.isRequired,
+  bodyRef: PropTypes.func.isRequired,
 };
 
 export default NavBody;

@@ -1,27 +1,24 @@
 import React from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import isEmpty from 'helpers/is-empty';
+import { FlexedCenter } from 'components/common/containers/Flexed';
 import AlbumSummary from './AlbumSummary';
 
-const AlbumsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  flex-wrap: wrap;
-`;
-
+/**
+ *
+ * @param {*} props
+ * @desc takes albums as the props (the return from get albums endpoint)
+ */
 function Albums(props) {
   const { albums } = props;
   return (
-    <AlbumsContainer>
+    <FlexedCenter>
       {albums &&
         albums.map(album => {
           return (
             <AlbumSummary key={album.id} name={album.name} id={album.id} />
           );
         })}
-    </AlbumsContainer>
+    </FlexedCenter>
   );
 }
 

@@ -6,6 +6,11 @@ import PrivateRoute from './PrivateRoute';
 import Root from 'components/Root';
 import NavBar from 'components/layout/NavBar';
 
+const NotFound = Loadable({
+  loader: () => import('components/common/NotFound'),
+  loading: Loading,
+});
+
 const Login = Loadable({
   loader: () => import('components/auth/login'),
   loading: Loading,
@@ -132,6 +137,7 @@ export default class Router extends Component {
             <PrivateRoute path="/profile" component={Profile} exact />
             <Route path="/sign-up" component={Register} exact />
             <Route path="/" component={Login} exact />
+            <Route path="*" component={NotFound} />
           </Switch>
         </React.Fragment>
       </Root>

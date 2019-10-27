@@ -6,6 +6,7 @@ import Page from 'components/common/containers/Page';
 import AuthInput from 'components/common/inputs/AuthInput';
 import ButtonLarge from 'components/common/buttons/ButtonMedium';
 import ConfirmModal from 'components/common/modals/ConfirmationModal';
+import { FlexedCenter } from 'components/common/containers/Flexed';
 
 const ImageContainer = styled.div`
   display: flex;
@@ -28,13 +29,6 @@ const LargeImage = styled.img`
 
 const ResPage = styled(Page)`
   padding: 1.5rem;
-`;
-
-const Flex = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
 `;
 
 export const LinkTitle = styled(Link)`
@@ -124,10 +118,14 @@ class ResourcePage extends Component {
     return (
       <ResPage>
         <LinkTitle to={`/artifact/${artifactId}`}>Back to Artifact</LinkTitle>
-        <Flex>
+        <FlexedCenter>
           <ImageContainer>
             <LargeImage
-              src={`data:${contentType};base64,${image}`}
+              src={
+                image
+                  ? `data:${contentType};base64,${image}`
+                  : 'https://upload.wikimedia.org/wikipedia/commons/6/6c/No_image_3x4.svg'
+              }
               alt="user upload"
             />
             <ConfirmModal
@@ -161,7 +159,7 @@ class ResourcePage extends Component {
               text="Submit Changes"
             />
           </MetaDataContainer>
-        </Flex>
+        </FlexedCenter>
       </ResPage>
     );
   }

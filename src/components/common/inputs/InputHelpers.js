@@ -19,7 +19,7 @@ export const Label = styled.label`
 `;
 
 export const Error = styled.p`
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: ${props => props.theme.colors.colorDanger};
 `;
 

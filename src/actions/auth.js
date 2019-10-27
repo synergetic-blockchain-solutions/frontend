@@ -22,6 +22,9 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAILURE,
   CLEAR_ERRORS,
   CLEAR_SUCCESS,
   CLEAR_AUTH,
@@ -66,6 +69,21 @@ export const loginUser = (email, password) => ({
       password,
     },
     types: [LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE],
+  },
+});
+
+/**
+ * @route /login
+ * @method POST
+ * @param {string} email
+ * @param {password} password
+ * @desc login the user
+ */
+export const deleteUser = id => ({
+  [CALL_API]: {
+    endpoint: `/user/${id}`,
+    method: 'DELETE',
+    types: [DELETE_USER_REQUEST, DELETE_USER_SUCCESS, DELETE_USER_FAILURE],
   },
 });
 

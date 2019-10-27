@@ -9,17 +9,13 @@ import AuthInput from 'components/common/inputs/AuthInput';
 import Adder from 'components/common/form/IdAndValueAdder';
 import ProfileElement from './ProfileElement';
 import ProfileArrayElement from './ProfileArrayElement';
-import { updateUserData, getUsersOwnData } from 'actions/auth';
+import { updateUserData, getUsersOwnData, deleteUser } from 'actions/auth';
+import ConfirmationModal from 'components/common/modals/ConfirmationModal';
+import { FlexedCenter } from 'components/common/containers/Flexed';
 
 const Welcome = styled.h1`
   text-align: center;
   margin-bottom: 2rem;
-`;
-
-const ButtonsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
 `;
 
 class Profile extends Component {
@@ -108,14 +104,26 @@ class Profile extends Component {
 
   submit = () => {
     const { newEmail, newName, newGroups } = this.state;
-    this.props.updateUserData(this.props.user.id, newEmail, newName, newGroups);
+    this.props.updateUserData(
+      this.props.user.id,
+      newEmail,
+      newName,
+      newGroups.map(grp => grp.id)
+    );
   };
 
   render() {
     const { user } = this.props;
     const { email, id, groups, name, ownedArtifacts, ownedAlbums } = user;
-    const { edit, newEmail, newName, newGroups, hasEdited, newAlbums,
-      newArtifacts } = this.state;
+    const {
+      edit,
+      newEmail,
+      newName,
+      newGroups,
+      hasEdited,
+      newAlbums,
+      newArtifacts,
+    } = this.state;
     console.log(this.state);
     return (
       <Page>
@@ -131,14 +139,14 @@ class Profile extends Component {
                 label="Your Artifacts:"
                 value={ownedArtifacts}
               />
-              <ButtonsContainer>
+              <FlexedCenter>
                 <ButtonMedium
                   clickEvent={this.toggleEdit}
                   text="Edit Details"
                   disabled={false}
                   color="warning"
                 />
-              </ButtonsContainer>
+              </FlexedCenter>
             </React.Fragment>
           ) : (
             <React.Fragment>
@@ -168,46 +176,45 @@ class Profile extends Component {
                 }))}
                 removeGroup={this.removeGroup}
               />
+              {
+                // <h2>Your Albums: </h2>
+                // <Adder
+                //   values={newAlbums.map(group => ({
+                //     name: group.name,
+                //     id: group.id,
+                //   }))}
+                //   removeGroup={this.removeAlbum}
+                // />
+                // <h2>Your Artifacts: </h2>
+                // <Adder
+                //   values={newArtifacts.map(group => ({
+                //     name: group.name,
+                //     id: group.id,
+                //   }))}
+                //   removeGroup={this.removeArtifact}
+                // />
+              }
 
-              <h2>Your Albums: </h2>
-              <Adder
-                values={newAlbums.map(group => ({
-                  name: group.name,
-                  id: group.id,
-                }))}
-                removeGroup={this.removeAlbum}
-              />
-
-              <h2>Your Artifacts: </h2>
-              <Adder
-                values={newArtifacts.map(group => ({
-                  name: group.name,
-                  id: group.id,
-                }))}
-                removeGroup={this.removeArtifact}
-              />
-              <ButtonsContainer>
-                <ButtonMedium
-                  clickEvent={this.toggleEdit}
-                  text="View Details"
-                  disabled={false}
-                  color="warning"
-                  margin="0 1rem 0 0"
-                />
+              <FlexedCenter>
                 <ButtonMedium
                   clickEvent={this.submit}
                   text="Update Details"
                   disabled={!hasEdited}
                   color="success"
-                  margin="0 1rem 0 0"
+                  margin="1rem"
                 />
                 <ButtonMedium
                   clickEvent={this.toggleEdit}
                   text="Cancel"
                   color="info"
-                  margin="0 0 0 0"
+                  margin="1rem"
                 />
-              </ButtonsContainer>
+                <ConfirmationModal
+                  confirmAction={() => this.props.deleteUser(id)}
+                  confirmationText="delete your account"
+                  btnText="Delete Account"
+                />
+              </FlexedCenter>
             </React.Fragment>
           )}
         </FormContainer>
@@ -224,12 +231,14 @@ const mapDispatchToProps = dispatch => ({
   updateUserData: (id, email, name, groups) =>
     dispatch(updateUserData(id, email, name, groups)),
   getUsersOwnData: () => dispatch(getUsersOwnData()),
+  deleteUser: id => dispatch(deleteUser(id)),
 });
 
 Profile.propTypes = {
   user: PropTypes.object.isRequired,
   updateUserData: PropTypes.func.isRequired,
   getUsersOwnData: PropTypes.func.isRequired,
+  deleteUser: PropTypes.func.isRequired,
 };
 
 export default connect(

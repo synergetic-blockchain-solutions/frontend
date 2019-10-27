@@ -6,12 +6,13 @@ export const SummaryContainer = styled.div`
 
 export const Summary = styled.div`
   position: relative;
-  border: 1px solid ${props => props.theme.colors.colorBlack};
+  /* border: 1px solid ${props => props.theme.colors.colorBlack}; */
   padding: 0;
   background-image: url("${props => props.srcUrl}");
   background-size: cover;
   height: 30rem;
-  width: 40rem;
+  width: 30%;
+  min-width: 40rem;
 
   &::after {
     content: "";

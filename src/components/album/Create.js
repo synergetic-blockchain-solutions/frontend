@@ -28,6 +28,12 @@ class CreateAlbum extends Component {
       validWhen: false,
       message: 'name is required.',
     },
+    {
+      field: 'description',
+      method: 'isEmpty',
+      validWhen: false,
+      message: 'Description is required',
+    },
   ]);
 
   state = {

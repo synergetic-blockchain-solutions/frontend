@@ -49,7 +49,11 @@ class FamilySummary extends Component {
       <FamilyLink to={`/family/${id}`}>
         <SummaryContainer>
           <Summary
-            srcUrl={!isEmpty(image) ? `data:image/png;base64,${image}` : ''}
+            srcUrl={
+              !isEmpty(image)
+                ? `data:image/png;base64,${image}`
+                : 'https://upload.wikimedia.org/wikipedia/commons/6/6c/No_image_3x4.svg'
+            }
           >
             <FamilyTitle>{name}</FamilyTitle>
           </Summary>

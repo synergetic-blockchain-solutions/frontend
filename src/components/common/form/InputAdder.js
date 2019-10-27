@@ -46,7 +46,6 @@ class InputAdder extends Component {
   };
 
   addInput = input => {
-    console.log('here');
     const { id, name } = input;
     this.props.addElem(id);
     this.setState(prevState => ({
@@ -84,6 +83,7 @@ class InputAdder extends Component {
       userSearch,
     } = this.props;
     const { value, added, visible } = this.state;
+
     return (
       <Container>
         <AuthInput
