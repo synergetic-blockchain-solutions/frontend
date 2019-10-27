@@ -5,11 +5,12 @@ import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import AuthInput from 'components/common/inputs/AuthInput';
 import Logo from 'components/common/visual/Logo';
-import ButtonMedium from 'components/common/buttons/ButtonMedium';
+import ButtonLarge from 'components/common/buttons/ButtonLarge';
 import isEmpty from 'helpers/is-empty';
 import { loginUser } from 'actions/auth';
 import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/common/containers/FormDisplayContainer';
+import { Center } from 'components/auth/register/RegistrationForm';
 
 const Form = styled.form``;
 
@@ -43,7 +44,7 @@ class LoginForm extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (!isEmpty(nextProps.auth.token)) {
-      this.props.history.push('/dashboard');
+      this.props.history.push('/my-artifacts');
     }
     return true;
   }
@@ -101,13 +102,15 @@ class LoginForm extends Component {
             label="Password"
             error={validation.password.message}
           />
-          <ButtonMedium
-            clickEvent={this.submit}
-            text="Log In"
-            disabled={isEmpty(email) || isEmpty(password)}
-            color="btn-block btn-primary-light"
-            margin="1rem 0 0 0"
-          />
+          <Center>
+            <ButtonLarge
+              clickEvent={this.submit}
+              text="Log In"
+              disabled={isEmpty(email) || isEmpty(password)}
+              color="dark-brown"
+              margin="1rem 0 0 0"
+            />
+          </Center>
         </Form>
       </FormContainer>
     );

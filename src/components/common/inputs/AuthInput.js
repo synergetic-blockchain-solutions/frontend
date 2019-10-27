@@ -13,8 +13,12 @@ function AuthInput(props) {
     marginBottom,
     label,
     error,
+    onFocus,
+    onBlur,
+    autoComplete,
   } = props;
 
+  console.log(autoComplete);
   return (
     <InputContainer marginBottom={marginBottom}>
       {label && <Label htmlFor={name}>{label}</Label>}
@@ -24,6 +28,9 @@ function AuthInput(props) {
         value={value}
         name={name}
         placeholder={placeholder}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        autoComplete={autoComplete ? 'on' : 'off'}
       />
       {error && <Error>{error}</Error>}
     </InputContainer>
@@ -32,6 +39,7 @@ function AuthInput(props) {
 
 AuthInput.defaultProps = {
   marginBottom: '0',
+  autoComplete: false,
 };
 
 AuthInput.propTypes = {
@@ -43,6 +51,9 @@ AuthInput.propTypes = {
   marginBottom: PropTypes.string,
   label: PropTypes.string,
   error: PropTypes.string,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
+  autoComplete: PropTypes.bool.isRequired,
 };
 
 export default AuthInput;

@@ -43,7 +43,6 @@ class Resource extends Component {
   render() {
     const { image, showFullImage } = this.state;
     const { contentType, description } = this.props;
-    console.log(this.state);
     return (
       <Image
         src={`data:${contentType};base64,${image}`}

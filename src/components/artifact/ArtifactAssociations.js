@@ -13,7 +13,6 @@ const GroupsList = styled.ul`
 
 function AssociatedGroups(props) {
   const { groups, title } = props;
-  groups && groups.push({ name: 'The Smiths', id: 9 });
   return (
     <GroupsContainer>
       <h3>{title}:</h3>

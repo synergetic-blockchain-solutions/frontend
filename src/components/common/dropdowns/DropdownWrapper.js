@@ -17,10 +17,8 @@ const DropdownBody = styled.div`
   display: none;
   width: 100%;
   background-color: ${props => props.theme.colors.colorWhite};
-  border: 1px solid ${props => props.theme.colors.colorPrimaryLight};
+  border: 1px solid ${props => props.theme.colors.colorPrimary};
   border-top: none;
-  border-bottom-left-radius: ${props => props.theme.borders.borderRadiusSmall};
-  border-bottom-right-radius: ${props => props.theme.borders.borderRadiusSmall};
 
   &.visible {
     display: block;

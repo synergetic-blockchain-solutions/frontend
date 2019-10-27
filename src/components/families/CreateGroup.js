@@ -54,10 +54,8 @@ class Creategroup extends Component {
       nextProps.group.success === REGISTER_GROUP_SUCCESS &&
       !isEmpty(prevState.image)
     ) {
-      // const formData = new FormData();
-      // formData.append('image', prevState.image.file);
       nextProps.addImageToGroup(nextProps.group.group.id, prevState.image.file);
-    } else if (nextProps.group === ADD_GROUP_IMAGE_SUCCESS) {
+    } else if (nextProps.group.success === ADD_GROUP_IMAGE_SUCCESS) {
       return { ...prevState, finished: true };
     } else if (
       nextProps.group.success === REGISTER_GROUP_SUCCESS &&
@@ -134,7 +132,7 @@ class Creategroup extends Component {
       <FormContainer>
         {finished ? (
           <Success
-            text="group Was Created Successfully"
+            text="Group Successfully Created"
             linkAddress={`/family/${group.id}`}
             linkText="Click Here To View group"
           />
@@ -181,24 +179,26 @@ class Creategroup extends Component {
                 type="text"
                 inputName="admins"
                 placeholder="Add admins to this group"
-                label="Add admins to this group (name or email)"
+                label="Add admins to this group"
                 addElem={this.addAdmin}
                 removeElem={this.removeAdmin}
                 values={admins}
+                isUserSearch
               />
               <InputAdder
                 type="text"
                 inputName="members"
                 placeholder="Add members to this group"
-                label="Add members to this group (name or email)"
+                label="Add members to this group"
                 addElem={this.addMember}
                 removeElem={this.removeMember}
                 values={admins}
+                isUserSearch
               />
               <ButtonMedium
                 clickEvent={this.submit}
                 text="Create Group"
-                color="btn-block btn-primary-light"
+                color="dark-brown"
                 margin="1rem 0 0 0"
                 disabled={isEmpty(name) || isEmpty(description)}
               />

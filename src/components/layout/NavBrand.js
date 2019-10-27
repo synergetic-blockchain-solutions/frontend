@@ -9,7 +9,7 @@ import isEmpty from 'helpers/is-empty';
 const NavBrandContainer = styled(NavLink)`
   display: block;
   height: 5rem;
-  width: 7rem;
+  width: 10rem;
   margin-left: 2rem;
   margin-top: 1rem;
 `;
@@ -17,7 +17,7 @@ const NavBrandContainer = styled(NavLink)`
 function NavBrand(props) {
   const { token } = props;
   return (
-    <NavBrandContainer to={isEmpty(token) ? '/' : '/dashboard'}>
+    <NavBrandContainer to={isEmpty(token) ? '/' : '/my-artifacts'}>
       <Logo />
     </NavBrandContainer>
   );

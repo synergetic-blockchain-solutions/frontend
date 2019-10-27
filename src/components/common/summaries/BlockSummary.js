@@ -11,7 +11,7 @@ export const Summary = styled.div`
   background-image: url("${props => props.srcUrl}");
   background-size: cover;
   height: 30rem;
-  width: 100%;
+  width: 40rem;
 
   &::after {
     content: "";
@@ -26,13 +26,8 @@ export const Summary = styled.div`
 `;
 
 export const SummaryTitle = styled.h3`
-  text-align: center;
-  text-decoration: none;
-  font-size: 2.5rem;
-  color: ${props => props.theme.colors.colorWhite};
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 1rem 0;
-  opacity: 1;
+  font-size: 1.6rem;
+  color: ${props => props.theme.colors.colorDarkBrown};
 `;
 
 export const SummaryFooter = styled.div`

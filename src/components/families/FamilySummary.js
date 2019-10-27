@@ -14,6 +14,7 @@ const FamilyTitle = styled.h2`
   bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
+  width: fit-content;
   font-size: 4rem;
   color: ${props => props.theme.colors.colorWhite};
   z-index: ${props => props.theme.zIndex.important};
@@ -21,7 +22,9 @@ const FamilyTitle = styled.h2`
 
 const FamilyLink = styled(Link)`
   display: block;
-  width: 100%;
+  width: fit-content;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
 `;
 
 class FamilySummary extends Component {

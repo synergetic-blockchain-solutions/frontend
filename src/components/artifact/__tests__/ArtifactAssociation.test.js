@@ -10,7 +10,7 @@ describe('The Adder Component', () => {
   beforeEach(() => {
 
     const props={
-        groups: [],
+        groups: [{}],
         title: "testTitle",
     }
 

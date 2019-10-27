@@ -16,7 +16,8 @@ html {
 body {
   background-color: #f0f0f0;
   box-sizing: border-box;
-  font-family: 'Signika', sans-serif;
+  font-family: 'Nanum Gothic', sans-serif;
+  color: #39312E;
 }
 
 @media (max-width: 736px) {
@@ -35,13 +36,17 @@ body {
 
 export const theme = {
   colors: {
-    colorDarkBrown: '#B3723D',
-    colorPrimaryLight: '#FFBE8A',
-    colorPrimary: '#FFB170',
+    colorDarkBrown: '#6a594f',
+    colorDarkerBrown: '#372E29',
+    colorPrimaryLight: '#9d8a7c',
+    colorPrimary: '#847162',
     colorDarkBlue: '#2B9FB3',
-    colorLightBlue: '#70EAFF',
+    colorLightBrown: '#DFCAC0',
+    colorLighterBrown: '#f0e6e2',
     colorWhite: '#fff',
     colorBlack: '#000',
+    colorGrayDark: '#6c757d',
+    colorGrayDarker: '#545b62',
     colorGrayLight2: '#b2b2b2',
     colorGrayMedium: '#e3e3e3',
     colorDanger: '#dc3545',

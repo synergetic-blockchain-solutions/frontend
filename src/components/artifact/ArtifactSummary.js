@@ -7,24 +7,26 @@ import {
   SummaryContainer,
   Summary,
   SummaryTitle,
-  SummaryFooter,
 } from 'components/common/summaries/BlockSummary';
 import isEmpty from 'helpers/is-empty';
 
 const SummaryLink = styled(Link)`
   display: block;
-  width: 100%;
   text-decoration: none;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
 `;
 
 class ArtifactSummary extends Component {
   state = {
     image: '',
   };
+
   componentDidMount() {
     const { id, resource } = this.props;
-    const file = typeof resource === 'number' ? resource : resource.id;
+
     if (!isEmpty(resource)) {
+      const file = typeof resource === 'number' ? resource : resource.id;
       axios
         .get(
           `${process.env.REACT_APP_API_URL}/artifact/${id}/resource/${file}/resource`
@@ -48,10 +50,8 @@ class ArtifactSummary extends Component {
             srcUrl={
               resource ? `data:${resource.contentType};base64,${image}` : ''
             }
-          >
-            <SummaryTitle>{name}</SummaryTitle>
-            <SummaryFooter>{description}</SummaryFooter>
-          </Summary>
+          />
+          <SummaryTitle>{name}</SummaryTitle>
         </SummaryContainer>
       </SummaryLink>
     );

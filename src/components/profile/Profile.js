@@ -34,11 +34,13 @@ class Profile extends Component {
 
   componentDidMount() {
     const { user } = this.props;
-    const { email, groups, name } = user;
+    const { email, groups, name, ownedAlbums, ownedArtifacts } = user;
     this.props.getUsersOwnData();
     this.setState({
       newEmail: email,
       newGroups: groups,
+      newAlbums: ownedAlbums,
+      newArtifacts: ownedArtifacts,
       newName: name,
       user: user,
     });
@@ -46,12 +48,21 @@ class Profile extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.user.toString() !== prevState.user.toString()) {
-      const { email, name, groups, user } = nextProps.user;
+      const {
+        email,
+        name,
+        groups,
+        user,
+        ownedAlbums,
+        ownedArtifacts,
+      } = nextProps.user;
       return {
         ...prevState,
         newEmail: email,
         newGroups: groups,
         newName: name,
+        newAlbums: ownedAlbums,
+        newArtifacts: ownedArtifacts,
         user: user,
       };
     } else {
@@ -77,6 +88,24 @@ class Profile extends Component {
     }));
   };
 
+  removeAlbum = e => {
+    const i = Number(e.target.name);
+    this.setState(prevState => ({
+      newAlbums: prevState.newAlbums.filter(
+        (irr, index) => index !== Number(i)
+      ),
+    }));
+  };
+
+  removeArtifact = e => {
+    const i = Number(e.target.name);
+    this.setState(prevState => ({
+      newArtifacts: prevState.newArtifacts.filter(
+        (irr, index) => index !== Number(i)
+      ),
+    }));
+  };
+
   submit = () => {
     const { newEmail, newName, newGroups } = this.state;
     this.props.updateUserData(this.props.user.id, newEmail, newName, newGroups);
@@ -84,8 +113,9 @@ class Profile extends Component {
 
   render() {
     const { user } = this.props;
-    const { email, id, groups, name } = user;
-    const { edit, newEmail, newName, newGroups, hasEdited } = this.state;
+    const { email, id, groups, name, ownedArtifacts, ownedAlbums } = user;
+    const { edit, newEmail, newName, newGroups, hasEdited, newAlbums,
+      newArtifacts } = this.state;
     console.log(this.state);
     return (
       <Page>
@@ -96,6 +126,11 @@ class Profile extends Component {
               <ProfileElement label="Email:" value={email} />
               <ProfileElement label="Full Name:" value={name} />
               <ProfileArrayElement label="Your Groups:" value={groups} />
+              <ProfileArrayElement label="Your Albums:" value={ownedAlbums} />
+              <ProfileArrayElement
+                label="Your Artifacts:"
+                value={ownedArtifacts}
+              />
               <ButtonsContainer>
                 <ButtonMedium
                   clickEvent={this.toggleEdit}
@@ -114,7 +149,7 @@ class Profile extends Component {
                 name="newEmail"
                 placeholder="Email"
                 marginBottom="1rem"
-                label="Email"
+                label="Email:"
               />
               <AuthInput
                 handleStandardChange={this.handleStandardChange}
@@ -123,15 +158,33 @@ class Profile extends Component {
                 name="newName"
                 placeholder="Name"
                 marginBottom="1rem"
-                label="Name"
+                label="Name:"
               />
-              <h3>Groups: </h3>
+              <h2>Groups: </h2>
               <Adder
                 values={newGroups.map(group => ({
                   name: group.name,
                   id: group.id,
                 }))}
                 removeGroup={this.removeGroup}
+              />
+
+              <h2>Your Albums: </h2>
+              <Adder
+                values={newAlbums.map(group => ({
+                  name: group.name,
+                  id: group.id,
+                }))}
+                removeGroup={this.removeAlbum}
+              />
+
+              <h2>Your Artifacts: </h2>
+              <Adder
+                values={newArtifacts.map(group => ({
+                  name: group.name,
+                  id: group.id,
+                }))}
+                removeGroup={this.removeArtifact}
               />
               <ButtonsContainer>
                 <ButtonMedium

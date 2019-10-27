@@ -5,11 +5,8 @@ import { connect } from 'react-redux';
 import { getUserByName, clearUserSearch } from 'actions/auth';
 import { updateGroup } from 'actions/group';
 import Modal from 'react-modal';
-import UnstyledButton from 'components/common/buttons/UnstyledButton';
-import { ButtonIcon } from 'components/common/icons/Icons';
+import { Button } from 'components/common/buttons/Button';
 import SearchBar from 'components/common/inputs/SearchBar';
-import { AddedElem } from 'components/common/form/AdderHelpers';
-import { ReccomendButton } from 'components/common/form/AdderHelpers';
 import isEmpty from 'helpers/is-empty';
 
 Modal.setAppElement('#root');
@@ -21,23 +18,16 @@ const customStyles = {
     left: '50%',
     transform: 'translate(-50%,-50%)',
     borderRadius: '20px',
-    height: '60vh',
+    height: '40rem',
     width: '60vw',
+    minWidth: '45rem',
   },
 };
-
-const ModalButton = styled(UnstyledButton)`
-  position: absolute;
-  bottom: 4rem;
-  left: 4rem;
-  color: ${props => props.theme.colors.colorWarning};
-  font-size: 5rem;
-`;
 
 const ModalTitle = styled.h3`
   text-align: center;
   font-size: 2rem;
-  margin-bottom: 2rem;
+  margin: 2rem 0;
 `;
 
 const ModalSubtitle = styled.h5`
@@ -51,27 +41,39 @@ const ModalSeperator = styled.div`
 
 const NoUsersFound = styled.div`
   width: 100%;
+  line-height: 5rem;
   height: 5rem;
   background-color: ${props => props.theme.colors.colorGrayLight2};
+  color: ${props => props.theme.colors.colorWhite};
   font-size: 2rem;
   text-align: center;
-  padding: 1rem;
   border-radius: ${props => props.theme.borders.borderRadiusMedium};
 `;
 
-const GroupMember = styled.div`
-  display: inline-block;
-  background-color: ${props => props.theme.colors.colorSuccess};
-  border-radius: ${props => props.theme.borders.borderRadiusMedium};
-  color: ${props => props.theme.colors.colorWhite};
-  padding: 0.5rem 2rem;
+const ModalResults = styled.div`
+  height: 15rem;
+  overflow: auto;
+  width: 100%;
 `;
 
-const CurrentMembers = styled.div`
+const Result = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: left;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0.5rem 2rem;
+  border-bottom: 1px solid ${props => props.theme.colors.colorDarkBrown};
+`;
+
+const ResultDetail = styled.div`
+  margin-top: 0.8rem;
+`;
+
+const ResultField = styled.p`
+  font-size: 1.2rem;
+`;
+
+const ResultButton = styled(Button)`
+  width: 20rem;
 `;
 
 class AddMemberModal extends Component {
@@ -91,6 +93,7 @@ class AddMemberModal extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.getUserByName(this.state.search);
+    this.setState({ lastSearch: this.state.search });
   };
 
   addInput = idAndName => {
@@ -107,7 +110,9 @@ class AddMemberModal extends Component {
       value: '',
       added: [...prevState.added, newName],
       lastSearch: prevState.value,
+      search: '',
     }));
+    this.closeModal();
     this.props.clearUserSearch();
   };
 
@@ -117,9 +122,9 @@ class AddMemberModal extends Component {
     group.members && console.log(group.members.concat(added));
     return (
       <React.Fragment>
-        <ModalButton onClick={this.openModal}>
-          <ButtonIcon className="fas fa-user-plus"></ButtonIcon>
-        </ModalButton>
+        <Button className="dark-brown" onClick={this.openModal}>
+          Add Member
+        </Button>
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={this.closeModal}
@@ -138,36 +143,40 @@ class AddMemberModal extends Component {
             />
           </ModalSeperator>
           <ModalSeperator>
-            {!isEmpty(userSearch)
-              ? userSearch.map(user => {
-                  return (
-                    <ReccomendButton
-                      onClick={() =>
-                        this.addInput({ newId: user.id, newName: user.name })
-                      }
-                    >
-                      <h4>{user.name}</h4>
-                      <p>{user.email}</p>
-                    </ReccomendButton>
-                  );
-                })
-              : !isEmpty(lastSearch) && (
-                  <NoUsersFound>
-                    No users found for search "{lastSearch}"
-                  </NoUsersFound>
-                )}
-          </ModalSeperator>
-          <ModalSeperator>
-            <ModalSubtitle>Current Members Matching Search:</ModalSubtitle>
-            <CurrentMembers>
-              {group.members &&
-                group.members
-                  .concat(added)
-                  .filter(mem => mem.name.includes(search))
-                  .map(mem => {
-                    return <GroupMember>{mem.name}</GroupMember>;
+            {!isEmpty(userSearch) ? (
+              <React.Fragment>
+                <ModalSubtitle>Results:</ModalSubtitle>
+                <ModalResults>
+                  {userSearch.map(user => {
+                    return (
+                      <Result>
+                        <ResultDetail>
+                          <ResultField>{user.name}</ResultField>
+                          <ResultField>{user.email}</ResultField>
+                        </ResultDetail>
+                        <ResultButton
+                          className="success"
+                          onClick={() =>
+                            this.addInput({
+                              newId: user.id,
+                              newName: user.name,
+                            })
+                          }
+                        >
+                          Add {user.name} <i className="fas fa-plus-circle"></i>
+                        </ResultButton>
+                      </Result>
+                    );
                   })}
-            </CurrentMembers>
+                </ModalResults>
+              </React.Fragment>
+            ) : (
+              !isEmpty(lastSearch) && (
+                <NoUsersFound>
+                  No users found for search "{lastSearch}"
+                </NoUsersFound>
+              )
+            )}
           </ModalSeperator>
         </Modal>
       </React.Fragment>

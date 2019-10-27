@@ -21,10 +21,10 @@ describe('The Adder Component', () => {
     );
   });
 
-  it('Renders the FamilyBannerContainer and SummaryFooter', () => {
+  it('Renders the FamilyBannerContainer', () => {
     expect(
         wrapped.find('div').length
-    ).toEqual(2);
+    ).toEqual(1);
   });
  
   

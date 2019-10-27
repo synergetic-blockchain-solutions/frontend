@@ -1,5 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import loadingSrc from 'assets/loading.gif';
 
 const WindowView = styled.div`
   position: relative;
@@ -12,8 +15,36 @@ const WindowView = styled.div`
   background-color: lighten($color-gray-light-1, 1%);
 `;
 
+const Image = styled.img`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
 function Window(props) {
-  return <WindowView>{props.children}</WindowView>;
+  const { auth, album, artifact, group } = props;
+  const loading = auth || album || artifact || group;
+  return (
+    <WindowView>
+      {props.children}
+      {loading && <Image src={loadingSrc} />}
+    </WindowView>
+  );
 }
 
-export default Window;
+Window.propTypes = {
+  auth: PropTypes.bool.isRequired,
+  album: PropTypes.bool.isRequired,
+  artifact: PropTypes.bool.isRequired,
+  group: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth.loading,
+  album: state.album.loading,
+  artifact: state.artifact.loading,
+  group: state.group.loading,
+});
+
+export default connect(mapStateToProps)(Window);
