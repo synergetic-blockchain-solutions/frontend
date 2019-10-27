@@ -53,7 +53,7 @@ class ViewAlbum extends Component {
           </ButtonLinkLarge>
         </Flex>
         <Container>
-          <Artifacts artifacts={artifacts} />
+          {artifacts && <Artifacts artifacts={artifacts} />}
         </Container>
       </Page>
     );
@@ -70,7 +70,7 @@ const mapDispatchToProps = dispatch => ({
 
 ViewAlbum.propTypes = {
   getAlbum: PropTypes.func.isRequired,
-  album: PropTypes.string.isRequired,
+  album: PropTypes.object.isRequired,
 };
 
 export default connect(

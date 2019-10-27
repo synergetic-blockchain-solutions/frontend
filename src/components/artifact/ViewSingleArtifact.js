@@ -56,18 +56,7 @@ class ViewSingleArtifact extends Component {
 
   render() {
     const { artifact, user, albums } = this.props;
-    console.log(this.props);
-    console.log(this.state);
-    const {
-      description,
-      groups,
-      id,
-      name,
-      owners,
-      resources,
-      sharedWith,
-      tags,
-    } = artifact;
+    const { description, groups, id, name, owners, resources } = artifact;
 
     let artifactAlbumIds = [];
     if (artifact.albums) {
@@ -98,14 +87,6 @@ class ViewSingleArtifact extends Component {
         <InfoSeperator>
           <Associations groups={owners} title="Owners of this artifact" />
         </InfoSeperator>
-        {
-          //   <InfoSeperator>
-          //   <Associations
-          //     groups={tags}
-          //     title="This artifact has the following tags"
-          //   />
-          // </InfoSeperator>
-        }
 
         <InfoSeperator>
           <Select

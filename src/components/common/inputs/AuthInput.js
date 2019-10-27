@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { Label, Error, InputContainer, Input } from './InputHelpers';
 
 function AuthInput(props) {
@@ -18,7 +17,6 @@ function AuthInput(props) {
     autoComplete,
   } = props;
 
-  console.log(autoComplete);
   return (
     <InputContainer marginBottom={marginBottom}>
       {label && <Label htmlFor={name}>{label}</Label>}

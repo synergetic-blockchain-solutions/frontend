@@ -62,7 +62,6 @@ class NavBar extends Component {
   render() {
     const { display } = this.state;
     const { auth } = this.props;
-    console.log(this.props);
     return (
       <Nav>
         <NavBrand />

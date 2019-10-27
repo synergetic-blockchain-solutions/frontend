@@ -13,10 +13,7 @@ function Artifacts(props) {
           return (
             <ArtifactSummary
               name={artifact.name}
-              description={artifact.description}
-              groups={artifact.groups}
               id={artifact.id}
-              owners={artifact.owners}
               resource={
                 !isEmpty(artifact.resources) ? artifact.resources[0] : null
               }

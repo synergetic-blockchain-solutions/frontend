@@ -18,6 +18,9 @@ const Welcome = styled.h1`
   margin-bottom: 2rem;
 `;
 
+/**
+ * @desc the page which describes the user's important information
+ */
 class Profile extends Component {
   state = {
     edit: false,
@@ -31,7 +34,10 @@ class Profile extends Component {
   componentDidMount() {
     const { user } = this.props;
     const { email, groups, name, ownedAlbums, ownedArtifacts } = user;
+    // Get the most up to date info about the user
     this.props.getUsersOwnData();
+
+    // Set the state with the current user information
     this.setState({
       newEmail: email,
       newGroups: groups,
@@ -43,6 +49,8 @@ class Profile extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
+    // if the user has changed any information from what we already had
+    // update that info in the state
     if (nextProps.user.toString() !== prevState.user.toString()) {
       const {
         email,
@@ -52,6 +60,7 @@ class Profile extends Component {
         ownedAlbums,
         ownedArtifacts,
       } = nextProps.user;
+
       return {
         ...prevState,
         newEmail: email,
@@ -66,8 +75,10 @@ class Profile extends Component {
     }
   }
 
+  // Change the profile between edit and dont edit mode
   toggleEdit = () => this.setState(prevState => ({ edit: !prevState.edit }));
 
+  // if they change any text flip to has edited
   handleStandardChange = e => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -75,28 +86,11 @@ class Profile extends Component {
     });
   };
 
+  //
   removeGroup = e => {
     const i = Number(e.target.name);
     this.setState(prevState => ({
       newGroups: prevState.newGroups.filter(
-        (irr, index) => index !== Number(i)
-      ),
-    }));
-  };
-
-  removeAlbum = e => {
-    const i = Number(e.target.name);
-    this.setState(prevState => ({
-      newAlbums: prevState.newAlbums.filter(
-        (irr, index) => index !== Number(i)
-      ),
-    }));
-  };
-
-  removeArtifact = e => {
-    const i = Number(e.target.name);
-    this.setState(prevState => ({
-      newArtifacts: prevState.newArtifacts.filter(
         (irr, index) => index !== Number(i)
       ),
     }));
@@ -115,16 +109,7 @@ class Profile extends Component {
   render() {
     const { user } = this.props;
     const { email, id, groups, name, ownedArtifacts, ownedAlbums } = user;
-    const {
-      edit,
-      newEmail,
-      newName,
-      newGroups,
-      hasEdited,
-      newAlbums,
-      newArtifacts,
-    } = this.state;
-    console.log(this.state);
+    const { edit, newEmail, newName, newGroups, hasEdited } = this.state;
     return (
       <Page>
         <FormContainer>
@@ -176,25 +161,6 @@ class Profile extends Component {
                 }))}
                 removeGroup={this.removeGroup}
               />
-              {
-                // <h2>Your Albums: </h2>
-                // <Adder
-                //   values={newAlbums.map(group => ({
-                //     name: group.name,
-                //     id: group.id,
-                //   }))}
-                //   removeGroup={this.removeAlbum}
-                // />
-                // <h2>Your Artifacts: </h2>
-                // <Adder
-                //   values={newArtifacts.map(group => ({
-                //     name: group.name,
-                //     id: group.id,
-                //   }))}
-                //   removeGroup={this.removeArtifact}
-                // />
-              }
-
               <FlexedCenter>
                 <ButtonMedium
                   clickEvent={this.submit}

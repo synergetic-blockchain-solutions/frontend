@@ -51,9 +51,7 @@ const TestRoot = ({ children, initialState }) => {
     <Provider store={store}>
       <BrowserRouter>
         <GlobalStyle />
-        <ThemeProvider theme={theme}>
-        {children}
-        </ThemeProvider>
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
       </BrowserRouter>
     </Provider>
   );

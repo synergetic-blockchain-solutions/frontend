@@ -43,7 +43,6 @@ class Resource extends Component {
   render() {
     const { image, showFullImage } = this.state;
     const { contentType, description } = this.props;
-    console.log(this.state);
     return (
       <React.Fragment>
         <Button onClick={this.toggleFullImage}>

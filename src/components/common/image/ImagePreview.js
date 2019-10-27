@@ -28,7 +28,6 @@ const DeleteButton = styled(UnstyledButton)`
 
 function ImagePreview(props) {
   const { src, deleteImage, position, metaData, handleMetaDataChange } = props;
-  console.log(props);
   return (
     <ImageContainer>
       <DeleteButton name={position} onClick={deleteImage}>

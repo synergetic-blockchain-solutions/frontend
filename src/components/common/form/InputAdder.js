@@ -106,6 +106,7 @@ class InputAdder extends Component {
                   onClick={() =>
                     this.addInput({ id: user.id, name: user.name })
                   }
+                  key={user.id}
                 >
                   <h4>{user.name}</h4>
                   <p>{user.email}</p>

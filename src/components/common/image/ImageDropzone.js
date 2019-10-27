@@ -53,7 +53,6 @@ class ImageDropzone extends Component {
 
   onDrop = e => {
     e.preventDefault();
-    // console.log(e.dataTransfer.files);
     const files = e.dataTransfer.files;
     for (let file in files) {
       if (files.hasOwnProperty(file)) {
@@ -75,7 +74,6 @@ class ImageDropzone extends Component {
   };
 
   handleFile = files => {
-    console.log(files);
     const preview = URL.createObjectURL(files[0]);
 
     this.setState({ files, preview, error: '' });

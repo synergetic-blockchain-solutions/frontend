@@ -70,7 +70,6 @@ class ViewFamily extends Component {
     const { group } = this.props;
     const { name, admins, albums, artifacts, description, id, members } = group;
     const { view } = this.state;
-    console.log(this.state);
     let output;
     if (view === 'artifacts') {
       output = (

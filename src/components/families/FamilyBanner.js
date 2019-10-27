@@ -19,7 +19,6 @@ class FamilyBanner extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props);
     axios
       .get(`${process.env.REACT_APP_API_URL}/group/${this.props.id}/image`)
       .then(res => {

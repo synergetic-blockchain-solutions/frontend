@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Loadable from 'react-loadable';
 import Loading from 'components/common/loading/Loading';
 import PrivateRoute from './PrivateRoute';
@@ -86,60 +88,73 @@ const ViewAlbum = Loadable({
   loading: Loading,
 });
 
-export default class Router extends Component {
-  render() {
-    return (
-      <Root>
-        <React.Fragment>
-          <NavBar />
-          <Switch>
-            <PrivateRoute path="/families" component={ViewFamilies} exact />
-            <PrivateRoute path="/family/:id" component={ViewFamily} exact />
-            <PrivateRoute path="/create" component={CreateOptions} exact />
-            <PrivateRoute path="/album/create" component={CreateAlbum} exact />
-            <PrivateRoute path="/album/:id" component={ViewAlbum} exact />
-            <PrivateRoute
-              path="/artifact/create"
-              component={CreateArtifact}
-              exact
-            />
-            <PrivateRoute
-              path="/artifact/:artifactId/resource/:resourceId/edit"
-              component={ResourceEditPage}
-              exact
-            />
-            <PrivateRoute
-              path="/artifact/:artifactId/resource/:resourceId"
-              exact
-              component={ResourcePage}
-            />
-            <PrivateRoute
-              path="/families/create"
-              component={CreateGroup}
-              exact
-            />
-            <PrivateRoute
-              path="/my-artifacts"
-              component={ViewMyArtifacts}
-              exact
-            />
-            <PrivateRoute
-              path="/artifact/:id"
-              component={ViewSingleArtifact}
-              exact
-            />
-            <PrivateRoute
-              path="/artifact/edit/:id"
-              component={EditArtifact}
-              exact
-            />
-            <PrivateRoute path="/profile" component={Profile} exact />
-            <Route path="/sign-up" component={Register} exact />
-            <Route path="/" component={Login} exact />
-            <Route path="*" component={NotFound} />
-          </Switch>
-        </React.Fragment>
-      </Root>
-    );
-  }
-}
+const Router = props => {
+  const { auth, album, artifact, group } = props;
+  const loading = auth || album || artifact || group;
+  return (
+    <Root>
+      <React.Fragment>
+        <NavBar />
+        <Switch>
+          <PrivateRoute path="/families" component={ViewFamilies} exact />
+          <PrivateRoute path="/family/:id" component={ViewFamily} exact />
+          <PrivateRoute path="/create" component={CreateOptions} exact />
+          <PrivateRoute path="/album/create" component={CreateAlbum} exact />
+          <PrivateRoute path="/album/:id" component={ViewAlbum} exact />
+          <PrivateRoute
+            path="/artifact/create"
+            component={CreateArtifact}
+            exact
+          />
+          <PrivateRoute
+            path="/artifact/:artifactId/resource/:resourceId/edit"
+            component={ResourceEditPage}
+            exact
+          />
+          <PrivateRoute
+            path="/artifact/:artifactId/resource/:resourceId"
+            exact
+            component={ResourcePage}
+          />
+          <PrivateRoute path="/families/create" component={CreateGroup} exact />
+          <PrivateRoute
+            path="/my-artifacts"
+            component={ViewMyArtifacts}
+            exact
+          />
+          <PrivateRoute
+            path="/artifact/:id"
+            component={ViewSingleArtifact}
+            exact
+          />
+          <PrivateRoute
+            path="/artifact/edit/:id"
+            component={EditArtifact}
+            exact
+          />
+          <PrivateRoute path="/profile" component={Profile} exact />
+          <Route path="/sign-up" component={Register} exact />
+          <Route path="/" component={Login} exact />
+          <Route path="*" component={NotFound} />
+        </Switch>
+        {loading && <Loading />}
+      </React.Fragment>
+    </Root>
+  );
+};
+
+Router.propTypes = {
+  auth: PropTypes.bool.isRequired,
+  album: PropTypes.bool.isRequired,
+  artifact: PropTypes.bool.isRequired,
+  group: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth.loading,
+  album: state.album.loading,
+  artifact: state.artifact.loading,
+  group: state.group.loading,
+});
+
+export default connect(mapStateToProps)(Router);

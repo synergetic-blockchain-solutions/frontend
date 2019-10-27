@@ -115,9 +115,8 @@ class AddMemberModal extends Component {
   };
 
   render() {
-    const { modalIsOpen, search, lastSearch, added } = this.state;
-    const { groupName, userSearch, group } = this.props;
-    group.members && console.log(group.members.concat(added));
+    const { modalIsOpen, search, lastSearch } = this.state;
+    const { groupName, userSearch } = this.props;
     return (
       <React.Fragment>
         <Button className="dark-brown" onClick={this.openModal}>
