@@ -7,13 +7,13 @@ import Page from 'components/common/containers/Page';
 import { ButtonLinkLarge } from 'components/common/buttons/Button';
 import { FlexedBetween } from 'components/common/containers/Flexed';
 import Artifacts from 'components/artifact/Artifacts';
+import { LargeTitle } from 'components/common/styled-helpers/text';
 
 const Flex = styled(FlexedBetween)`
   margin: 2rem;
 `;
 
-const Title = styled.h1`
-  font-size: 2.5rem;
+const Title = styled(LargeTitle)`
   margin-top: 1rem;
 `;
 
@@ -30,10 +30,17 @@ const TitleContainer = styled.div`
   max-width: 50rem;
 `;
 
+/**
+ * @param {*} props
+ * @desc page to view an individual album
+ * @prop {function} getAlbum
+ * @prop {object} album
+ */
 class ViewAlbum extends Component {
   componentDidMount() {
     this.props.getAlbum(this.props.match.params.id);
   }
+
   render() {
     const { album } = this.props;
     const { artifacts, id, name, description } = album;

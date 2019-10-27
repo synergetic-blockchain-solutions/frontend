@@ -23,6 +23,16 @@ import { Title, Subtitle } from './artifact-helpers';
 
 const Form = styled.form``;
 
+/**
+ * @prop {function} updateArtifact
+ * @prop {object} artifact
+ * @prop {function} addResourceToArtifact
+ * @prop {function} resetArtifact
+ * @prop {function} getGroups
+ * @prop {array} usersGroups
+ * @prop {function} getArtifact
+ * @prop {object} user
+ */
 class CreateArtifact extends Component {
   validator = new FormValidator([
     {

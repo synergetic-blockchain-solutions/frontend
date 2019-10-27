@@ -73,7 +73,7 @@ class ViewFamily extends Component {
     let output;
     if (view === 'artifacts') {
       output = (
-        <NoContent text="There Aren't Any Artifacts Added To This Group Yet" />
+        <NoContent text="There Aren't Any Artifacts Added To This Family Yet" />
       );
       if (!isEmpty(artifacts)) {
         output = <Artifacts artifacts={artifacts} />;
@@ -102,7 +102,7 @@ class ViewFamily extends Component {
       );
     } else if (view === 'albums') {
       output = (
-        <NoContent text="There Aren't Any Albums Added To This Group Yet" />
+        <NoContent text="There Aren't Any Albums Added To This Family Yet" />
       );
       if (!isEmpty(albums)) {
         output = <Albums albums={albums} />;

@@ -4,6 +4,12 @@ import ArtifactSummary from './ArtifactSummary';
 import { FlexedCenter } from 'components/common/containers/Flexed';
 import isEmpty from 'helpers/is-empty';
 
+/**
+ *
+ * @param {*} props
+ * @prop {array} articfacts
+ * @desc factory for artifacts
+ */
 function Artifacts(props) {
   const { artifacts } = props;
   return (

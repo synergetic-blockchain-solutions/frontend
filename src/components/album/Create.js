@@ -19,6 +19,15 @@ import { Title } from 'components/artifact/artifact-helpers';
 
 const Form = styled.div``;
 
+/**
+ * @param {*} props
+ * @prop {function} createAlbum
+ * @prop {object} album
+ * @prop {function} resetAlbum
+ * @prop {function} getGroups
+ * @prop {array} usersGroups
+ * @prop {object} user
+ */
 class CreateAlbum extends Component {
   validator = new FormValidator([
     {

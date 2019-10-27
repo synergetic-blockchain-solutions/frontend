@@ -26,6 +26,12 @@ const AlbumTitle = styled.h2`
   margin-left: 1rem;
 `;
 
+/**
+ *
+ * @param {*} props
+ * @prop {string} name
+ * @prop {number} id
+ */
 function AlbumSummary(props) {
   const { name, id } = props;
   return (

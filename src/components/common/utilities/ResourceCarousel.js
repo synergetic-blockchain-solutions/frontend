@@ -30,7 +30,7 @@ const ResourceCarousel = props => {
     });
   }
 
-  return <AliceCarousel items={carouselItems} />;
+  return carouselItems && <AliceCarousel items={carouselItems} />;
 };
 
 ResourceCarousel.propTypes = {

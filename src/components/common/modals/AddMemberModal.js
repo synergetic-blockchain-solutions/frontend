@@ -129,11 +129,11 @@ class AddMemberModal extends Component {
           style={customStyles}
         >
           <ModalSeperator>
-            <ModalTitle>Add A User To Group {groupName}</ModalTitle>
+            <ModalTitle>Add A User To Family {groupName}</ModalTitle>
           </ModalSeperator>
           <ModalSeperator>
             <SearchBar
-              placeholder="Search User To Add To The Group"
+              placeholder="Search User To Add To The Family"
               onChange={this.handleSearchChange}
               value={search}
               handleSubmit={this.handleSubmit}

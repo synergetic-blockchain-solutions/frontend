@@ -17,9 +17,16 @@ const SummaryLink = styled(Link)`
   margin-bottom: 1rem;
 `;
 
+/**
+ * @param {*} props
+ * @prop {number} id
+ * @prop {string} name
+ * @prop {object, number} resource
+ */
 class ArtifactSummary extends Component {
   state = {
     image: '',
+    error: false,
   };
 
   componentDidMount() {
@@ -36,20 +43,20 @@ class ArtifactSummary extends Component {
           this.setState({ image: res.data });
         })
         .catch(err => {
-          console.log(err);
+          this.setState({ error: true });
         });
     }
   }
   render() {
     const { name, id, resource } = this.props;
-    const { image } = this.state;
+    const { image, error } = this.state;
 
     return (
       <SummaryLink to={`/artifact/${id}`}>
         <SummaryContainer>
           <Summary
             srcUrl={
-              resource
+              resource && !error
                 ? `data:${resource.contentType};base64,${image}`
                 : 'https://upload.wikimedia.org/' +
                   'wikipedia/commons/6/6c/No_image_3x4.svg'

@@ -1,7 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import Loadable from 'react-loadable';
 import Loading from 'components/common/loading/Loading';
 import PrivateRoute from './PrivateRoute';
@@ -89,8 +87,6 @@ const ViewAlbum = Loadable({
 });
 
 const Router = props => {
-  const { auth, album, artifact, group } = props;
-  const loading = auth || album || artifact || group;
   return (
     <Root>
       <React.Fragment>
@@ -137,24 +133,9 @@ const Router = props => {
           <Route path="/" component={Login} exact />
           <Route path="*" component={NotFound} />
         </Switch>
-        {loading && <Loading />}
       </React.Fragment>
     </Root>
   );
 };
 
-Router.propTypes = {
-  auth: PropTypes.bool.isRequired,
-  album: PropTypes.bool.isRequired,
-  artifact: PropTypes.bool.isRequired,
-  group: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = state => ({
-  auth: state.auth.loading,
-  album: state.album.loading,
-  artifact: state.artifact.loading,
-  group: state.group.loading,
-});
-
-export default connect(mapStateToProps)(Router);
+export default Router;

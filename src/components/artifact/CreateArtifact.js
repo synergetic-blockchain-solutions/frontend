@@ -31,6 +31,17 @@ const AlreadyAdded = styled.h3`
   margin-bottom: 1.5rem;
 `;
 
+/**
+ * @prop {function} registerArtifact
+ * @prop {object} artifact
+ * @prop {function} addResourceToArtifact
+ * @prop {function} resetArtifact
+ * @prop {function} getGroups
+ * @prop {function} getAlbums
+ * @prop {array} usersGroups
+ * @prop {object} user
+ * @prop {array} albums
+ */
 class CreateArtifact extends Component {
   validator = new FormValidator([
     {

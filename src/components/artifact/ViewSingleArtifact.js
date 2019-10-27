@@ -81,7 +81,7 @@ class ViewSingleArtifact extends Component {
         <InfoSeperator>
           <Associations
             groups={groups}
-            title="Groups this artifact is shared with"
+            title="Families this artifact is shared with"
           />
         </InfoSeperator>
         <InfoSeperator>

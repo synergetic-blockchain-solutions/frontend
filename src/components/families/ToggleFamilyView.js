@@ -49,7 +49,7 @@ function ToggleFamilyView(props) {
         onClick={() => toggleView('info')}
         className="dark-gray"
       >
-        View Group Info
+        View Family Info
       </ButtonRight>
     </MyArtifactsPageToggler>
   );

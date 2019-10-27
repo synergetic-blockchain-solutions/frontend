@@ -108,7 +108,15 @@ class Profile extends Component {
 
   render() {
     const { user } = this.props;
-    const { email, id, groups, name, ownedArtifacts, ownedAlbums } = user;
+    const {
+      email,
+      id,
+      groups,
+      name,
+      ownedArtifacts,
+      ownedAlbums,
+      privateGroup,
+    } = user;
     const { edit, newEmail, newName, newGroups, hasEdited } = this.state;
     return (
       <Page>
@@ -118,7 +126,10 @@ class Profile extends Component {
             <React.Fragment>
               <ProfileElement label="Email:" value={email} />
               <ProfileElement label="Full Name:" value={name} />
-              <ProfileArrayElement label="Your Groups:" value={groups} />
+              <ProfileArrayElement
+                label="Your Families:"
+                value={groups.filter(group => group.id !== privateGroup.id)}
+              />
               <ProfileArrayElement label="Your Albums:" value={ownedAlbums} />
               <ProfileArrayElement
                 label="Your Artifacts:"
@@ -153,7 +164,7 @@ class Profile extends Component {
                 marginBottom="1rem"
                 label="Name:"
               />
-              <h2>Groups: </h2>
+              <h2>Families: </h2>
               <Adder
                 values={newGroups.map(group => ({
                   name: group.name,
