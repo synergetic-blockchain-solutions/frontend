@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import UnstyledBtn from 'components/common/buttons/UnstyledButton';
+import isEmpty from 'helpers/is-empty';
+import { centerXY } from 'components/common/styled-helpers/mixins';
 
 const ImageContainer = styled.label`
   display: block;
@@ -16,10 +17,7 @@ const ImageContainer = styled.label`
 `;
 
 const ImageText = styled.h3`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  ${centerXY}
   font-size: 1.6rem;
   width: fit-content;
 `;
@@ -30,11 +28,17 @@ const ImageInput = styled.input`
   height: 100%;
 `;
 
+const Error = styled.p`
+  color: ${props => props.theme.colors.colorDanger};
+  font-size: 1.6rem;
+`;
+
 class ImageDropzone extends Component {
   state = {
     // preview: '',
     files: null,
     dragOver: false,
+    error: '',
   };
 
   onDragOver = e => {
@@ -49,20 +53,32 @@ class ImageDropzone extends Component {
 
   onDrop = e => {
     e.preventDefault();
-
+    // console.log(e.dataTransfer.files);
     const files = e.dataTransfer.files;
-
-    const preview = URL.createObjectURL(files[0]);
-
-    this.setState({ files: files, preview: preview });
+    for (let file in files) {
+      if (files.hasOwnProperty(file)) {
+        if (
+          files[file].type !== 'image/png' &&
+          files[file].type !== 'image/jpeg' &&
+          files[file].type !== 'image/jpg'
+        ) {
+          this.setState({
+            error: `Cannot accept file type ${files[file].type}`,
+          });
+          return;
+        }
+      }
+    }
+    if (files.length !== 0) {
+      this.handleFile(files);
+    }
   };
 
-  onChange = e => {
-    const files = e.target.files;
-
+  handleFile = files => {
+    console.log(files);
     const preview = URL.createObjectURL(files[0]);
 
-    this.setState({ files, preview });
+    this.setState({ files, preview, error: '' });
 
     for (let file in files) {
       if (files.hasOwnProperty(file)) {
@@ -74,8 +90,16 @@ class ImageDropzone extends Component {
     }
   };
 
+  onChange = e => {
+    e.preventDefault();
+    const files = e.target.files;
+    if (files.length !== 0) {
+      this.handleFile(files);
+    }
+  };
+
   render() {
-    const { dragOver } = this.state;
+    const { dragOver, error } = this.state;
     const { multiple } = this.props;
     return (
       <React.Fragment>
@@ -97,8 +121,9 @@ class ImageDropzone extends Component {
           type="file"
           onChange={this.onChange}
           multiple={multiple}
-          accept="image/png, image/jpeg"
+          accept="image/png, image/jpeg, image/jpg"
         />
+        {!isEmpty(error) && <Error>{error}</Error>}
       </React.Fragment>
     );
   }

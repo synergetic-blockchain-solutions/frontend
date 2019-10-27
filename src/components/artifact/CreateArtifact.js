@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import moment from 'moment';
 import qs from 'query-string';
-import { Link } from 'react-router-dom';
 import AuthInput from 'components/common/inputs/AuthInput';
 import TextAreaInput from 'components/common/inputs/TextAreaInput';
 import ButtonLarge from 'components/common/buttons/ButtonLarge';
@@ -317,7 +316,7 @@ class CreateArtifact extends Component {
               />
               <InputAdder
                 type="text"
-                name="sharedWith"
+                inputName="sharedWith"
                 placeholder="Share artifact with other users"
                 label="Share artifact with other users"
                 addElem={this.addUser}

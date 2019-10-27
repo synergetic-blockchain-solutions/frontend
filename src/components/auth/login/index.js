@@ -1,35 +1,34 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import LoginForm from './LoginForm';
-import { clearAuth } from 'actions/auth';
+import Loading from 'components/common/loading/Loading';
 
 const LoginPage = styled.section``;
 
+/**
+ * @desc Login component is made as a container for the LoginForm and is
+ * made to help if login needs to be extended
+ */
 class Login extends Component {
-  componentWillUnmount() {
-    // this.props.clearAuth();
-  }
-
   render() {
+    const { loading } = this.props;
     return (
       <LoginPage>
         <LoginForm />
+        {loading && <Loading />}
       </LoginPage>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  clearAuth: () => dispatch(clearAuth()),
-});
-
 Login.propTypes = {
-  clearAuth: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(Login);
+const mapStateToProps = state => ({
+  loading: state.auth.loading,
+});
+
+export default connect(mapStateToProps)(Login);

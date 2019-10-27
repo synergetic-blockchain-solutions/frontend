@@ -48,7 +48,7 @@ export const registerArtifact = (
       sharedWith,
       tag,
       dateTaken: date,
-      album: album,
+      albums: album,
     },
     types: [
       REGISTER_ARTIFACT_REQUEST,
