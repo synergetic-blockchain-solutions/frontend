@@ -19,14 +19,15 @@ class FamilyBanner extends Component {
   };
 
   componentDidMount() {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/group/${this.props.id}/image`)
-      .then(res => {
-        this.setState({ image: res.data });
-      })
-      .catch(err => {
-        this.setState({ image: '' });
-      });
+    process.env.NODE_ENV !== 'test' &&
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/group/${this.props.id}/image`)
+        .then(res => {
+          this.setState({ image: res.data });
+        })
+        .catch(err => {
+          this.setState({ image: '' });
+        });
   }
 
   render() {
