@@ -81,7 +81,7 @@ The state managment is done with redux check docs at https://redux.js.org/introd
 
 ## Deployment
 
-Not Applicable at the moment 
+Deployed to Heroku, keep the master branch as the branch that is live on heroku. 
 
 ## Authors
 
