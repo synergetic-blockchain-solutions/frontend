@@ -22,7 +22,7 @@ function ProfileElement(props) {
       <ElemLabel>{label}</ElemLabel>
       {value &&
         value.map(val => {
-          return <ElemValue>{val.name}</ElemValue>;
+          return <ElemValue key={val.name}>{val.name}</ElemValue>;
         })}
     </ElemContainer>
   );

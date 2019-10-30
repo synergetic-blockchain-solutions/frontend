@@ -6,6 +6,7 @@ import AlbumSummary from './AlbumSummary';
 /**
  *
  * @param {*} props
+ * @prop {array} albums
  * @desc takes albums as the props (the return from get albums endpoint)
  */
 function Albums(props) {

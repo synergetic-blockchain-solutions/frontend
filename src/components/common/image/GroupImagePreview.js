@@ -27,7 +27,6 @@ const DeleteButton = styled(UnstyledButton)`
 
 function ImagePreview(props) {
   const { src, deleteImage } = props;
-  console.log(props);
   return (
     <ImageContainer>
       <DeleteButton onClick={deleteImage}>

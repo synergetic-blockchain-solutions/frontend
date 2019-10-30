@@ -17,9 +17,16 @@ const SummaryLink = styled(Link)`
   margin-bottom: 1rem;
 `;
 
+/**
+ * @param {*} props
+ * @prop {number} id
+ * @prop {string} name
+ * @prop {object, number} resource
+ */
 class ArtifactSummary extends Component {
   state = {
     image: '',
+    error: false,
   };
 
   componentDidMount() {
@@ -29,28 +36,30 @@ class ArtifactSummary extends Component {
       const file = typeof resource === 'number' ? resource : resource.id;
       axios
         .get(
-          `${process.env.REACT_APP_API_URL}/artifact/${id}/resource/${file}/resource`
+          `${process.env.REACT_APP_API_URL}/` +
+            `artifact/${id}/resource/${file}/resource`
         )
         .then(res => {
           this.setState({ image: res.data });
         })
         .catch(err => {
-          console.log(err);
+          this.setState({ error: true });
         });
     }
   }
   render() {
-    const { name, description, groups, id, owners, resource } = this.props;
-    const { image } = this.state;
+    const { name, id, resource } = this.props;
+    const { image, error } = this.state;
 
     return (
       <SummaryLink to={`/artifact/${id}`}>
         <SummaryContainer>
           <Summary
             srcUrl={
-              resource
+              resource && !error
                 ? `data:${resource.contentType};base64,${image}`
-                : 'https://upload.wikimedia.org/wikipedia/commons/6/6c/No_image_3x4.svg'
+                : 'https://upload.wikimedia.org/' +
+                  'wikipedia/commons/6/6c/No_image_3x4.svg'
             }
           />
           <SummaryTitle>{name}</SummaryTitle>
@@ -62,12 +71,8 @@ class ArtifactSummary extends Component {
 
 ArtifactSummary.propTypes = {
   name: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  resource: PropTypes.array.isRequired,
+  resource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
   id: PropTypes.number.isRequired,
-  getResource: PropTypes.func.isRequired,
-  groups: PropTypes.array.isRequired,
-  owners: PropTypes.array.isRequired,
 };
 
 export default ArtifactSummary;

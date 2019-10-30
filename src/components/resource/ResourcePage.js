@@ -48,7 +48,6 @@ class ResourcePage extends Component {
         `${process.env.REACT_APP_API_URL}/artifact/${artifactId}/resource/${resourceId}/resource`
       )
       .then(res => {
-        console.log(res);
         this.setState({
           image: res.data,
           contentType: res.headers['content-type'],
@@ -63,7 +62,6 @@ class ResourcePage extends Component {
         `${process.env.REACT_APP_API_URL}/artifact/${artifactId}/resource/${resourceId}/metadata`
       )
       .then(res => {
-        console.log(res);
         this.setState({
           name: res.data.name,
           description: res.data.description,

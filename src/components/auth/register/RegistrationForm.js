@@ -134,8 +134,6 @@ class RegistrationForm extends Component {
     const { name, email, password, passwordConfirm, success } = this.state;
     const { errors } = this.props.auth;
 
-    console.log(this.props.auth);
-
     return (
       <FormContainer>
         {success ? (

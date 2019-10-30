@@ -126,8 +126,6 @@ class Creategroup extends Component {
 
     const { name, description, admins, image, finished } = this.state;
     const { group } = this.props.group;
-    console.log(this.state);
-    console.log(this.props);
     return (
       <FormContainer>
         {finished ? (

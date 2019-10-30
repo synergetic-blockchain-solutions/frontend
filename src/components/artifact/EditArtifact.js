@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import moment from 'moment';
 import AuthInput from 'components/common/inputs/AuthInput';
 import TextAreaInput from 'components/common/inputs/TextAreaInput';
 import { updateArtifact, resetArtifact, getArtifact } from 'actions/artifact';
@@ -24,6 +23,16 @@ import { Title, Subtitle } from './artifact-helpers';
 
 const Form = styled.form``;
 
+/**
+ * @prop {function} updateArtifact
+ * @prop {object} artifact
+ * @prop {function} addResourceToArtifact
+ * @prop {function} resetArtifact
+ * @prop {function} getGroups
+ * @prop {array} usersGroups
+ * @prop {function} getArtifact
+ * @prop {object} user
+ */
 class CreateArtifact extends Component {
   validator = new FormValidator([
     {
@@ -54,14 +63,10 @@ class CreateArtifact extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const {
-      albums,
       description,
       groups,
-      id,
       name,
       owners,
-      resources,
-      date,
       tags,
     } = nextProps.artifact.artifact;
     if (!isEmpty(nextProps.artifact.artifact) && prevState.name === '') {
@@ -72,7 +77,6 @@ class CreateArtifact extends Component {
         groups: groups.map(group => ({ value: group.id, label: group.name })),
         name,
         owners: owners.map(owner => ({ name: owner.name, id: owner.id })),
-        date: date,
       };
     }
     if (
@@ -134,7 +138,6 @@ class CreateArtifact extends Component {
 
   deleteImage = e => {
     const name = e.target.name.toString();
-    console.log(name);
     this.setState(prevState => ({
       image: prevState.image.filter((img, index) => {
         return index.toString() !== name;
@@ -189,9 +192,6 @@ class CreateArtifact extends Component {
       owners,
     } = this.state;
 
-    console.log(groups);
-    console.log(owners);
-
     if (validation.isValid) {
       this.props.updateArtifact(
         name,
@@ -216,13 +216,11 @@ class CreateArtifact extends Component {
 
     const {
       name,
-      date,
       description,
       owners,
       sharedWith,
       image,
       finished,
-      groups,
     } = this.state;
 
     const { usersGroups, user } = this.props;

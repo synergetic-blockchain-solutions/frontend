@@ -20,11 +20,11 @@ class Resource extends Component {
   state = {
     image: '',
     showFullImage: false,
+    error: false,
   };
 
   componentDidMount() {
     const { artifactId, id } = this.props;
-
     axios
       .get(
         `${process.env.REACT_APP_API_URL}/artifact/${artifactId}/resource/${id}/resource`
@@ -33,8 +33,16 @@ class Resource extends Component {
         this.setState({ image: res.data });
       })
       .catch(err => {
-        console.log(err);
+        this.setState({ error: true });
       });
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.image !== this.state.image) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   toggleFullImage = () =>
@@ -43,7 +51,6 @@ class Resource extends Component {
   render() {
     const { image, showFullImage } = this.state;
     const { contentType, description } = this.props;
-    console.log(this.state);
     return (
       <React.Fragment>
         <Button onClick={this.toggleFullImage}>

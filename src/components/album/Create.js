@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import moment from 'moment';
 import AuthInput from 'components/common/inputs/AuthInput';
 import TextAreaInput from 'components/common/inputs/TextAreaInput';
 import ButtonLarge from 'components/common/buttons/ButtonLarge';
 import { CREATE_ALBUM_SUCCESS } from 'actions/types';
 import { createAlbum, resetAlbum } from 'actions/album';
 import { getGroups } from 'actions/group';
-import { Center, MY1X0 } from 'components/common/containers/GeneralContainers';
+import { Center } from 'components/common/containers/GeneralContainers';
 import FormValidator from 'components/common/help-component/FormValidator';
 import FormContainer from 'components/common/containers/FormDisplayContainer';
 import isEmpty from 'helpers/is-empty';
@@ -20,6 +19,15 @@ import { Title } from 'components/artifact/artifact-helpers';
 
 const Form = styled.div``;
 
+/**
+ * @param {*} props
+ * @prop {function} createAlbum
+ * @prop {object} album
+ * @prop {function} resetAlbum
+ * @prop {function} getGroups
+ * @prop {array} usersGroups
+ * @prop {object} user
+ */
 class CreateAlbum extends Component {
   validator = new FormValidator([
     {
@@ -47,10 +55,13 @@ class CreateAlbum extends Component {
   };
 
   componentDidMount() {
+    // get all groups the user belongs to
     this.props.getGroups();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    // if they have successfully created the album update
+    // the state to show a success screen
     if (
       nextProps.album.success === CREATE_ALBUM_SUCCESS &&
       !this.state.finished
@@ -61,6 +72,7 @@ class CreateAlbum extends Component {
   }
 
   componentWillUnmount() {
+    // When unmounting reset all the values in redux
     this.props.resetAlbum();
   }
 
@@ -104,6 +116,7 @@ class CreateAlbum extends Component {
 
     const { name, description, groups, sharedWith, owners } = this.state;
 
+    // if it is valid create the album
     if (validation.isValid) {
       this.props.createAlbum(
         name,
@@ -126,8 +139,6 @@ class CreateAlbum extends Component {
 
     const { usersGroups, user } = this.props;
     const { album } = this.props.album;
-
-    console.log(this.state);
 
     return (
       <FormContainer>
@@ -181,7 +192,7 @@ class CreateAlbum extends Component {
               />
               <InputAdder
                 type="text"
-                name="sharedWith"
+                inputName="sharedWith"
                 placeholder="Share album with other users"
                 label="Share album with other users"
                 addElem={this.addUser}

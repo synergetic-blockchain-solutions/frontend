@@ -44,7 +44,6 @@ class FamilySummary extends Component {
   render() {
     const { name, id } = this.props;
     const { image } = this.state;
-    console.log(this.state);
     return (
       <FamilyLink to={`/family/${id}`}>
         <SummaryContainer>

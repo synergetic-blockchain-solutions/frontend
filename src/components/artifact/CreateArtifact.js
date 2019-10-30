@@ -31,6 +31,17 @@ const AlreadyAdded = styled.h3`
   margin-bottom: 1.5rem;
 `;
 
+/**
+ * @prop {function} registerArtifact
+ * @prop {object} artifact
+ * @prop {function} addResourceToArtifact
+ * @prop {function} resetArtifact
+ * @prop {function} getGroups
+ * @prop {function} getAlbums
+ * @prop {array} usersGroups
+ * @prop {object} user
+ * @prop {array} albums
+ */
 class CreateArtifact extends Component {
   validator = new FormValidator([
     {
@@ -38,6 +49,12 @@ class CreateArtifact extends Component {
       method: 'isEmpty',
       validWhen: false,
       message: 'name is required.',
+    },
+    {
+      field: 'description',
+      method: 'isEmpty',
+      validWhen: false,
+      message: 'description is required',
     },
   ]);
 
@@ -57,6 +74,7 @@ class CreateArtifact extends Component {
   };
 
   componentDidMount() {
+    // get the groups, albums and parse the query in the url (if any)
     this.props.getGroups();
     this.props.getAlbums();
     const query = qs.parse(this.props.location.search);
@@ -67,6 +85,9 @@ class CreateArtifact extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
+    // if the artifact is submitted check if there are
+    // attached resources and then submit them if
+    // needed
     if (
       !isEmpty(nextProps.artifact.artifact) &&
       nextProps.artifact.success === REGISTER_ARTIFACT_SUCCESS &&
@@ -86,6 +107,9 @@ class CreateArtifact extends Component {
       }
     }
 
+    // if the ampount of resouces submitted is the same as the successCount
+    // then all of the resoucres are submitted and this component should
+    // be updated to a success state
     if (
       nextProps.artifact.successCount === prevState.image.length &&
       nextProps.artifact.success
@@ -96,6 +120,7 @@ class CreateArtifact extends Component {
   }
 
   componentWillUnmount() {
+    // reset aritfact data when leaving this page
     this.props.resetArtifact();
   }
 
@@ -104,6 +129,7 @@ class CreateArtifact extends Component {
   handleStandardChange = e =>
     this.setState({ [e.target.name]: e.target.value });
 
+  // get a image from the dropzone
   recieveImage = image => {
     this.setState(prevState => {
       return {
@@ -115,15 +141,23 @@ class CreateArtifact extends Component {
     });
   };
 
+  // handle the changing of metadata
   handleMetaDataChange = e => {
+    // get the field and postion
     const [field, position] = e.target.name.split('-');
+
+    // get the image that was changed
     const { image } = this.state;
     const newImages = image;
     const changedImage = newImages[Number(position)];
+
+    // update the field on that image
     changedImage.metaData[field] = e.target.value;
+
     this.setState({ images: newImages });
   };
 
+  // delete an uploaded image
   deleteImage = e => {
     const name = e.target.name.toString();
     this.setState(prevState => ({
@@ -195,7 +229,7 @@ class CreateArtifact extends Component {
         !isEmpty(date) ? moment(date).format() : null,
         albums
           .map(alb => alb.value)
-          .concat([Number(query.album)])
+          .concat(Number(query.album) ? [Number(query.album)] : [])
           .filter(alb => !isEmpty(alb))
       );
     }
@@ -208,10 +242,12 @@ class CreateArtifact extends Component {
       ? this.validator.validate(this.state)
       : this.state.validation;
 
-    const { name, date, description, image, finished, query } = this.state;
+    const { name, description, image, finished, query } = this.state;
 
     const { usersGroups, user, albums } = this.props;
     const { artifact } = this.props.artifact;
+
+    // get the seleced album from the url query
     let selectedAlbum = {};
     if (albums) {
       selectedAlbum = albums.find(alb => alb.id === Number(query.album));
@@ -261,16 +297,6 @@ class CreateArtifact extends Component {
                   );
                 })}
               </MY1X0>
-              <AuthInput
-                handleStandardChange={this.handleStandardChange}
-                value={date}
-                type="date"
-                name="date"
-                placeholder="Date Taken"
-                marginBottom="1rem"
-                label="Date Taken"
-              />
-
               <TextAreaInput
                 handleStandardChange={this.handleStandardChange}
                 value={description}

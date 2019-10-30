@@ -7,10 +7,15 @@ const GroupsContainer = styled.div`
   font-size: 1.5rem;
 `;
 
-const GroupsList = styled.ul`
-  margin-left: 2rem;
-`;
+const GroupsList = styled.ul``;
 
+/**
+ *
+ * @param {*} props
+ * @prop {array} groups
+ * @prop {string} title
+ * @desc factory for groups
+ */
 function AssociatedGroups(props) {
   const { groups, title } = props;
   return (

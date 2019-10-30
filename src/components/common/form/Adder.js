@@ -5,7 +5,6 @@ import { AddedContainer, AddedElem, AddedDelete } from './AdderHelpers';
 
 function Adder(props) {
   const { values, removeGroup } = props;
-  console.log(values);
   return (
     <AddedContainer>
       {values.map((value, index) => {
